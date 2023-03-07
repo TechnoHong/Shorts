@@ -1,20 +1,35 @@
-import React, { Component } from 'react';
+import React, { useMemo, useState} from 'react';
 import Menubar from "./layout/Menubar"
 import Home from './Home'
 import Footer from "./layout/Footer"
+import {createTheme, ThemeProvider} from "@mui/material";
+import {ColorModeContext} from "./context/ColorContext";
 
-class App extends Component {
-  render() {
-    return (
-        <div>
-            <Menubar/>
+const App = () => {
+  const [mode, setMode] = useState('light')
+  const colorMode = useMemo(() => ({
+    toggleColorMode: () => {
+      setMode((prevMode) => (prevMode === 'light' ? 'dark' : 'light'))
+    }
+  }), [])
 
-            <Home/>
+  const theme = useMemo(() => createTheme({
+    palette: {
+      mode
+    }
+  }), [mode])
 
-            <Footer/>
-        </div>
-    );
-  }
+  return (
+    <ColorModeContext.Provider value={colorMode}>
+      <ThemeProvider theme={theme}>
+        <Menubar/>
+
+        <Home/>
+
+        <Footer/>
+      </ThemeProvider>
+    </ColorModeContext.Provider>
+  );
 }
 
 export default App;

@@ -3,7 +3,7 @@ const ButtonAppBar = () => {
     return (
         <footer>
             <hr/>
-            <div class="font">
+            <div className="font">
                 푸터푸터
             </div>
         </footer>
