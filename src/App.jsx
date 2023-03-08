@@ -7,6 +7,7 @@ import { ColorModeContext } from './context/ColorContext';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import ShortsDownload from './view/container/ShortsDownload';
 import NotFound from './view/container/NotFound';
+import ShortsPicking from "./view/container/ShortsPicking";
 
 const App = () => {
   const [mode, setMode] = useState('light');
@@ -37,6 +38,7 @@ const App = () => {
 
           <Routes>
             <Route path="/" element={<Home />} />
+            <Route path="/shortsPicking" element={<ShortsPicking />} />
             <Route path="/download" element={<ShortsDownload />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
