@@ -4,7 +4,7 @@ import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import IconButton from '@mui/material/IconButton';
-import { Brightness4, Brightness7 } from '@material-ui/icons';
+import { Brightness4, Brightness7 } from '@mui/icons-material';
 import { useTheme } from '@mui/material';
 import { ColorModeContext } from '../context/ColorContext';
 
@@ -28,7 +28,7 @@ const ColorModeContainer = () => {
 
 const ButtonAppBar = () => {
   return (
-    <Box sx={{ flexGrow: 1 }}>
+    <Box sx={{ flexGrow: 0 }}>
       <AppBar position="static">
         <Toolbar>
           <IconButton

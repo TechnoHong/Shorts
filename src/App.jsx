@@ -2,11 +2,13 @@ import React, { useMemo, useState } from 'react';
 import Menubar from './view/Menubar';
 import Home from './Home';
 import Footer from './view/Footer';
-import { createTheme, ThemeProvider } from '@mui/material';
+import { ThemeProvider } from '@mui/material';
 import { ColorModeContext } from './context/ColorContext';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
-import ShortsDownload from './view/container/ShortsDownload';
+import ShortsDownload from './view/container/shortDonwdload/ShortsDownload';
 import NotFound from './view/container/NotFound';
+import CssBaseline from '@mui/material/CssBaseline';
+import { theme } from './theme/GlobalTheme';
 
 const App = () => {
   const [mode, setMode] = useState('light');
@@ -19,19 +21,12 @@ const App = () => {
     [],
   );
 
-  const theme = useMemo(
-    () =>
-      createTheme({
-        palette: {
-          mode,
-        },
-      }),
-    [mode],
-  );
+  const globalTheme = useMemo(() => theme(mode), [mode]);
 
   return (
     <ColorModeContext.Provider value={colorMode}>
-      <ThemeProvider theme={theme}>
+      <ThemeProvider theme={globalTheme}>
+        <CssBaseline />
         <BrowserRouter>
           <Menubar />
 
