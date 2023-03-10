@@ -1,6 +1,14 @@
 import React from 'react';
-import { Dialog, DialogContent, DialogTitle, Slide } from '@mui/material';
+import {
+  Button,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogTitle,
+  Slide,
+} from '@mui/material';
 import PropTypes from 'prop-types';
+import ReactPlayer from 'react-player';
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
@@ -10,9 +18,32 @@ const ShortsPreviewDialog = (props) => {
   const { onClose, open } = props;
 
   return (
-    <Dialog onClose={onClose} open={open} TransitionComponent={Transition}>
-      <DialogTitle>Dialog Title</DialogTitle>
-      <DialogContent>hello</DialogContent>
+    <Dialog
+      onClose={onClose}
+      open={open}
+      TransitionComponent={Transition}
+      maxWidth="xl"
+    >
+      <DialogTitle>미리보기</DialogTitle>
+      <DialogContent>
+        <ReactPlayer
+          style={{
+            margin: '0 auto',
+            maxWidth: '100%',
+          }}
+          url="https://www.youtube.com/watch?v=WFsAon_TWPQ"
+          playing
+          muted
+          controls
+          pip
+          config={{
+            youtube: { playerVars: { origin: 'https://www.youtube.com' } },
+          }}
+        />
+      </DialogContent>
+      <DialogActions>
+        <Button onClick={onClose}>닫기</Button>
+      </DialogActions>
     </Dialog>
   );
 };

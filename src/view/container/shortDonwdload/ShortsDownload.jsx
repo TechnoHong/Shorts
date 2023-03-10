@@ -8,11 +8,12 @@ const ShortsDownload = () => {
   const [dialogState, setDialogState] = useState(false);
 
   const handleClickOpen = () => {
-    console.log('dialog open clicked');
+    console.log('dialog opened');
     setDialogState(true);
   };
 
   const handleClose = () => {
+    console.log('dialog closed');
     setDialogState(false);
   };
 
