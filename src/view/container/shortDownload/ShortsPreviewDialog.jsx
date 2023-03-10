@@ -9,6 +9,7 @@ import {
 } from '@mui/material';
 import PropTypes from 'prop-types';
 import ReactPlayer from 'react-player';
+import { useTranslation } from 'react-i18next';
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
@@ -16,6 +17,7 @@ const Transition = React.forwardRef(function Transition(props, ref) {
 
 const ShortsPreviewDialog = (props) => {
   const { onClose, open } = props;
+  const { t } = useTranslation(['page']);
 
   return (
     <Dialog
@@ -24,7 +26,7 @@ const ShortsPreviewDialog = (props) => {
       TransitionComponent={Transition}
       maxWidth="xl"
     >
-      <DialogTitle>미리보기</DialogTitle>
+      <DialogTitle>{t('shortsDownload.preview')}</DialogTitle>
       <DialogContent>
         <ReactPlayer
           style={{
@@ -42,7 +44,7 @@ const ShortsPreviewDialog = (props) => {
         />
       </DialogContent>
       <DialogActions>
-        <Button onClick={onClose}>닫기</Button>
+        <Button onClick={onClose}>{t('shortsDownload.close')}</Button>
       </DialogActions>
     </Dialog>
   );

@@ -5,7 +5,7 @@ import Footer from './view/Footer';
 import { ThemeProvider } from '@mui/material';
 import { ColorModeContext } from './context/ColorContext';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
-import ShortsDownload from './view/container/shortDonwdload/ShortsDownload';
+import ShortsDownload from './view/container/shortDownload/ShortsDownload';
 import NotFound from './view/container/NotFound';
 import CssBaseline from '@mui/material/CssBaseline';
 import { theme } from './theme/GlobalTheme';

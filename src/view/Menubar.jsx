@@ -15,10 +15,12 @@ import IconButton from '@mui/material/IconButton';
 import {
   Brightness4,
   Brightness7,
+  Language,
   Menu as MenuIcon,
 } from '@mui/icons-material';
 import { ColorModeContext } from '../context/ColorContext';
 import { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 
 const pages = [];
 
@@ -35,6 +37,30 @@ const ColorModeContainer = () => {
           color="inherit"
         >
           {theme.palette.mode === 'dark' ? <Brightness7 /> : <Brightness4 />}
+        </IconButton>
+      </Tooltip>
+    </Box>
+  );
+};
+
+const ChangeLangContainer = () => {
+  const { t, i18n } = useTranslation(['page']);
+
+  const handleChangeLang = () => {
+    i18n.language === 'ko'
+      ? i18n.changeLanguage('en')
+      : i18n.changeLanguage('ko');
+  };
+
+  return (
+    <Box sx={{ flexGrow: 0 }}>
+      <Tooltip title={t('appbar.language')}>
+        <IconButton
+          sx={{ ml: 1, p: 0 }}
+          onClick={handleChangeLang}
+          color="inherit"
+        >
+          <Language />
         </IconButton>
       </Tooltip>
     </Box>
@@ -138,6 +164,7 @@ const ButtonAppBar = () => {
               </Button>
             ))}
           </Box>
+          <ChangeLangContainer />
           <ColorModeContainer />
         </Toolbar>
       </Container>
