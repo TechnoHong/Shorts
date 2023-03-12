@@ -3,21 +3,35 @@ import { IconButton, ImageListItem, ImageListItemBar } from '@mui/material';
 import { Download } from '@mui/icons-material';
 import SampleImg from '../../../assets/images/mock/sample.jpg';
 import Grid from '@mui/material/Grid';
+import PropTypes from 'prop-types';
 
-const DownloadItem = () => {
+const DownloadItem = (props) => {
+  const { handleClick } = props;
   return (
     <Grid item>
       <ImageListItem
         sx={{
           maxWidth: '20rem',
+          transform: 'scale(1.0)',
+          transition: 'transform .5s',
+          ':hover': {
+            transform: 'scale(1.1)',
+            transition: 'transform .5s',
+            cursor: 'pointer',
+          },
         }}
       >
-        <img src={SampleImg} alt="kkang" loading="lazy" />
+        <img
+          src={SampleImg}
+          alt="sample_img"
+          loading="lazy"
+          onClick={handleClick}
+        />
         <ImageListItemBar
           title="title"
           subtitle="sub title"
           actionIcon={
-            <IconButton sx={{ color: `rgba(255, 255, 255, 0.54` }}>
+            <IconButton>
               <Download color="primary" />
             </IconButton>
           }
@@ -25,6 +39,10 @@ const DownloadItem = () => {
       </ImageListItem>
     </Grid>
   );
+};
+
+DownloadItem.propTypes = {
+  handleClick: PropTypes.func.isRequired,
 };
 
 export default DownloadItem;
