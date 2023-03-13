@@ -3,6 +3,7 @@ import { ContentsWrapper } from '../../components/ContentsWrapper';
 import DownloadItem from './DownloadItem';
 import Grid from '@mui/material/Grid';
 import ShortsPreviewDialog from './ShortsPreviewDialog';
+import { Counter } from '../../../store/sample/Counter';
 
 const ShortsDownload = () => {
   const [dialogState, setDialogState] = useState(false);
@@ -25,6 +26,7 @@ const ShortsDownload = () => {
         ))}
       </Grid>
       <ShortsPreviewDialog onClose={handleClose} open={dialogState} />
+      <Counter />
     </ContentsWrapper>
   );
 };
