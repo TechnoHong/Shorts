@@ -5,8 +5,8 @@ import { styled, Typography } from '@mui/material';
 const ButtonAppBar = () => {
   return (
     <Footer>
-      <Typography align="center" gutterBottom fontSize="0.5rem">
-        ⓒ 2023 ShortsPicker All rights reserved.
+      <Typography align="center" gutterBottom variant="body2">
+        ⓒ 2023 Team TCNK All rights reserved.
       </Typography>
     </Footer>
   );
