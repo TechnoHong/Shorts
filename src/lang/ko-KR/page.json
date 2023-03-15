@@ -2,6 +2,14 @@
     "appbar": {
         "language": "한국어"
     },
+    "main": {
+        "searchLabel": "YouTube 영상의 주소를 입력하세요.",
+        "count": "{{count}}개",
+        "mainDescription": "main desc rip t ion",
+        "stepDescription1": "stepDescription1",
+        "stepDescription2": "stepDescription2",
+        "stepDescription3": "stepDescription3"
+    },
     "shortsDownload": {
         "preview": "미리보기",
         "close": "닫기"

@@ -1,5 +1,5 @@
 import { createTheme } from '@mui/material';
-import { blue, green, red } from '@mui/material/colors';
+import { grey } from '@mui/material/colors';
 
 export const theme = (mode) =>
   createTheme({
@@ -27,24 +27,43 @@ export const theme = (mode) =>
       ...(mode === 'light'
         ? {
             primary: {
-              main: blue[500],
+              main: '#3E54AC',
+              light: '#ECF2FF',
+              dark: '#655DBB',
             },
             secondary: {
-              main: green[500],
+              main: '#E90064',
+              light: '#FF5F9E',
+              dark: '#B3005E',
             },
             text: {
-              primary: blue[500],
+              primary: '#18122B',
+            },
+            background: {
+              homeMainContainer:
+                'linear-gradient(180deg, rgba(62,84,172,1) 0%, rgba(101,93,187,1) 100%)',
+              homeSearchContainer: 'rgba(255,255,255,0.7)',
             },
           }
         : {
             primary: {
-              main: blue[500],
+              main: '#443C68',
+              light: '#635985',
+              dark: '#18122B',
             },
             secondary: {
-              main: green[500],
+              main: '#E90064',
+              light: '#FF5F9E',
+              dark: '#B3005E',
             },
             text: {
-              primary: red[500],
+              primary: '#ECF2FF',
+            },
+            background: {
+              default: grey[900],
+              homeMainContainer:
+                'linear-gradient(180deg, rgba(68,60,104,1) 0%, rgba(99,89,133,1) 100%)',
+              homeSearchContainer: 'rgba(0,0,0,0.7)',
             },
           }),
     },
