@@ -5,7 +5,7 @@
     "main": {
         "searchLabel": "Enter the URL of the YouTube video.",
         "count": "{{count}} Shorts",
-        "mainDescription": "메인 설 명 입니다.",
+        "mainDescription": "this is main description",
         "stepDescription1": "stepDescription1",
         "stepDescription2": "stepDescription2",
         "stepDescription3": "stepDescription3"

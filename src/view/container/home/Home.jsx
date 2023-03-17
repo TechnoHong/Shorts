@@ -29,7 +29,7 @@ function Home() {
           <TextField
             id="url-text-field"
             placeholder={t('main.searchLabel')}
-            variant="outlined"
+            variant="filled"
             sx={{ minWidth: '50%' }}
           />
           <Divider flexItem />
