@@ -6,13 +6,29 @@ import { ContentsWrapper } from '../../components/ContentsWrapper';
 import { useTranslation } from 'react-i18next';
 import { Container, Divider, styled } from '@mui/material';
 import RangeSlider from './RangeSlider';
-import RangeButtonGroup from './RangeButtonGroup';
+import ShortsAmountSelector from './ShortsAmountSelector';
 import { Send } from '@mui/icons-material';
 import StepDescription from './StepDescription';
 import MainDescription from './MainDescription';
+import { useState } from 'react';
 
 function Home() {
   const { t } = useTranslation(['page']);
+  const [ytURL, setYtURL] = useState('');
+  const [range, setRange] = useState(60);
+  const [count, setCount] = useState(5);
+
+  const handlePickingButton = () => {
+    alert(
+      'youtube URL :' +
+        ytURL +
+        '\nTimeRange : ' +
+        range +
+        '\nConverting amount : ' +
+        count,
+    );
+  };
+
   return (
     <ContentsWrapper
       disableGutters
@@ -31,11 +47,13 @@ function Home() {
             placeholder={t('main.searchLabel')}
             variant="filled"
             sx={{ minWidth: '50%' }}
+            value={ytURL}
+            onChange={(e) => setYtURL(e.target.value)}
           />
           <Divider flexItem />
           <StepDescription step="2." description={t('main.stepDescription2')} />
-          <RangeSlider />
-          <RangeButtonGroup />
+          <RangeSlider range={range} setRange={setRange} />
+          <ShortsAmountSelector count={count} setCount={setCount} />
           <Divider flexItem />
           <StepDescription step="3." description={t('main.stepDescription3')} />
           <Button
@@ -43,6 +61,7 @@ function Home() {
             variant="contained"
             sx={{ fontSize: '1.5rem', textTransform: 'none' }}
             endIcon={<Send />}
+            onClick={handlePickingButton}
           >
             Picking
           </Button>

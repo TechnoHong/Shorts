@@ -1,22 +1,21 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Box, Grid, Input, InputAdornment, Slider } from '@mui/material';
+import PropTypes from 'prop-types';
 
-const RangeSlider = () => {
-  const [value, setValue] = useState(60);
-
+const RangeSlider = ({ range, setRange }) => {
   const handleSliderChange = (event, newValue) => {
-    setValue(newValue);
+    setRange(newValue);
   };
 
   const handleInputChange = (event) => {
-    setValue(event.target.value === '' ? '' : Number(event.target.value));
+    setRange(event.target.value === '' ? '' : Number(event.target.value));
   };
 
   const handleBlur = () => {
-    if (value < 0) {
-      setValue(0);
-    } else if (value > 60) {
-      setValue(60);
+    if (range < 0) {
+      setRange(0);
+    } else if (range > 60) {
+      setRange(60);
     }
   };
 
@@ -31,8 +30,8 @@ const RangeSlider = () => {
       <Grid container spacing={5} justifyContent="center">
         <Grid item xs={8} sx={{ display: { xs: 'none', md: 'block' } }}>
           <Slider
-            defaultValue={value}
-            value={typeof value === 'number' ? value : 0}
+            defaultValue={range}
+            value={typeof range === 'number' ? range : 0}
             onChange={handleSliderChange}
             min={0}
             max={60}
@@ -42,7 +41,7 @@ const RangeSlider = () => {
         </Grid>
         <Grid item>
           <Input
-            value={value}
+            value={range}
             color="primary"
             onChange={handleInputChange}
             onBlur={handleBlur}
@@ -58,6 +57,11 @@ const RangeSlider = () => {
       </Grid>
     </Box>
   );
+};
+
+RangeSlider.propTypes = {
+  range: PropTypes.number.isRequired,
+  setRange: PropTypes.func.isRequired,
 };
 
 export default RangeSlider;

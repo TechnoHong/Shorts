@@ -1,10 +1,10 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Box, styled, ToggleButton, ToggleButtonGroup } from '@mui/material';
 import { useTranslation } from 'react-i18next';
+import PropTypes from 'prop-types';
 
-const RangeButtonGroup = () => {
+const ShortsAmountSelector = ({ count, setCount }) => {
   const { t } = useTranslation(['page']);
-  const [count, setCount] = useState(10);
 
   const handleCount = (event, newCount) => {
     if (newCount !== null) {
@@ -44,4 +44,9 @@ const RangeSelectedToggle = styled(ToggleButton)(({ theme }) => ({
   textTransform: 'none',
 }));
 
-export default RangeButtonGroup;
+ShortsAmountSelector.propTypes = {
+  count: PropTypes.number.isRequired,
+  setCount: PropTypes.func.isRequired,
+};
+
+export default ShortsAmountSelector;
