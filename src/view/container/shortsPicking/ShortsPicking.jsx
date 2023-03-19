@@ -1,18 +1,15 @@
 import React from 'react';
 import {
-    Container, Divider,
+    Container,
     styled
 } from '@mui/material';
 import Typography from "@mui/material/Typography";
-import Button from "@mui/material/Button";
 import {useTranslation} from "react-i18next";
 import {ContentsWrapper} from "../../components/ContentsWrapper";
 import MainDescription from "../home/MainDescription";
 import StepDescription from "../home/StepDescription";
-import TextField from "@mui/material/TextField";
-import RangeSlider from "../home/RangeSlider";
-import RangeButtonGroup from "../home/RangeButtonGroup";
-import {Send} from "@mui/icons-material";
+import ShortsButtonGrp from "./ShortsButtonGrp";
+import PickingCandi from "./PickingCandi";
 
 function ShortsPicking() {
     const { t } = useTranslation(['page']);
@@ -29,33 +26,12 @@ function ShortsPicking() {
                     disableGutters
                     sx={{ borderRadius: { md: 'none', lg: '30px 30px 30px 30px' } }}
                 >
-                    <Button variant="outlined" color="error" >
-                        re-pick
-                    </Button>
-                    <Button variant="contained" color="success">
-                        Download
-                    </Button>
+
+                    <ShortsButtonGrp flexItem />
+                    <PickingCandi />
                     <StepDescription step="1." description={t('main.stepDescription1')} />
-                    <TextField
-                        id="url-text-field"
-                        placeholder={t('main.searchLabel')}
-                        variant="outlined"
-                        sx={{ minWidth: '50%' }}
-                    />
-                    <Divider flexItem />
                     <StepDescription step="2." description={t('main.stepDescription2')} />
-                    <RangeSlider />
-                    <RangeButtonGroup />
-                    <Divider flexItem />
                     <StepDescription step="3." description={t('main.stepDescription3')} />
-                    <Button
-                        disableElevation
-                        variant="contained"
-                        sx={{ fontSize: '1.5rem', textTransform: 'none' }}
-                        endIcon={<Send />}
-                    >
-                        Picking
-                    </Button>
                 </SearchContainer>
             </MainContainer>
 
@@ -73,9 +49,6 @@ function ShortsPicking() {
         </ContentsWrapper>
     );
 }
-
-
-
 const SearchContainer = styled(Container)(({ theme }) => ({
     ...theme.components.MuiContainer,
     display: 'flex',

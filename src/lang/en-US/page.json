@@ -12,6 +12,7 @@
     },
     "picking": {
         "mainDescription": "Pick what u wanna get.",
+        "candiBrief": "Pick what u wanna get.",
         "step1": "set shorts info",
         "step2": "pick shorts up",
         "step3": "download"
