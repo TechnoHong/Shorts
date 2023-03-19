@@ -1,15 +1,15 @@
 import React from 'react';
 import {
-    Container,
+    Container, Divider, Stack,
     styled
 } from '@mui/material';
 import Typography from "@mui/material/Typography";
 import {useTranslation} from "react-i18next";
 import {ContentsWrapper} from "../../components/ContentsWrapper";
 import MainDescription from "../home/MainDescription";
-import StepDescription from "../home/StepDescription";
-import ShortsButtonGrp from "./ShortsButtonGrp";
 import PickingCandi from "./PickingCandi";
+import Button from "@mui/material/Button";
+import CandiPreview from "./CandiPrivew";
 
 function ShortsPicking() {
     const { t } = useTranslation(['page']);
@@ -26,12 +26,17 @@ function ShortsPicking() {
                     disableGutters
                     sx={{ borderRadius: { md: 'none', lg: '30px 30px 30px 30px' } }}
                 >
-
-                    <ShortsButtonGrp flexItem />
-                    <PickingCandi />
-                    <StepDescription step="1." description={t('main.stepDescription1')} />
-                    <StepDescription step="2." description={t('main.stepDescription2')} />
-                    <StepDescription step="3." description={t('main.stepDescription3')} />
+                    <CandiPreview />
+                    <Divider flexItem />
+                    <Stack
+                        direction="row"
+                        divider={<Divider orientation="vertical" flexItem />}
+                        justifyContent="flex-end"
+                        spacing={2} >
+                        <Button variant="contained" color="success">Download</Button>
+                        <Button variant="outlined" color="error" >re-pick</Button>
+                    </Stack>
+                    <PickingCandi description={t('picking.candiBrief')}/>
                 </SearchContainer>
             </MainContainer>
 

@@ -1,52 +1,61 @@
 import * as React from 'react';
-import Box from '@mui/material/Box';
-import FormLabel from '@mui/material/FormLabel';
-import FormControl from '@mui/material/FormControl';
-import FormGroup from '@mui/material/FormGroup';
-import FormControlLabel from '@mui/material/FormControlLabel';
+import List from '@mui/material/List';
+import ListItem from '@mui/material/ListItem';
+import ListItemButton from '@mui/material/ListItemButton';
+import ListItemIcon from '@mui/material/ListItemIcon';
+import ListItemText from '@mui/material/ListItemText';
 import Checkbox from '@mui/material/Checkbox';
+import IconButton from '@mui/material/IconButton';
+import CommentIcon from '@mui/icons-material/Comment';
+import {Divider} from "@mui/material";
 
-export default function PickingCandi() {
-    const [state, setState] = React.useState({
-        shorts1: true,
-        shorts2: false,
-        shorts3: false,
-    });
+const PickingCandi = () => {
+    const [checked, setChecked] = React.useState([0]);
 
-    const handleChange = (event) => {
-        setState({
-            ...state,
-            [event.target.name]: event.target.checked,
-        });
+    const handleToggle = (value) => () => {
+        const currentIndex = checked.indexOf(value);
+        const newChecked = [...checked];
+
+        if (currentIndex === -1) {
+            newChecked.push(value);
+        } else {
+            newChecked.splice(currentIndex, 1);
+        }
+
+        setChecked(newChecked);
     };
 
-    const { shorts1, shorts2, shorts3 } = state;
-
     return (
-        <Box sx={{ display: 'flex' }}>
-            <FormControl sx={{ m: 5 }} component="fieldset" variant="standard">
-                <FormLabel component="legend">picking.candiBrief</FormLabel>
-                <FormGroup>
-                    <FormControlLabel
-                        control={
-                            <Checkbox checked={shorts1} onChange={handleChange} name="gilad" />
+        <List sx={{ width: '100%', maxWidth: 360 }}>
+            {[0, 1, 2, 3].map((value) => {
+                const labelId = `checkbox-list-label-${value}`;
+                return (
+                    <ListItem
+                        key={value}
+                        secondaryAction={
+                            <IconButton edge="end" aria-label="play">
+                                <CommentIcon />
+                            </IconButton>
                         }
-                        label="shorts1"
-                    />
-                    <FormControlLabel
-                        control={
-                            <Checkbox checked={shorts2} onChange={handleChange} name="jason" />
-                        }
-                        label="shorts2"
-                    />
-                    <FormControlLabel
-                        control={
-                            <Checkbox checked={shorts3} onChange={handleChange} name="antoine" />
-                        }
-                        label="shorts3"
-                    />
-                </FormGroup>
-            </FormControl>
-        </Box>
+                        disablePadding
+                    >
+                        <ListItemButton role={undefined} onClick={handleToggle(value)} dense>
+                            <ListItemIcon>
+                                <Checkbox
+                                    edge="start"
+                                    checked={checked.indexOf(value) !== -1}
+                                    tabIndex={-1}
+                                    disableRipple
+                                    inputProps={{ 'aria-labelledby': labelId }}
+                                />
+                            </ListItemIcon>
+                            <ListItemText id={labelId} primary={`Shorts ${value + 1}`} />
+                        </ListItemButton>
+                        <Divider />
+                    </ListItem>
+                );
+            })}
+        </List>
     );
 }
+export default PickingCandi;

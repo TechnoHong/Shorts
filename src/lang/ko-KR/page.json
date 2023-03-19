@@ -12,6 +12,7 @@
     },
     "picking": {
         "mainDescription": "마음에 드는 쇼츠를 골라주세요.",
+        "candiBrief": "알고리즘으로 찾아낸 쇼츠 리스트",
         "step1": "쇼츠 정보 입력",
         "step2": "쇼츠 선택",
         "step3": "다운로드"

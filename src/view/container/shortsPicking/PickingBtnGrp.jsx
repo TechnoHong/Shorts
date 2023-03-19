@@ -11,7 +11,7 @@ import MenuList from '@mui/material/MenuList';
 
 const options = ['Create a merge commit', 'Get Shorts', 'Rebase and merge'];
 
-export default function ShortsButtonGrp() {
+export default function PickingBtnGrp() {
     const [open, setOpen] = React.useState(false);
     const anchorRef = React.useRef(null);
     const [selectedIndex, setSelectedIndex] = React.useState(1);
