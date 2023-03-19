@@ -6,7 +6,7 @@ import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import Checkbox from '@mui/material/Checkbox';
 import IconButton from '@mui/material/IconButton';
-import CommentIcon from '@mui/icons-material/Comment';
+import PlayCircleOutlineIcon from '@material-ui/icons/PlayCircleOutline';
 import {Divider} from "@mui/material";
 
 const PickingCandi = () => {
@@ -26,7 +26,7 @@ const PickingCandi = () => {
     };
 
     return (
-        <List sx={{ width: '100%', maxWidth: 360 }}>
+        <List sx={{ width: '100%', maxWidth: 1000 }}>
             {[0, 1, 2, 3].map((value) => {
                 const labelId = `checkbox-list-label-${value}`;
                 return (
@@ -34,7 +34,7 @@ const PickingCandi = () => {
                         key={value}
                         secondaryAction={
                             <IconButton edge="end" aria-label="play">
-                                <CommentIcon />
+                                <PlayCircleOutlineIcon />
                             </IconButton>
                         }
                         disablePadding
