@@ -5,10 +5,16 @@
     "main": {
         "searchLabel": "YouTube 영상의 주소를 입력하세요.",
         "count": "{{count}}개",
-        "mainDescription": "main desc rip t ion",
-        "stepDescription1": "stepDescription1",
-        "stepDescription2": "stepDescription2",
-        "stepDescription3": "stepDescription3"
+        "mainDescription": "쇼츠를 만들어 드릴게요. 몇가지만 입력해 주세요.",
+        "stepDescription1": "URL 입력",
+        "stepDescription2": "Shorts 길이 및 갯수",
+        "stepDescription3": "이동~~"
+    },
+    "picking": {
+        "mainDescription": "마음에 드는 쇼츠를 골라주세요.",
+        "step1": "쇼츠 정보 입력",
+        "step2": "쇼츠 선택",
+        "step3": "다운로드"
     },
     "shortsDownload": {
         "preview": "미리보기",

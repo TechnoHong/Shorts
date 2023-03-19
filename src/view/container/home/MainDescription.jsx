@@ -1,5 +1,5 @@
 import React from 'react';
-import { Box, Fade } from '@mui/material';
+import {Box, Fade,} from '@mui/material';
 import Typography from '@mui/material/Typography';
 import PropTypes from 'prop-types';
 
@@ -21,10 +21,10 @@ const MainDescription = ({ description }) => {
         <Fade
           in
           timeout={500}
-          style={{ transitionDelay: `${index * 500}ms` }}
+          style={{ transitionDelay: `${index * 120}ms` }}
           key={token + index}
         >
-          <Typography variant="h3">{token}</Typography>
+        <Typography variant="h3" color="bluegrass">{token}</Typography>
         </Fade>
       ))}
     </Box>
