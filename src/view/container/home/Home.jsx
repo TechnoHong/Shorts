@@ -12,8 +12,6 @@ import StepDescription from './StepDescription';
 import MainDescription from './MainDescription';
 import { useState } from 'react';
 
-
-
 function Home() {
   const { t } = useTranslation(['page']);
   const [ytURL, setYtURL] = useState('');
@@ -37,19 +35,36 @@ function Home() {
       maxWidth={false}
       sx={{ padding: '0 0 1.5rem' }}
     >
-
-      <MainContainer disableGutters maxWidth={false}>
+      <MainContainer
+        disableGutters
+        maxWidth={false}
+        sx={{
+          display: 'flex',
+          gap: '3rem',
+          alignItems: 'center',
+          flexDirection: {
+            xs: 'column',
+            sm: 'column',
+            md: 'column',
+            lg: 'row',
+          },
+          padding: { md: '0', lg: '7rem' },
+        }}
+      >
         <MainDescription description={t('main.mainDescription')} />
         <SearchContainer
           disableGutters
-          sx={{ borderRadius: { md: 'none', lg: '30px 30px 30px 30px' } }}
+          maxWidth="md"
+          sx={{
+            borderRadius: { md: 'none', lg: '30px 30px 30px 30px' },
+          }}
         >
           <StepDescription step="1." description={t('main.stepDescription1')} />
           <TextField
             id="url-text-field"
             placeholder={t('main.searchLabel')}
             variant="filled"
-            sx={{ minWidth: '50%' }}
+            sx={{ minWidth: '80%' }}
             value={ytURL}
             onChange={(e) => setYtURL(e.target.value)}
           />
@@ -61,6 +76,7 @@ function Home() {
           <StepDescription step="3." description={t('main.stepDescription3')} />
           <Button
             disableElevation
+            fullWidth
             variant="contained"
             sx={{ fontSize: '1.5rem', textTransform: 'none' }}
             endIcon={<Send />}
@@ -92,7 +108,7 @@ const SearchContainer = styled(Container)(({ theme }) => ({
   flexDirection: 'column',
   padding: '2rem',
   alignItems: 'center',
-  gap: '2rem',
+  gap: '1rem',
   background: theme.palette.background.homeSearchContainer,
 }));
 
@@ -100,6 +116,5 @@ const MainContainer = styled(Container)(({ theme }) => ({
   ...theme.components.MuiContainer,
   background: theme.palette.background.homeMainContainer,
 }));
-
 
 export default Home;

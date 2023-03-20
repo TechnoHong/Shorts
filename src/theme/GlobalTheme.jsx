@@ -42,7 +42,9 @@ export const theme = (mode) =>
             background: {
               homeMainContainer:
                 'linear-gradient(180deg, rgba(62,84,172,1) 0%, rgba(101,93,187,1) 100%)',
-              homeSearchContainer: 'rgba(255,255,255,0.7)',
+              homeSearchContainer: 'rgba(255,255,255,0.5)',
+              homeTypoGradient:
+                'linear-gradient(120deg, #d4fc79 0%, #96e6a1 100%)',
             },
           }
         : {
@@ -62,15 +64,17 @@ export const theme = (mode) =>
             background: {
               default: grey[900],
               homeMainContainer:
-                'linear-gradient(180deg, rgba(68,60,104,1) 0%, rgba(99,89,133,1) 100%)',
-              homeSearchContainer: 'rgba(0,0,0,0.7)',
+                'linear-gradient(180deg, rgba(68,60,104,1) 0%, rgba(40,35,45,1) 100%)',
+              homeSearchContainer: 'rgba(0,0,0,0.5)',
+              homeTypoGradient:
+                'linear-gradient(120deg, #d4fc79 0%, #96e6a1 100%)',
             },
           }),
     },
     typography: {
       fontFamily: [
-        'Noto Sans KR',
-        'sans-serif',
+        'Hahmlet',
+        'serif',
         '-apple-system',
         'BlinkMacSystemFont',
         'Segoe UI',

@@ -8,13 +8,13 @@ const StepDescription = ({ step, description }) => {
     <Box
       sx={{
         display: 'flex',
-        alignItems: 'end',
+        alignItems: 'baseline',
         alignSelf: 'start',
         gap: '0.5rem',
       }}
     >
-      <Typography variant="h4">{step}</Typography>
-      {description && <Typography variant="h4">{description}</Typography>}
+      <Typography variant="h5">{step}</Typography>
+      {description && <Typography variant="h6">{description}</Typography>}
     </Box>
   );
 };
