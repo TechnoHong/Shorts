@@ -4,11 +4,18 @@
     },
     "main": {
         "searchLabel": "Enter the URL of the YouTube video.",
-        "count": "{{count}} Shorts",
-        "mainDescription": "this is main description",
-        "stepDescription1": "stepDescription1",
-        "stepDescription2": "stepDescription2",
-        "stepDescription3": "stepDescription3"
+        "count": "{{count}}Shorts",
+        "mainDescription": "Fill some info and Get your own Shorts.",
+        "stepDescription1": "Input URL",
+        "stepDescription2": "How long and many u wanna get?",
+        "stepDescription3": "Move to Pick Shorts."
+    },
+    "picking": {
+        "mainDescription": "Pick what u wanna get.",
+        "candiBrief": "Pick what u wanna get.",
+        "step1": "set shorts info",
+        "step2": "pick shorts up",
+        "step3": "download"
     },
     "shortsDownload": {
         "preview": "Preview",

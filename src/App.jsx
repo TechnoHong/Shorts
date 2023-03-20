@@ -9,7 +9,7 @@ import ShortsDownload from './view/container/shortDownload/ShortsDownload';
 import NotFound from './view/container/NotFound';
 import CssBaseline from '@mui/material/CssBaseline';
 import { theme } from './theme/GlobalTheme';
-import ShortsPicking from './view/container/ShortsPicking';
+import ShortsPicking from './view/container/shortsPicking/ShortsPicking';
 
 const App = () => {
   const [mode, setMode] = useState('light');

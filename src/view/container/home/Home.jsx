@@ -12,6 +12,8 @@ import StepDescription from './StepDescription';
 import MainDescription from './MainDescription';
 import { useState } from 'react';
 
+
+
 function Home() {
   const { t } = useTranslation(['page']);
   const [ytURL, setYtURL] = useState('');
@@ -35,11 +37,12 @@ function Home() {
       maxWidth={false}
       sx={{ padding: '0 0 1.5rem' }}
     >
+
       <MainContainer disableGutters maxWidth={false}>
         <MainDescription description={t('main.mainDescription')} />
         <SearchContainer
           disableGutters
-          sx={{ borderRadius: { md: 'none', lg: '30px 30px 0 0' } }}
+          sx={{ borderRadius: { md: 'none', lg: '30px 30px 30px 30px' } }}
         >
           <StepDescription step="1." description={t('main.stepDescription1')} />
           <TextField
@@ -69,10 +72,11 @@ function Home() {
       </MainContainer>
 
       <Typography
-        variant="h5"
+        variant="h7"
+        sy={{ p: 3 }}
         align="center"
         color="text.secondary"
-        marginTop="50px"
+        marginTop="10px"
       >
         Something short and leading about the collection below—its contents, the
         creator, etc. Make it short and sweet, but not too short so folks
@@ -96,4 +100,6 @@ const MainContainer = styled(Container)(({ theme }) => ({
   ...theme.components.MuiContainer,
   background: theme.palette.background.homeMainContainer,
 }));
+
+
 export default Home;
