@@ -1,7 +1,6 @@
 import * as React from 'react';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
-import Typography from '@mui/material/Typography';
 import { ContentsWrapper } from '../../components/ContentsWrapper';
 import { useTranslation } from 'react-i18next';
 import { Container, Divider, styled } from '@mui/material';
@@ -11,6 +10,9 @@ import { Send } from '@mui/icons-material';
 import StepDescription from './StepDescription';
 import MainDescription from './MainDescription';
 import { useState } from 'react';
+import GuideContainer from './GuideContainer';
+import lottieData1 from '../../../assets/images/lotties/youtube-content.json';
+import lottieData2 from '../../../assets/images/lotties/video-editting.json';
 
 function Home() {
   const { t } = useTranslation(['page']);
@@ -56,7 +58,7 @@ function Home() {
           disableGutters
           maxWidth="md"
           sx={{
-            borderRadius: { md: 'none', lg: '30px 30px 30px 30px' },
+            borderRadius: { md: 'none', lg: '30px' },
           }}
         >
           <StepDescription step="1." description={t('main.stepDescription1')} />
@@ -87,17 +89,19 @@ function Home() {
         </SearchContainer>
       </MainContainer>
 
-      <Typography
-        variant="h7"
-        sy={{ p: 3 }}
-        align="center"
-        color="text.secondary"
-        marginTop="10px"
-      >
-        Something short and leading about the collection below—its contents, the
-        creator, etc. Make it short and sweet, but not too short so folks
-        don&apos;t simply skip over it entirely.
-      </Typography>
+      <SubContainer maxWidth={false}>
+        <GuideContainer
+          title={t('main.guideTitle1')}
+          desc={t('main.guideDesc1')}
+          animationData={lottieData1}
+        />
+        <GuideContainer
+          title={t('main.guideTitle2')}
+          desc={t('main.guideDesc2')}
+          animationData={lottieData2}
+          reverse={true}
+        />
+      </SubContainer>
     </ContentsWrapper>
   );
 }
@@ -115,6 +119,15 @@ const SearchContainer = styled(Container)(({ theme }) => ({
 const MainContainer = styled(Container)(({ theme }) => ({
   ...theme.components.MuiContainer,
   background: theme.palette.background.homeMainContainer,
+}));
+
+const SubContainer = styled(Container)(({ theme }) => ({
+  ...theme.components.MuiContainer,
+  display: 'flex',
+  flexDirection: 'column',
+  gap: '2rem',
+  background: theme.palette.background.homeSubContainer,
+  padding: '2rem',
 }));
 
 export default Home;

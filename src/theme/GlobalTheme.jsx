@@ -38,10 +38,14 @@ export const theme = (mode) =>
             },
             text: {
               primary: '#18122B',
+              mainDescription: '#d6e5ff',
+              guide: '#655DBB',
             },
             background: {
               homeMainContainer:
                 'linear-gradient(180deg, rgba(62,84,172,1) 0%, rgba(101,93,187,1) 100%)',
+              homeSubContainer:
+                'linear-gradient(45deg, rgba(237,233,254,1) 0%, rgba(224,235,251,1) 25%, rgba(213,237,255,1) 66%, rgba(255,255,255,1) 100%)',
               homeSearchContainer: 'rgba(255,255,255,0.5)',
               homeTypoGradient:
                 'linear-gradient(120deg, #d4fc79 0%, #96e6a1 100%)',
@@ -59,12 +63,16 @@ export const theme = (mode) =>
               dark: '#B3005E',
             },
             text: {
-              primary: '#ECF2FF',
+              primary: '#d6e5ff',
+              mainDescription: '#d6e5ff',
+              guide: '#d6e5ff',
             },
             background: {
               default: grey[900],
               homeMainContainer:
                 'linear-gradient(180deg, rgba(68,60,104,1) 0%, rgba(40,35,45,1) 100%)',
+              homeSubContainer:
+                'linear-gradient(45deg, rgba(83,81,93,1) 0%, rgba(82,93,110,1) 25%, rgba(59,102,135,1) 66%, rgba(47,30,93,1) 100%)',
               homeSearchContainer: 'rgba(0,0,0,0.5)',
               homeTypoGradient:
                 'linear-gradient(120deg, #d4fc79 0%, #96e6a1 100%)',

@@ -13,8 +13,8 @@ const StepDescription = ({ step, description }) => {
         gap: '0.5rem',
       }}
     >
-      <Typography variant="h5">{step}</Typography>
-      {description && <Typography variant="h6">{description}</Typography>}
+      <Typography variant="h6">{step}</Typography>
+      {description && <Typography variant="body1">{description}</Typography>}
     </Box>
   );
 };

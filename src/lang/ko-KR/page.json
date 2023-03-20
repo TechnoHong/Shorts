@@ -8,7 +8,11 @@
         "mainDescription": "쇼츠를 만들어 드릴게요. 몇가지만 입력해 주세요.",
         "stepDescription1": "URL 입력",
         "stepDescription2": "Shorts 길이 및 갯수",
-        "stepDescription3": "이동~~"
+        "stepDescription3": "이동~~",
+        "guideTitle1": "알아서 할게요",
+        "guideDesc1": "ShortsPicker는 Youtube 영상에서 시청자들이 가장 많이 재생한 부분을 골라 자동으로 Short-Form 맞게 변환해줍니다.",
+        "guideTitle2": "쉽고, 직관적이며, 자동입니다",
+        "guideDesc2": "ShortsPicker는 대현이 여기 뭐라고 적을까"
     },
     "picking": {
         "mainDescription": "마음에 드는 쇼츠를 골라주세요.",

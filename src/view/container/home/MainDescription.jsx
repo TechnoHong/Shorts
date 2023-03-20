@@ -40,12 +40,12 @@ const MainDescription = ({ description }) => {
 
 const MainTypography = styled(Typography)(({ theme, gradient }) => ({
   ...theme.components.MuiTypography,
-  fontSize: '3rem',
+  fontSize: '1.5rem',
   background: gradient && theme.palette.background.homeTypoGradient,
   backgroundClip: gradient && 'text',
   WebkitBackgroundClip: gradient && 'text',
-  color: gradient ? 'transparent' : theme.palette.primary.light,
-  fontFamily: 'Lora, serif',
+  color: gradient ? 'transparent' : theme.palette.text.mainDescription,
+  fontFamily: 'Gowun Batang, serif',
 }));
 
 MainDescription.propTypes = {
