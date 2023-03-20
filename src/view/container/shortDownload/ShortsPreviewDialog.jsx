@@ -8,8 +8,8 @@ import {
   Slide,
 } from '@mui/material';
 import PropTypes from 'prop-types';
-import ReactPlayer from 'react-player';
 import { useTranslation } from 'react-i18next';
+import VideoPreview from '../../components/VideoPreview';
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
@@ -28,19 +28,9 @@ const ShortsPreviewDialog = (props) => {
     >
       <DialogTitle>{t('shortsDownload.preview')}</DialogTitle>
       <DialogContent>
-        <ReactPlayer
-          style={{
-            margin: '0 auto',
-            maxWidth: '100%',
-          }}
-          url="https://www.youtube.com/watch?v=WFsAon_TWPQ"
-          playing
-          muted
-          controls
-          pip
-          config={{
-            youtube: { playerVars: { origin: 'https://www.youtube.com' } },
-          }}
+        <VideoPreview
+          isAutoPlay={true}
+          ytURL={'https://www.youtube.com/watch?v=WFsAon_TWPQ'}
         />
       </DialogContent>
       <DialogActions>
