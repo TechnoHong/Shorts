@@ -4,9 +4,12 @@ import DownloadItem from './DownloadItem';
 import Grid from '@mui/material/Grid';
 import ShortsPreviewDialog from './ShortsPreviewDialog';
 import { Counter } from '../../../store/sample/Counter';
+import { Button, Container, Fab, styled, Typography } from '@mui/material';
+import { Download } from '@mui/icons-material';
 
 const ShortsDownload = () => {
   const [dialogState, setDialogState] = useState(false);
+  const [selected, setSelected] = useState(0);
 
   const handleClickOpen = () => {
     console.log('dialog opened');
@@ -19,7 +22,21 @@ const ShortsDownload = () => {
   };
 
   return (
-    <ContentsWrapper maxWidth="xl">
+    <ContentsWrapper maxWidth={false}>
+      <HeadContainer
+        maxWidth="lg"
+        sx={{
+          flexDirection: {
+            xs: 'column',
+            sm: 'column',
+            md: 'column',
+            lg: 'row',
+          },
+        }}
+      >
+        <Typography>Hello</Typography>
+        <Button>download</Button>
+      </HeadContainer>
       <Grid container justifyContent="center" spacing={5}>
         {Array.from(Array(10)).map((_, index) => (
           <DownloadItem key={index} handleClick={handleClickOpen} />
@@ -27,8 +44,26 @@ const ShortsDownload = () => {
       </Grid>
       <ShortsPreviewDialog onClose={handleClose} open={dialogState} />
       <Counter />
+      <Fab color="primary" sx={fabStyle} size="medium">
+        <Download />
+      </Fab>
     </ContentsWrapper>
   );
 };
+
+const fabStyle = {
+  position: 'fixed',
+  bottom: '2rem',
+  right: '2rem',
+};
+
+const HeadContainer = styled(Container)(({ theme }) => ({
+  ...theme.components.MuiContainer,
+  width: '100%',
+  display: 'flex',
+  padding: '2rem',
+  justifyContent: 'space-between',
+  alignItems: 'center',
+}));
 
 export default ShortsDownload;
