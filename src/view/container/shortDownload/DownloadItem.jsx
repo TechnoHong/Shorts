@@ -1,24 +1,19 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { IconButton, ImageListItem, ImageListItemBar } from '@mui/material';
-import { Download } from '@mui/icons-material';
+import { CheckCircle, Circle, CircleTwoTone } from '@mui/icons-material';
 import SampleImg from '../../../assets/images/mock/sample.jpg';
 import Grid from '@mui/material/Grid';
 import PropTypes from 'prop-types';
 
 const DownloadItem = (props) => {
   const { handleClick } = props;
+  const [selected, setSelected] = useState(false);
+
   return (
     <Grid item>
       <ImageListItem
         sx={{
           maxWidth: '20rem',
-          transform: 'scale(1.0)',
-          transition: 'transform .5s',
-          ':hover': {
-            transform: 'scale(1.1)',
-            transition: 'transform .5s',
-            cursor: 'pointer',
-          },
         }}
       >
         <img
@@ -26,13 +21,14 @@ const DownloadItem = (props) => {
           alt="sample_img"
           loading="lazy"
           onClick={handleClick}
+          style={{ cursor: 'pointer' }}
         />
         <ImageListItemBar
           title="title"
           subtitle="sub title"
           actionIcon={
-            <IconButton>
-              <Download color="primary" />
+            <IconButton size="large" onClick={() => setSelected(!selected)}>
+              {selected ? <CheckCircle color="info" /> : <CircleTwoTone />}
             </IconButton>
           }
         />
