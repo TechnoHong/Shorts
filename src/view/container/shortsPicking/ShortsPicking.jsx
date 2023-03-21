@@ -8,7 +8,14 @@ import VideoPreview from '../../components/VideoPreview';
 
 function ShortsPicking() {
   const { t } = useTranslation(['page']);
+  // const [ScrollY, setScrollY] = useState(0);
+  // const handleScroll = () => {
+  //     setScrollY(window.pageYOffset);
+  //     setScrollActive(true);
+  //   }
+
   return (
+
     <ContentsWrapper disableGutters maxWidth={false} sx={{ padding: '0' }}>
       <MainContainer disableGutters maxWidth={false}>
         <PickingContainer
@@ -27,11 +34,8 @@ function ShortsPicking() {
             justifyContent="flex-end"
             spacing={2}
           >
-            <Button variant="contained" color="success">
-              Download
-            </Button>
-            <Button variant="outlined" color="error">
-              re-pick
+            <Button variant="contained">
+              All Download
             </Button>
           </Stack>
           <PickingCandi description={t('picking.candiBrief')} />
