@@ -6,14 +6,17 @@ const VideoPreview = ({ ytURL, isAutoPlay }) => {
   return (
     <ReactPlayer
       style={{
-        margin: '0 auto',
-        maxWidth: '100%',
+        position: 'absolute',
+        left: '0',
+        top: '0',
       }}
       url={ytURL}
       playing={isAutoPlay}
       muted={isAutoPlay}
       controls
       pip
+      width="100%"
+      height="100%"
       config={{
         youtube: { playerVars: { origin: 'https://www.youtube.com' } },
       }}

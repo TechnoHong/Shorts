@@ -1,5 +1,12 @@
 import React from 'react';
-import { Container, Divider, Stack, styled, Typography } from '@mui/material';
+import {
+  Container,
+  Divider,
+  Paper,
+  Stack,
+  styled,
+  Typography,
+} from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import { ContentsWrapper } from '../../components/ContentsWrapper';
 import PickingCandi from './PickingCandi';
@@ -8,35 +15,66 @@ import VideoPreview from '../../components/VideoPreview';
 
 function ShortsPicking() {
   const { t } = useTranslation(['page']);
-  // const [ScrollY, setScrollY] = useState(0);
-  // const handleScroll = () => {
-  //     setScrollY(window.pageYOffset);
-  //     setScrollActive(true);
-  //   }
 
   return (
-
     <ContentsWrapper disableGutters maxWidth={false} sx={{ padding: '0' }}>
-      <MainContainer disableGutters maxWidth={false}>
-        <PickingContainer
-          disableGutters
-          sx={{ borderRadius: { md: 'none', lg: '30px' } }}
+      <PickingTitle align="center">{t('picking.mainDescription')}</PickingTitle>
+      <MainContainer
+        disableGutters
+        maxWidth={false}
+        sx={{
+          flexDirection: {
+            xs: 'column',
+            sm: 'column',
+            md: 'column',
+            lg: 'row',
+          },
+          padding: {
+            md: '0',
+            lg: '0 5rem',
+          },
+        }}
+      >
+        <PreviewPaper
+          sx={{
+            minWidth: {
+              xs: '100%',
+              sm: '100%',
+              md: '100%',
+              lg: '50%',
+            },
+            borderRadius: {
+              xs: '0',
+              sm: '0',
+              md: '0',
+              lg: '0.5rem',
+            },
+          }}
         >
+          <PreviewTitle align="left">
+            {t('shortsDownload.preview')}
+          </PreviewTitle>
+          <div
+            style={{
+              position: 'relative',
+              paddingTop: '56.25%' /* 720 / 1280 = 0.5625 */,
+            }}
+          >
+            <VideoPreview
+              isAutoPlay={false}
+              ytURL={'https://www.youtube.com/watch?v=WFsAon_TWPQ'}
+            />
+          </div>
           <Typography align="center">{t('picking.mainDescription')}</Typography>
-          <VideoPreview
-            isAutoPlay={false}
-            ytURL={'https://www.youtube.com/watch?v=WFsAon_TWPQ'}
-          />
-          <Divider flexItem />
+        </PreviewPaper>
+        <PickingContainer disableGutters>
           <Stack
             direction="row"
             divider={<Divider orientation="vertical" flexItem />}
             justifyContent="flex-end"
             spacing={2}
           >
-            <Button variant="contained">
-              All Download
-            </Button>
+            <Button variant="contained">All Download</Button>
           </Stack>
           <PickingCandi description={t('picking.candiBrief')} />
         </PickingContainer>
@@ -56,8 +94,33 @@ const PickingContainer = styled(Container)(({ theme }) => ({
 
 const MainContainer = styled(Container)(({ theme }) => ({
   ...theme.components.MuiContainer,
-  minHeight: '100%',
+  display: 'flex',
+  alignItems: 'center',
+  height: '100%',
+  gap: '2rem',
   paddingBottom: '1.5rem',
-  background: theme.palette.background.homeMainContainer,
+  background: theme.palette.primary.light,
 }));
+
+const PreviewPaper = styled(Paper)(({ theme }) => ({
+  ...theme.components.MuiPaper,
+  position: 'static',
+  top: '1rem',
+  zIndex: '99',
+  background: theme.palette.grey['900'],
+}));
+
+const PickingTitle = styled(Typography)(({ theme }) => ({
+  ...theme.components.MuiTypography,
+  width: '100%',
+  padding: '2rem',
+  background: theme.palette.primary.light,
+}));
+
+const PreviewTitle = styled(Typography)(({ theme }) => ({
+  ...theme.components.MuiTypography,
+  color: theme.palette.primary.light,
+  padding: '0.5rem 1rem',
+}));
+
 export default ShortsPicking;
