@@ -12,6 +12,7 @@ import { ContentsWrapper } from '../../components/ContentsWrapper';
 import PickingCandi from './PickingCandi';
 import Button from '@mui/material/Button';
 import VideoPreview from '../../components/VideoPreview';
+import PreviewInfoContainer from './PreviewInfoContainer';
 
 function ShortsPicking() {
   const { t } = useTranslation(['page']);
@@ -65,7 +66,7 @@ function ShortsPicking() {
               ytURL={'https://www.youtube.com/watch?v=WFsAon_TWPQ'}
             />
           </div>
-          <Typography align="center">{t('picking.mainDescription')}</Typography>
+          <PreviewInfoContainer />
         </PreviewPaper>
         <PickingContainer disableGutters>
           <Stack
