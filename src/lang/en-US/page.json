@@ -24,5 +24,8 @@
     "shortsDownload": {
         "preview": "Preview",
         "close": "Close"
+    },
+    "notFound": {
+        "desc": "Oops"
     }
 }
