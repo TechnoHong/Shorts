@@ -1,25 +1,20 @@
 import * as React from 'react';
 import IconButton from '@mui/material/IconButton';
 import {
-  alpha,
   Box,
-  Checkbox,
-  Paper, Table, TableBody,
-  TableCell,
+  Paper, Table, TableBody, TableCell,
   TableContainer,
   TableHead, TablePagination,
   TableRow, TableSortLabel,
   Toolbar,
-  Tooltip
 } from '@mui/material';
 import Typography from "@mui/material/Typography";
 import PropTypes from "prop-types";
-import FilterListIcon from '@mui/icons-material/FilterList';
 import { visuallyHidden } from '@mui/utils';
 import {Download} from "@mui/icons-material";
+import {useTranslation} from "react-i18next";
+import CloudDownloadIcon from '@mui/icons-material/CloudDownload';
 
-
-// num, time, rate / download
 function createData(rank, rate, timet) {
   return {
     rank,
@@ -51,10 +46,13 @@ function getComparator(order, orderBy) {
       : (a, b) => -descendingComparator(a, b, orderBy);
 }
 
-// Since 2020 all major browsers ensure sort stability with Array.prototype.sort().
-// stableSort() brings sort stability to non-modern browsers (notably IE11). If you
-// only support modern browsers you can replace stableSort(exampleArray, exampleComparator)
-// with exampleArray.slice().sort(exampleComparator)
+function getLabelById(id) {
+  const { t } = useTranslation(['page']);
+  if(id === 'rank') return t('picking.table_rank') ;
+  if(id === 'rate') return t('picking.table_rate') ;
+  else              return t('picking.table_timet') ;
+}
+
 function stableSort(array, comparator) {
   const stabilizedThis = array.map((el, index) => [el, index]);
   stabilizedThis.sort((a, b) => {
@@ -85,7 +83,7 @@ const headCells = [
 ];
 
 function EnhancedTableHead(props) {
-  const { onSelectAllClick, order, orderBy, numSelected, rowCount, onRequestSort } =
+  const { order, orderBy, onRequestSort } =
       props;
   const createSortHandler = (property) => (event) => {
     onRequestSort(event, property);
@@ -94,17 +92,6 @@ function EnhancedTableHead(props) {
   return (
       <TableHead>
         <TableRow>
-          <TableCell padding="checkbox">
-            <Checkbox
-                color="primary"
-                indeterminate={numSelected > 0 && numSelected < rowCount}
-                checked={rowCount > 0 && numSelected === rowCount}
-                onChange={onSelectAllClick}
-                inputProps={{
-                  'aria-label': 'select all desserts',
-                }}
-            />
-          </TableCell>
           {headCells.map((headCell) => (
               <TableCell
                   key={headCell.id}
@@ -117,7 +104,7 @@ function EnhancedTableHead(props) {
                     direction={orderBy === headCell.id ? order : 'asc'}
                     onClick={createSortHandler(headCell.id)}
                 >
-                  {headCell.label}
+                  {getLabelById(headCell.id)}
                   {orderBy === headCell.id ? (
                       <Box component="span" sx={visuallyHidden}>
                         {order === 'desc' ? 'sorted descending' : 'sorted ascending'}
@@ -132,7 +119,6 @@ function EnhancedTableHead(props) {
 }
 
 EnhancedTableHead.propTypes = {
-  numSelected: PropTypes.number.isRequired,
   onRequestSort: PropTypes.func.isRequired,
   onSelectAllClick: PropTypes.func.isRequired,
   order: PropTypes.oneOf(['asc', 'desc']).isRequired,
@@ -140,64 +126,34 @@ EnhancedTableHead.propTypes = {
   rowCount: PropTypes.number.isRequired,
 };
 
-function EnhancedTableToolbar(props) {
-  const { numSelected } = props;
+function EnhancedTableToolbar() {
 
   return (
       <Toolbar
           sx={{
             pl: { sm: 2 },
             pr: { xs: 1, sm: 1 },
-            ...(numSelected > 0 && {
-              bgcolor: (theme) =>
-                  alpha(theme.palette.primary.main, theme.palette.action.activatedOpacity),
-            }),
           }}
       >
-        {numSelected > 0 ? (
-            <Typography
-                sx={{ flex: '1 1 100%' }}
-                color="inherit"
-                variant="subtitle1"
-                component="div"
-            >
-              {numSelected} selected
-            </Typography>
-        ) : (
-            <Typography
-                sx={{ flex: '1 1 100%' }}
-                variant="h6"
-                id="tableTitle"
-                component="div"
-            >
-              Shorts
-            </Typography>
-        )}
+          <Typography
+              sx={{ flex: '1 1 100%' }}
+              variant="h6"
+              id="tableTitle"
+              component="div"
+          >
+            Shorts
+          </Typography>
 
-        {numSelected > 0 ? (
-            <Tooltip title="Delete">
-              <IconButton>
-                <Download />
-              </IconButton>
-            </Tooltip>
-        ) : (
-            <Tooltip title="Filter list">
-              <IconButton>
-                <FilterListIcon />
-              </IconButton>
-            </Tooltip>
-        )}
+        <IconButton>
+          <CloudDownloadIcon color="primary" fontSize="large" />
+        </IconButton>
       </Toolbar>
   );
 }
 
-EnhancedTableToolbar.propTypes = {
-  numSelected: PropTypes.number.isRequired,
-};
-
 const PickingCandi = () => {
   const [order, setOrder] = React.useState('asc');
-  const [orderBy, setOrderBy] = React.useState('rate');
+  const [orderBy, setOrderBy] = React.useState('rank');
   const [selected, setSelected] = React.useState([]);
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
@@ -208,33 +164,24 @@ const PickingCandi = () => {
     setOrderBy(property);
   };
 
-  const handleSelectAllClick = (event) => {
-    if (event.target.checked) {
-      const newSelected = rows.map((n) => n.rank);
-      setSelected(newSelected);
-      return;
-    }
-    setSelected([]);
-  };
-
   const handleClick = (event, name) => {
-    const selectedIndex = selected.indexOf(name);
-    let newSelected = [];
+    // const selectedIndex = selected.indexOf(name);
+    // let newSelected = [];
 
-    if (selectedIndex === -1) {
-      newSelected = newSelected.concat(selected, name);
-    } else if (selectedIndex === 0) {
-      newSelected = newSelected.concat(selected.slice(1));
-    } else if (selectedIndex === selected.length - 1) {
-      newSelected = newSelected.concat(selected.slice(0, -1));
-    } else if (selectedIndex > 0) {
-      newSelected = newSelected.concat(
-          selected.slice(0, selectedIndex),
-          selected.slice(selectedIndex + 1),
-      );
-    }
+    // if (selectedIndex === -1) {
+    //   newSelected = newSelected.concat(selected, name);
+    // } else if (selectedIndex === 0) {
+    //   newSelected = newSelected.concat(selected.slice(1));
+    // } else if (selectedIndex === selected.length - 1) {
+    //   newSelected = newSelected.concat(selected.slice(0, -1));
+    // } else if (selectedIndex > 0) {
+    //   newSelected = newSelected.concat(
+    //       selected.slice(0, selectedIndex),
+    //       selected.slice(selectedIndex + 1),
+    //   );
+    // }
 
-    setSelected(newSelected);
+    setSelected(name);
   };
 
   const handleChangePage = (event, newPage) => {
@@ -246,21 +193,20 @@ const PickingCandi = () => {
     setPage(0);
   };
 
-  const isSelected = (name) => selected.indexOf(name) !== -1;
+  // const isSelected = (name) => selected.indexOf(name) !== -1;
+  const isSelected = (name) => selected.toString().indexOf(name) !== -1;
 
   return (
       <Box sx={{ width: '100%' }}>
         <Paper sx={{ width: '100%', mb: 2 }}>
-          <EnhancedTableToolbar numSelected={selected.length} />
+          <EnhancedTableToolbar />
           <TableContainer>
             <Table
                 aria-labelledby="tableTitle"
             >
               <EnhancedTableHead
-                  numSelected={selected.length}
                   order={order}
                   orderBy={orderBy}
-                  onSelectAllClick={handleSelectAllClick}
                   onRequestSort={handleRequestSort}
                   rowCount={rows.length}
               />
@@ -268,29 +214,20 @@ const PickingCandi = () => {
                 {stableSort(rows, getComparator(order, orderBy))
                     .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                     .map((row, index) => {
-                      const isItemSelected = isSelected(row.name);
+                      const isItemSelected = isSelected(row.rank);
                       const labelId = `enhanced-table-checkbox-${index}`;
 
                       return (
                           <TableRow
                               hover
-                              onClick={(event) => handleClick(event, row.name)}
+                              onClick={(event) => handleClick(event, row.rank)}
                               role="checkbox"
                               aria-checked={isItemSelected}
                               tabIndex={-1}
-                              key={row.name}
+                              key={row.rank}
                               selected={isItemSelected}
                               sx={{ cursor: 'pointer' }}
                           >
-                            <TableCell padding="checkbox" >
-                              <Checkbox
-                                  color="primary"
-                                  checked={isItemSelected}
-                                  inputProps={{
-                                    'aria-labelledby': labelId,
-                                  }}
-                              />
-                            </TableCell>
                             <TableCell
                                 component="th"
                                 id={labelId}
@@ -302,6 +239,9 @@ const PickingCandi = () => {
                             </TableCell>
                             <TableCell align="center">{row.rate}</TableCell>
                             <TableCell align="center">{row.timet}</TableCell>
+                            <IconButton aria-label="delete" size="large">
+                              <Download color="primary" />
+                            </IconButton>
                           </TableRow>
                       );
                     })}

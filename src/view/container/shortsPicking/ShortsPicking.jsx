@@ -10,7 +10,6 @@ import {
 import { useTranslation } from 'react-i18next';
 import { ContentsWrapper } from '../../components/ContentsWrapper';
 import PickingCandi from './PickingCandi';
-import Button from '@mui/material/Button';
 import VideoPreview from '../../components/VideoPreview';
 import PreviewInfoContainer from './PreviewInfoContainer';
 
@@ -75,7 +74,7 @@ function ShortsPicking() {
             justifyContent="flex-end"
             spacing={2}
           >
-            <Button variant="contained">All Download</Button>
+
           </Stack>
           <PickingCandi description={t('picking.candiBrief')} />
         </PickingContainer>

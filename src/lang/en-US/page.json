@@ -16,7 +16,9 @@
     },
     "picking": {
         "mainDescription": "Pick what u wanna get.",
-        "candiBrief": "Pick what u wanna get.",
+        "table_rank": "rank",
+        "table_rate": "view rate(%)",
+        "table_timet": "timetable",
         "step1": "set shorts info",
         "step2": "pick shorts up",
         "step3": "download"
