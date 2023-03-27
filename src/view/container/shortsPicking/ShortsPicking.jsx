@@ -12,9 +12,11 @@ import { ContentsWrapper } from '../../components/ContentsWrapper';
 import PickingCandi from './PickingCandi';
 import VideoPreview from '../../components/VideoPreview';
 import PreviewInfoContainer from './PreviewInfoContainer';
+import { useSelector } from 'react-redux';
 
 function ShortsPicking() {
   const { t } = useTranslation(['page']);
+  const ytInfo = useSelector((state) => state.ytInfo.info);
 
   return (
     <ContentsWrapper disableGutters maxWidth={false} sx={{ padding: '0' }}>
@@ -60,12 +62,16 @@ function ShortsPicking() {
               paddingTop: '56.25%' /* 720 / 1280 = 0.5625 */,
             }}
           >
-            <VideoPreview
-              isAutoPlay={false}
-              ytURL={'https://www.youtube.com/watch?v=WFsAon_TWPQ'}
-            />
+            <VideoPreview isAutoPlay={false} ytURL={ytInfo.url} />
           </div>
-          <PreviewInfoContainer />
+          <PreviewInfoContainer
+            title={ytInfo.title}
+            uploader={ytInfo.owner.owner}
+            subscribers={ytInfo.owner.owner_subscribers}
+            uploadDate={ytInfo.get_yt_upload_date}
+            tag={ytInfo.tag}
+            url={ytInfo.owner.owner_url}
+          />
         </PreviewPaper>
         <PickingContainer disableGutters>
           <Stack
@@ -73,9 +79,7 @@ function ShortsPicking() {
             divider={<Divider orientation="vertical" flexItem />}
             justifyContent="flex-end"
             spacing={2}
-          >
-
-          </Stack>
+          ></Stack>
           <PickingCandi description={t('picking.candiBrief')} />
         </PickingContainer>
       </MainContainer>

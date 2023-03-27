@@ -13,6 +13,9 @@ import { useState } from 'react';
 import GuideContainer from './GuideContainer';
 import lottieData1 from '../../../assets/images/lotties/youtube-content.json';
 import lottieData2 from '../../../assets/images/lotties/video-editting.json';
+import { action } from '../../../api/YoutubeAPI';
+import { useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 
 function Home() {
   const { t } = useTranslation(['page']);
@@ -20,15 +23,15 @@ function Home() {
   const [range, setRange] = useState(60);
   const [count, setCount] = useState(5);
 
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
   const handlePickingButton = () => {
-    alert(
-      'youtube URL :' +
-        ytURL +
-        '\nTimeRange : ' +
-        range +
-        '\nConverting amount : ' +
-        count,
-    );
+    dispatch(action.getYtInfo({ ytURL, count }))
+      .unwrap()
+      .then(() => {
+        navigate('/shortspicking');
+      });
   };
 
   return (
