@@ -2,17 +2,22 @@ import * as React from 'react';
 import IconButton from '@mui/material/IconButton';
 import {
   Box,
-  Paper, Table, TableBody, TableCell,
+  Paper,
+  Table,
+  TableBody,
+  TableCell,
   TableContainer,
-  TableHead, TablePagination,
-  TableRow, TableSortLabel,
+  TableHead,
+  TablePagination,
+  TableRow,
+  TableSortLabel,
   Toolbar,
 } from '@mui/material';
-import Typography from "@mui/material/Typography";
-import PropTypes from "prop-types";
+import Typography from '@mui/material/Typography';
+import PropTypes from 'prop-types';
 import { visuallyHidden } from '@mui/utils';
-import {Download} from "@mui/icons-material";
-import {useTranslation} from "react-i18next";
+import { Download } from '@mui/icons-material';
+import { useTranslation } from 'react-i18next';
 import CloudDownloadIcon from '@mui/icons-material/CloudDownload';
 
 function createData(rank, rate, timet) {
@@ -24,11 +29,11 @@ function createData(rank, rate, timet) {
 }
 
 const rows = [
-  createData(1,30,'01:20:40 - 01:20:50', ),
-  createData(2,19,'01:00:10 - 01:00:20', ),
-  createData(3,17,'00:20:30 - 00:20:40', ),
-  createData(4,12,'00:53:50 - 00:54:00', ),
-  createData(5,23,'01:12:20 - 01:12:30', ),
+  createData(1, 30, '01:20:40 - 01:20:50'),
+  createData(2, 19, '01:00:10 - 01:00:20'),
+  createData(3, 17, '00:20:30 - 00:20:40'),
+  createData(4, 12, '00:53:50 - 00:54:00'),
+  createData(5, 23, '01:12:20 - 01:12:30'),
 ];
 function descendingComparator(a, b, orderBy) {
   if (b[orderBy] < a[orderBy]) {
@@ -42,15 +47,15 @@ function descendingComparator(a, b, orderBy) {
 
 function getComparator(order, orderBy) {
   return order === 'desc'
-      ? (a, b) => descendingComparator(a, b, orderBy)
-      : (a, b) => -descendingComparator(a, b, orderBy);
+    ? (a, b) => descendingComparator(a, b, orderBy)
+    : (a, b) => -descendingComparator(a, b, orderBy);
 }
 
-function getLabelById(id) {
+function GetLabelById(id) {
   const { t } = useTranslation(['page']);
-  if(id === 'rank') return t('picking.table_rank') ;
-  if(id === 'rate') return t('picking.table_rate') ;
-  else              return t('picking.table_timet') ;
+  if (id === 'rank') return t('picking.table_rank');
+  if (id === 'rate') return t('picking.table_rate');
+  else return t('picking.table_timet');
 }
 
 function stableSort(array, comparator) {
@@ -68,12 +73,12 @@ function stableSort(array, comparator) {
 const headCells = [
   {
     id: 'rank',
-    numeric : true,
+    numeric: true,
     label: 'rank',
   },
   {
     id: 'rate',
-    numeric : true,
+    numeric: true,
     label: 'rate (%)',
   },
   {
@@ -83,38 +88,37 @@ const headCells = [
 ];
 
 function EnhancedTableHead(props) {
-  const { order, orderBy, onRequestSort } =
-      props;
+  const { order, orderBy, onRequestSort } = props;
   const createSortHandler = (property) => (event) => {
     onRequestSort(event, property);
   };
 
   return (
-      <TableHead>
-        <TableRow>
-          {headCells.map((headCell) => (
-              <TableCell
-                  key={headCell.id}
-                  align={'center'}
-                  padding={'normal'}
-                  sortDirection={orderBy === headCell.id ? order : false}
-              >
-                <TableSortLabel
-                    active={orderBy === headCell.id}
-                    direction={orderBy === headCell.id ? order : 'asc'}
-                    onClick={createSortHandler(headCell.id)}
-                >
-                  {getLabelById(headCell.id)}
-                  {orderBy === headCell.id ? (
-                      <Box component="span" sx={visuallyHidden}>
-                        {order === 'desc' ? 'sorted descending' : 'sorted ascending'}
-                      </Box>
-                  ) : null}
-                </TableSortLabel>
-              </TableCell>
-          ))}
-        </TableRow>
-      </TableHead>
+    <TableHead>
+      <TableRow>
+        {headCells.map((headCell) => (
+          <TableCell
+            key={headCell.id}
+            align={'center'}
+            padding={'normal'}
+            sortDirection={orderBy === headCell.id ? order : false}
+          >
+            <TableSortLabel
+              active={orderBy === headCell.id}
+              direction={orderBy === headCell.id ? order : 'asc'}
+              onClick={createSortHandler(headCell.id)}
+            >
+              {GetLabelById(headCell.id)}
+              {orderBy === headCell.id ? (
+                <Box component="span" sx={visuallyHidden}>
+                  {order === 'desc' ? 'sorted descending' : 'sorted ascending'}
+                </Box>
+              ) : null}
+            </TableSortLabel>
+          </TableCell>
+        ))}
+      </TableRow>
+    </TableHead>
   );
 }
 
@@ -127,27 +131,26 @@ EnhancedTableHead.propTypes = {
 };
 
 function EnhancedTableToolbar() {
-
   return (
-      <Toolbar
-          sx={{
-            pl: { sm: 2 },
-            pr: { xs: 1, sm: 1 },
-          }}
+    <Toolbar
+      sx={{
+        pl: { sm: 2 },
+        pr: { xs: 1, sm: 1 },
+      }}
+    >
+      <Typography
+        sx={{ flex: '1 1 100%' }}
+        variant="h6"
+        id="tableTitle"
+        component="div"
       >
-          <Typography
-              sx={{ flex: '1 1 100%' }}
-              variant="h6"
-              id="tableTitle"
-              component="div"
-          >
-            Shorts
-          </Typography>
+        Shorts
+      </Typography>
 
-        <IconButton>
-          <CloudDownloadIcon color="primary" fontSize="large" />
-        </IconButton>
-      </Toolbar>
+      <IconButton>
+        <CloudDownloadIcon color="primary" fontSize="large" />
+      </IconButton>
+    </Toolbar>
   );
 }
 
@@ -197,70 +200,67 @@ const PickingCandi = () => {
   const isSelected = (name) => selected.toString().indexOf(name) !== -1;
 
   return (
-      <Box sx={{ width: '100%' }}>
-        <Paper sx={{ width: '100%', mb: 2 }}>
-          <EnhancedTableToolbar />
-          <TableContainer>
-            <Table
-                aria-labelledby="tableTitle"
-            >
-              <EnhancedTableHead
-                  order={order}
-                  orderBy={orderBy}
-                  onRequestSort={handleRequestSort}
-                  rowCount={rows.length}
-              />
-              <TableBody>
-                {stableSort(rows, getComparator(order, orderBy))
-                    .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                    .map((row, index) => {
-                      const isItemSelected = isSelected(row.rank);
-                      const labelId = `enhanced-table-checkbox-${index}`;
+    <Box sx={{ width: '100%' }}>
+      <Paper sx={{ width: '100%', mb: 2 }}>
+        <EnhancedTableToolbar />
+        <TableContainer>
+          <Table aria-labelledby="tableTitle">
+            <EnhancedTableHead
+              order={order}
+              orderBy={orderBy}
+              onRequestSort={handleRequestSort}
+              rowCount={rows.length}
+            />
+            <TableBody>
+              {stableSort(rows, getComparator(order, orderBy))
+                .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                .map((row, index) => {
+                  const isItemSelected = isSelected(row.rank);
+                  const labelId = `enhanced-table-checkbox-${index}`;
 
-                      return (
-                          <TableRow
-                              hover
-                              onClick={(event) => handleClick(event, row.rank)}
-                              role="checkbox"
-                              aria-checked={isItemSelected}
-                              tabIndex={-1}
-                              key={row.rank}
-                              selected={isItemSelected}
-                              sx={{ cursor: 'pointer' }}
-                          >
-                            <TableCell
-                                component="th"
-                                id={labelId}
-                                scope="row"
-                                padding="none"
-                                align="center"
-                            >
-                              {row.rank}
-                            </TableCell>
-                            <TableCell align="center">{row.rate}</TableCell>
-                            <TableCell align="center">{row.timet}</TableCell>
-                            <IconButton aria-label="delete" size="large">
-                              <Download color="primary" />
-                            </IconButton>
-                          </TableRow>
-                      );
-                    })}
-
-              </TableBody>
-            </Table>
-          </TableContainer>
-          <TablePagination
-              rowsPerPageOptions={[5, 10, 25]}
-              component="div"
-              count={rows.length}
-              rowsPerPage={rowsPerPage}
-              page={page}
-              onPageChange={handleChangePage}
-              onRowsPerPageChange={handleChangeRowsPerPage}
-          />
-        </Paper>
-      </Box>
+                  return (
+                    <TableRow
+                      hover
+                      onClick={(event) => handleClick(event, row.rank)}
+                      role="checkbox"
+                      aria-checked={isItemSelected}
+                      tabIndex={-1}
+                      key={row.rank}
+                      selected={isItemSelected}
+                      sx={{ cursor: 'pointer' }}
+                    >
+                      <TableCell
+                        component="th"
+                        id={labelId}
+                        scope="row"
+                        padding="none"
+                        align="center"
+                      >
+                        {row.rank}
+                      </TableCell>
+                      <TableCell align="center">{row.rate}</TableCell>
+                      <TableCell align="center">{row.timet}</TableCell>
+                      <IconButton aria-label="delete" size="large">
+                        <Download color="primary" />
+                      </IconButton>
+                    </TableRow>
+                  );
+                })}
+            </TableBody>
+          </Table>
+        </TableContainer>
+        <TablePagination
+          rowsPerPageOptions={[5, 10, 25]}
+          component="div"
+          count={rows.length}
+          rowsPerPage={rowsPerPage}
+          page={page}
+          onPageChange={handleChangePage}
+          onRowsPerPageChange={handleChangeRowsPerPage}
+        />
+      </Paper>
+    </Box>
   );
-}
+};
 // <ListItemText id={labelId} primary={`${value + 1}등 > Shorts ${value + 1} 00:00:00 - 00:00:00`} />
 export default PickingCandi;
