@@ -28,7 +28,11 @@ const MainDescription = ({ description }) => {
           key={token + index}
         >
           <MainTypography
-            gradient={index === stringTokenizer(description).length - 1}
+            gradient={
+              index === stringTokenizer(description).length - 1
+                ? 'true'
+                : undefined
+            }
           >
             {token}
           </MainTypography>

@@ -35,10 +35,10 @@ const GuideContainer = ({ title, desc, animationData, reverse }) => {
         style={{ margin: 0 }}
       />
       <GuideDescription>
-        <GuideTypo variant="h5" reverse={reverse}>
+        <GuideTypo variant="h5" reverse={reverse && 'true'}>
           {title}
         </GuideTypo>
-        <GuideTypo variant="body1" reverse={reverse}>
+        <GuideTypo variant="body1" reverse={reverse && 'true'}>
           {desc}
         </GuideTypo>
       </GuideDescription>
@@ -70,8 +70,8 @@ const GuideTypo = styled(Typography)(({ theme, reverse }) => ({
 }));
 
 GuideDescription.propTypes = {
-  title: PropTypes.string.isRequired,
-  desc: PropTypes.string.isRequired,
+  title: PropTypes.string,
+  desc: PropTypes.string,
   animationData: PropTypes.any,
   reverse: PropTypes.bool,
 };
