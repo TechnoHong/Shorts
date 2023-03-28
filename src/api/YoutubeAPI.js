@@ -12,16 +12,19 @@ export const action = {
 
 const initialState = {
   info: {},
-  state: 'idle',
+  loading: false,
 };
 
 export const reducer = {
   getYtInfo: (state, action) => {
     state.info = action.payload;
-    state.state = 'done';
+    state.loading = false;
   },
   handlePending: (state) => {
-    state.state = 'loading';
+    state.loading = true;
+  },
+  handleRejected: (state) => {
+    state.loading = false;
   },
 };
 

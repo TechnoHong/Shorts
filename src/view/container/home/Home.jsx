@@ -14,8 +14,9 @@ import GuideContainer from './GuideContainer';
 import lottieData1 from '../../../assets/images/lotties/youtube-content.json';
 import lottieData2 from '../../../assets/images/lotties/video-editting.json';
 import { action } from '../../../api/YoutubeAPI';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
+import { LoadingButton } from '@mui/lab';
 
 function Home() {
   const { t } = useTranslation(['page']);
@@ -23,6 +24,7 @@ function Home() {
   const [range, setRange] = useState(60);
   const [count, setCount] = useState(5);
 
+  const loading = useSelector((state) => state.ytInfo.loading);
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -79,7 +81,8 @@ function Home() {
           <ShortsAmountSelector count={count} setCount={setCount} />
           <Divider flexItem />
           <StepDescription step="3." description={t('main.stepDescription3')} />
-          <Button
+          <LoadingButton
+            loading={loading && true}
             disableElevation
             fullWidth
             variant="contained"
@@ -88,7 +91,7 @@ function Home() {
             onClick={handlePickingButton}
           >
             Picking
-          </Button>
+          </LoadingButton>
         </SearchContainer>
       </MainContainer>
 
