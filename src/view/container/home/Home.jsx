@@ -1,6 +1,5 @@
 import * as React from 'react';
 import TextField from '@mui/material/TextField';
-import Button from '@mui/material/Button';
 import { ContentsWrapper } from '../../components/ContentsWrapper';
 import { useTranslation } from 'react-i18next';
 import { Container, Divider, styled } from '@mui/material';
@@ -17,6 +16,7 @@ import { action } from '../../../api/YoutubeAPI';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { LoadingButton } from '@mui/lab';
+import { useAlert } from '../../../hooks/useAlert';
 
 function Home() {
   const { t } = useTranslation(['page']);
@@ -27,13 +27,21 @@ function Home() {
   const loading = useSelector((state) => state.ytInfo.loading);
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const alert = useAlert();
 
   const handlePickingButton = () => {
-    dispatch(action.getYtInfo({ ytURL, count }))
-      .unwrap()
-      .then(() => {
-        navigate('/shortspicking');
-      });
+    if (ytURL === '') {
+      alert.show('info', '유튜브 주소를 입력하세요.');
+    } else {
+      dispatch(action.getYtInfo({ ytURL, count }))
+        .unwrap()
+        .then(() => {
+          navigate('/shortspicking');
+        })
+        .catch((error) => {
+          alert.show('error', error.message);
+        });
+    }
   };
 
   return (
