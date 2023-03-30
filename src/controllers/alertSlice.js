@@ -2,7 +2,7 @@ import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
   isVisible: false,
-  severity: '',
+  severity: 'info',
   description: '',
 };
 
