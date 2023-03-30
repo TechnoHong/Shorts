@@ -79,7 +79,7 @@ function ShortsPicking() {
             title={ytInfo.title}
             uploader={ytInfo.owner.owner}
             subscribers={ytInfo.owner.owner_subscribers}
-            uploadDate={ytInfo.get_yt_upload_date}
+            uploadDate={ytInfo.upload_date}
             tag={ytInfo.tag}
             url={ytInfo.owner.owner_url}
           />

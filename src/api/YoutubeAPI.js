@@ -19,8 +19,9 @@ const initialState = {
       owner_subscribers: '',
       owner_url: '',
     },
-    get_yt_upload_date: '',
+    upload_date: '',
     tag: '',
+    mr_info: '',
   },
   loading: false,
 };
@@ -41,7 +42,8 @@ export const reducer = {
 const ytInfoReducer = createReducer(initialState, (builder) => {
   builder
     .addCase(action.getYtInfo.pending, reducer.handlePending)
-    .addCase(action.getYtInfo.fulfilled, reducer.getYtInfo);
+    .addCase(action.getYtInfo.fulfilled, reducer.getYtInfo)
+    .addCase(action.getYtInfo.rejected, reducer.handleRejected);
 });
 
 export default ytInfoReducer;
