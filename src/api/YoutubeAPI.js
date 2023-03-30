@@ -5,7 +5,7 @@ export const action = {
   getYtInfo: createAsyncThunk('GET/YTINFO', async ({ ytURL, count }) => {
     return axios({
       method: 'post',
-      url: `/scraping/?url=${ytURL}&count=${count}`,
+      url: `/scraping/?url=${ytURL}&count=${count}&time=60`,
     }).then((response) => response.data);
   }),
 };
@@ -20,8 +20,9 @@ const initialState = {
       owner_url: '',
     },
     upload_date: '',
-    tag: '',
+    tags: [],
     mr_info: '',
+    view_count: '',
   },
   loading: false,
 };

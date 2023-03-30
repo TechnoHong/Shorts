@@ -80,8 +80,9 @@ function ShortsPicking() {
             uploader={ytInfo.owner.owner}
             subscribers={ytInfo.owner.owner_subscribers}
             uploadDate={ytInfo.upload_date}
-            tag={ytInfo.tag}
+            tags={ytInfo.tags}
             url={ytInfo.owner.owner_url}
+            viewCount={ytInfo.view_count}
           />
         </PreviewPaper>
         <PickingContainer disableGutters>

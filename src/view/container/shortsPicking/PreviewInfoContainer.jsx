@@ -3,9 +3,22 @@ import {
   Accordion,
   AccordionDetails,
   AccordionSummary,
+  IconButton,
+  List,
+  ListItem,
+  ListItemIcon,
+  ListItemText,
   Typography,
 } from '@mui/material';
-import { ExpandMore } from '@mui/icons-material';
+import {
+  Event,
+  ExpandMore,
+  Launch,
+  PlayArrow,
+  Portrait,
+  Sell,
+  Visibility,
+} from '@mui/icons-material';
 import PropTypes from 'prop-types';
 
 const PreviewInfoContainer = ({
@@ -14,7 +27,8 @@ const PreviewInfoContainer = ({
   subscribers,
   uploadDate,
   url,
-  tag,
+  tags,
+  viewCount,
 }) => {
   return (
     <Accordion>
@@ -22,15 +36,48 @@ const PreviewInfoContainer = ({
         <Typography>More Info.</Typography>
       </AccordionSummary>
       <AccordionDetails>
-        <Typography variant="body2">Title {title}</Typography>
-        <Typography variant="body2">
-          Uploader {uploader} (subscriber {subscribers})
-        </Typography>
-        <Typography variant="body2">Uploader date - {uploadDate}</Typography>
-        <Typography variant="body2">URL {url}</Typography>
-        {tag && <Typography variant="body2">{tag}</Typography>}
+        <List disablePadding>
+          <InfoItemContainer title="제목" text={title} icon={<PlayArrow />} />
+          <InfoItemContainer
+            title="업로더"
+            text={`${uploader} (${subscribers})`}
+            icon={<Portrait />}
+            shortcut={url}
+          />
+          <InfoItemContainer
+            title="조회수"
+            text={viewCount}
+            icon={<Visibility />}
+          />
+          <InfoItemContainer title="날짜" text={uploadDate} icon={<Event />} />
+          {Array.isArray(tags) && tags.length !== 0 && (
+            <InfoItemContainer
+              title="태그"
+              text={tags.toString()}
+              icon={<Sell />}
+            />
+          )}
+        </List>
       </AccordionDetails>
     </Accordion>
+  );
+};
+
+const InfoItemContainer = ({ title, text, icon, shortcut }) => {
+  return (
+    <ListItem disablePadding>
+      <ListItemIcon>{icon}</ListItemIcon>
+      <ListItemText
+        primary={title}
+        primaryTypographyProps={{ fontSize: '0.75rem' }}
+        secondary={text}
+      />
+      {shortcut && (
+        <IconButton href={`https://youtube.com/${shortcut}`} target="_blank">
+          <Launch />
+        </IconButton>
+      )}
+    </ListItem>
   );
 };
 
@@ -40,7 +87,8 @@ PreviewInfoContainer.propTypes = {
   subscribers: PropTypes.string,
   uploadDate: PropTypes.string,
   url: PropTypes.string,
-  tag: PropTypes.string,
+  tags: PropTypes.array,
+  viewCount: PropTypes.string,
 };
 
 export default PreviewInfoContainer;
