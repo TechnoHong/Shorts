@@ -23,6 +23,7 @@ function Home() {
   const [ytURL, setYtURL] = useState('');
   const [range, setRange] = useState(60);
   const [count, setCount] = useState(5);
+  const [isEmptyInput, setIsEmptyInput] = useState(false);
 
   const loading = useSelector((state) => state.ytInfo.loading);
   const dispatch = useDispatch();
@@ -31,7 +32,8 @@ function Home() {
 
   const handlePickingButton = () => {
     if (ytURL === '') {
-      alert.show('info', '유튜브 주소를 입력하세요.');
+      alert.show('info', t('message.empty_url'));
+      setIsEmptyInput(true);
     } else {
       dispatch(action.getYtInfo({ ytURL, count }))
         .unwrap()
@@ -76,12 +78,16 @@ function Home() {
         >
           <StepDescription step="1." description={t('main.stepDescription1')} />
           <TextField
+            error={isEmptyInput}
             id="url-text-field"
             placeholder={t('main.searchLabel')}
             variant="filled"
             sx={{ minWidth: '80%' }}
             value={ytURL}
-            onChange={(e) => setYtURL(e.target.value)}
+            onChange={(e) => {
+              setIsEmptyInput(false);
+              setYtURL(e.target.value);
+            }}
           />
           <Divider flexItem />
           <StepDescription step="2." description={t('main.stepDescription2')} />

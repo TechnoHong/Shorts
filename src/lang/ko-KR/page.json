@@ -21,7 +21,15 @@
         "table_timet": "추출 시간대",
         "step1": "쇼츠 정보 입력",
         "step2": "쇼츠 선택",
-        "step3": "다운로드"
+        "step3": "다운로드",
+        "info": {
+            "more_info": "자세히 보기",
+            "title": "제목",
+            "uploader": "업로더",
+            "view_count": "조회수",
+            "date": "날짜",
+            "tag": "태그"
+        }
     },
     "shortsDownload": {
         "preview": "미리보기",
@@ -29,5 +37,9 @@
     },
     "notFound": {
         "desc": "페이지가 존재하지 않거나, 사용할 수 없는 페이지입니다. 입력하신 주소가 정확한지 다시 한 번 확인해주세요."
+    },
+    "message": {
+        "redirection": "영상 정보를 다시 입력하세요.",
+        "empty_url": "영상 주소를 입력하세요."
     }
 }

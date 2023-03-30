@@ -20,6 +20,7 @@ import {
   Visibility,
 } from '@mui/icons-material';
 import PropTypes from 'prop-types';
+import { useTranslation } from 'react-i18next';
 
 const PreviewInfoContainer = ({
   title,
@@ -30,29 +31,39 @@ const PreviewInfoContainer = ({
   tags,
   viewCount,
 }) => {
+  const { t } = useTranslation(['page']);
+
   return (
     <Accordion>
       <AccordionSummary expandIcon={<ExpandMore />}>
-        <Typography>More Info.</Typography>
+        <Typography>{t('picking.info.more_info')}</Typography>
       </AccordionSummary>
       <AccordionDetails>
         <List disablePadding>
-          <InfoItemContainer title="제목" text={title} icon={<PlayArrow />} />
           <InfoItemContainer
-            title="업로더"
+            title={t('picking.info.title')}
+            text={title}
+            icon={<PlayArrow />}
+          />
+          <InfoItemContainer
+            title={t('picking.info.uploader')}
             text={`${uploader} (${subscribers})`}
             icon={<Portrait />}
             shortcut={url}
           />
           <InfoItemContainer
-            title="조회수"
+            title={t('picking.info.view_count')}
             text={viewCount}
             icon={<Visibility />}
           />
-          <InfoItemContainer title="날짜" text={uploadDate} icon={<Event />} />
+          <InfoItemContainer
+            title={t('picking.info.date')}
+            text={uploadDate}
+            icon={<Event />}
+          />
           {Array.isArray(tags) && tags.length !== 0 && (
             <InfoItemContainer
-              title="태그"
+              title={t('picking.info.tag')}
               text={tags.toString()}
               icon={<Sell />}
             />

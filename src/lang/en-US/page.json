@@ -21,7 +21,15 @@
         "table_timet": "timetable",
         "step1": "set shorts info",
         "step2": "pick shorts up",
-        "step3": "download"
+        "step3": "download",
+        "info": {
+            "more_info": "More Info",
+            "title": "Title",
+            "uploader": "Uploader",
+            "view_count": "Views",
+            "date": "Date",
+            "tag": "Tags"
+        }
     },
     "shortsDownload": {
         "preview": "Preview",
@@ -29,5 +37,9 @@
     },
     "notFound": {
         "desc": "Oops"
+    },
+    "message": {
+        "redirection": "Try again",
+        "empty_url": "Oops"
     }
 }

@@ -25,7 +25,7 @@ function ShortsPicking() {
   useEffect(() => {
     if (ytInfo.url === '') {
       navigate('/');
-      alert.show('warning', '정보를 기입하세요.');
+      alert.show('warning', t('message.redirection'));
     }
   }, []);
 
