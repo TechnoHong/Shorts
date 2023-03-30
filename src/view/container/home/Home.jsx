@@ -41,7 +41,14 @@ function Home() {
           navigate('/shortspicking');
         })
         .catch((error) => {
-          alert.show('error', error.message);
+          switch (error.code) {
+            case 'ERR_BAD_REQUEST':
+              alert.show('error', t('message.bad_request'));
+              setIsEmptyInput(true);
+              break;
+            default:
+              alert.show('error', error.message);
+          }
         });
     }
   };

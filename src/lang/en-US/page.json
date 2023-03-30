@@ -39,6 +39,7 @@
         "desc": "Oops"
     },
     "message": {
+        "bad_request": "Bad Request. Try again",
         "redirection": "Try again",
         "empty_url": "Oops"
     }
