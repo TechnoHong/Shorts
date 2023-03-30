@@ -21,6 +21,7 @@ import {
 import { ColorModeContext } from '../context/ColorContext';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { Link } from 'react-router-dom';
 
 const pages = null;
 
@@ -82,23 +83,19 @@ const ButtonAppBar = () => {
     <AppBar position="static" elevation={0} enableColorOnDark>
       <Container maxWidth={false}>
         <Toolbar disableGutters>
-          <Typography
-            variant="h6"
-            noWrap
-            component="a"
-            href="/"
-            sx={{
-              mr: 2,
-              display: { xs: 'none', md: 'flex' },
-              fontFamily: 'Roboto',
-              fontWeight: 700,
-              letterSpacing: '.2rem',
-              color: 'inherit',
-              textDecoration: 'none',
+          <a
+            href={'/'}
+            style={{
+              display: 'flex',
+              flexGrow: 1,
             }}
           >
-            ShortsPicker
-          </Typography>
+            <img
+              alt="logo"
+              src={process.env.PUBLIC_URL + '/logo192.png'}
+              style={{ height: '100%', maxWidth: '10rem' }}
+            />
+          </a>
           {pages && (
             <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
               <IconButton
@@ -138,24 +135,6 @@ const ButtonAppBar = () => {
               </Menu>
             </Box>
           )}
-          <Typography
-            variant="h5"
-            noWrap
-            component="a"
-            href="/"
-            sx={{
-              mr: 2,
-              display: { xs: 'flex', md: 'none' },
-              flexGrow: 1,
-              fontFamily: 'Roboto',
-              fontWeight: 700,
-              letterSpacing: '.3rem',
-              color: 'inherit',
-              textDecoration: 'none',
-            }}
-          >
-            Shorts Picker
-          </Typography>
           <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
             {pages &&
               pages.map((page) => (
