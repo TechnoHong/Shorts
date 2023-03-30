@@ -3,7 +3,6 @@ import { ContentsWrapper } from '../../components/ContentsWrapper';
 import DownloadItem from './DownloadItem';
 import Grid from '@mui/material/Grid';
 import ShortsPreviewDialog from './ShortsPreviewDialog';
-import { Counter } from '../../../store/sample/Counter';
 import { Button, Container, Fab, styled, Typography } from '@mui/material';
 import { Download } from '@mui/icons-material';
 
@@ -43,7 +42,6 @@ const ShortsDownload = () => {
         ))}
       </Grid>
       <ShortsPreviewDialog onClose={handleClose} open={dialogState} />
-      <Counter />
       <Fab color="primary" sx={fabStyle} size="medium">
         <Download />
       </Fab>

@@ -11,7 +11,17 @@ export const action = {
 };
 
 const initialState = {
-  info: {},
+  info: {
+    url: '',
+    title: '',
+    owner: {
+      owner: '',
+      owner_subscribers: '',
+      owner_url: '',
+    },
+    get_yt_upload_date: '',
+    tag: '',
+  },
   loading: false,
 };
 

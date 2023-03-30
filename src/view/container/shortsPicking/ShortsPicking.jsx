@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import {
   Container,
   Divider,
@@ -13,10 +13,21 @@ import PickingCandi from './PickingCandi';
 import VideoPreview from '../../components/VideoPreview';
 import PreviewInfoContainer from './PreviewInfoContainer';
 import { useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
+import { useAlert } from '../../../hooks/useAlert';
 
 function ShortsPicking() {
   const { t } = useTranslation(['page']);
   const ytInfo = useSelector((state) => state.ytInfo.info);
+  const navigate = useNavigate();
+  const alert = useAlert();
+
+  useEffect(() => {
+    if (ytInfo.url === '') {
+      navigate('/');
+      alert.show('warning', '정보를 기입하세요.');
+    }
+  }, []);
 
   return (
     <ContentsWrapper disableGutters maxWidth={false} sx={{ padding: '0' }}>

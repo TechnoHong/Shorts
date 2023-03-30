@@ -10,6 +10,7 @@ import NotFound from './view/container/NotFound';
 import CssBaseline from '@mui/material/CssBaseline';
 import { theme } from './theme/GlobalTheme';
 import ShortsPicking from './view/container/shortsPicking/ShortsPicking';
+import { Alerting } from './hooks/useAlert';
 
 const App = () => {
   const [mode, setMode] = useState('light');
@@ -39,6 +40,7 @@ const App = () => {
           </Routes>
 
           <Footer />
+          <Alerting />
         </BrowserRouter>
       </ThemeProvider>
     </ColorModeContext.Provider>
