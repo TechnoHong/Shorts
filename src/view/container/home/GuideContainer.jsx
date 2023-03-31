@@ -7,7 +7,7 @@ const GuideContainer = ({ title, desc, animationData, reverse }) => {
   const lottieOptions = {
     loop: true,
     autoPlay: true,
-    animationData: animationData,
+    animationData,
     rerenderSettings: {
       preserveAspectRatio: 'xMidYMid slice',
     },
@@ -69,7 +69,7 @@ const GuideTypo = styled(Typography)(({ theme, reverse }) => ({
   alignSelf: reverse ? 'end' : 'start',
 }));
 
-GuideDescription.propTypes = {
+GuideContainer.propTypes = {
   title: PropTypes.string,
   desc: PropTypes.string,
   animationData: PropTypes.any,

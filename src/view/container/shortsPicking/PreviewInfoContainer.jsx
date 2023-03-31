@@ -102,4 +102,11 @@ PreviewInfoContainer.propTypes = {
   viewCount: PropTypes.string,
 };
 
+InfoItemContainer.propTypes = {
+  title : PropTypes.string,
+  text : PropTypes.string,
+  icon : PropTypes.object,
+  shortcut : PropTypes.object
+}
+
 export default PreviewInfoContainer;

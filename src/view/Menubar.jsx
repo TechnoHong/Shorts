@@ -21,7 +21,6 @@ import {
 import { ColorModeContext } from '../context/ColorContext';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Link } from 'react-router-dom';
 
 const pages = null;
 
