@@ -48,51 +48,63 @@ function ShortsPicking() {
           },
         }}
       >
-        <PreviewPaper
-          sx={{
-            minWidth: {
-              xs: '100%',
-              sm: '100%',
-              md: '100%',
-              lg: '50%',
-            },
-            borderRadius: {
-              xs: '0',
-              sm: '0',
-              md: '0',
-              lg: '0.5rem',
-            },
-          }}
-        >
-          <PreviewTitle align="left">
-            {t('shortsDownload.preview')}
-          </PreviewTitle>
-          <div
-            style={{
-              position: 'relative',
-              paddingTop: '56.25%' /* 720 / 1280 = 0.5625 */,
-            }}
+        <PickingContainer
+            disableGutters
+            sx={{
+              flexDirection: {
+                xs: 'column',
+                sm: 'column',
+                md: 'column',
+                lg: 'row',
+              }
+            }}>
+          <PreviewPaper
+              sx={{
+                minWidth: {
+                  xs: '100%',
+                  sm: '100%',
+                  md: '100%',
+                  lg: '50%',
+                },
+                borderRadius: {
+                  xs: '0',
+                  sm: '0',
+                  md: '0',
+                  lg: '0.5rem',
+                },
+              }}
           >
-            <VideoPreview isAutoPlay={false} ytURL={ytInfo.url} />
-          </div>
-          <PreviewInfoContainer
-            title={ytInfo.title}
-            uploader={ytInfo.owner.owner}
-            subscribers={ytInfo.owner.owner_subscribers}
-            uploadDate={ytInfo.upload_date}
-            tags={ytInfo.tags}
-            url={ytInfo.owner.owner_url}
-            viewCount={ytInfo.view_count}
-          />
-        </PreviewPaper>
-        <PickingContainer disableGutters>
+            <PreviewTitle align="left">
+              {t('shortsDownload.preview')}
+            </PreviewTitle>
+            <div
+                style={{
+                  position: 'relative',
+                  paddingTop: '56.25%' /* 720 / 1280 = 0.5625 */,
+                }}
+            >
+              <VideoPreview isAutoPlay={false} ytURL={ytInfo.url} />
+            </div>
+            <PreviewInfoContainer
+                title={ytInfo.title}
+                uploader={ytInfo.owner.owner}
+                subscribers={ytInfo.owner.owner_subscribers}
+                uploadDate={ytInfo.upload_date}
+                tags={ytInfo.tags}
+                url={ytInfo.owner.owner_url}
+                viewCount={ytInfo.view_count}
+            />
+          </PreviewPaper>
           <Stack
             direction="row"
             divider={<Divider orientation="vertical" flexItem />}
             justifyContent="flex-end"
             spacing={2}
           ></Stack>
-          <PickingCandi description={t('picking.candiBrief')} />
+          <PickingCandi
+              mr_list={ytInfo.mr_info}
+              description={t('picking.candiBrief')}
+          />
         </PickingContainer>
       </MainContainer>
     </ContentsWrapper>

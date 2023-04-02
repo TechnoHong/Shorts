@@ -38,7 +38,7 @@ function Home() {
       dispatch(action.getYtInfo({ ytURL, count }))
         .unwrap()
         .then(() => {
-          navigate('/shortspicking');
+          navigate('/ShortsPicking');
         })
         .catch((error) => {
           switch (error.code) {

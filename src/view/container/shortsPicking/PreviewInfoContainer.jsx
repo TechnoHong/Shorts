@@ -74,7 +74,7 @@ const PreviewInfoContainer = ({
   );
 };
 
-const InfoItemContainer = ({ title, text, icon, shortcut }) => {
+const InfoItemContainer = ({title, text, icon, shortcut}) => {
   return (
     <ListItem disablePadding>
       <ListItemIcon>{icon}</ListItemIcon>
@@ -105,8 +105,8 @@ PreviewInfoContainer.propTypes = {
 InfoItemContainer.propTypes = {
   title : PropTypes.string,
   text : PropTypes.string,
-  icon : PropTypes.object,
-  shortcut : PropTypes.object
-}
+  icon : PropTypes.node,
+  shortcut : PropTypes.string.isRequired,
+};
 
 export default PreviewInfoContainer;

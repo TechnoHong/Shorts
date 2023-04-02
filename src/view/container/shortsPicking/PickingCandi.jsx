@@ -27,7 +27,8 @@ function createData(rank, rate, timet) {
     timet,
   };
 }
-
+// todo : rows를 iter돌려서 createData
+// todo : 확인사항 : rank 순서대로 던져주는지
 const rows = [
   createData(1, 30, '01:20:40 - 01:20:50'),
   createData(2, 19, '01:00:10 - 01:00:20'),
@@ -36,12 +37,8 @@ const rows = [
   createData(5, 23, '01:12:20 - 01:12:30'),
 ];
 function descendingComparator(a, b, orderBy) {
-  if (b[orderBy] < a[orderBy]) {
-    return -1;
-  }
-  if (b[orderBy] > a[orderBy]) {
-    return 1;
-  }
+  if (b[orderBy] < a[orderBy]) { return -1; }
+  if (b[orderBy] > a[orderBy]) { return 1; }
   return 0;
 }
 
@@ -124,7 +121,6 @@ function EnhancedTableHead(props) {
 
 EnhancedTableHead.propTypes = {
   onRequestSort: PropTypes.func.isRequired,
-  onSelectAllClick: PropTypes.func.isRequired,
   order: PropTypes.oneOf(['asc', 'desc']).isRequired,
   orderBy: PropTypes.string.isRequired,
   rowCount: PropTypes.number.isRequired,
@@ -154,7 +150,7 @@ function EnhancedTableToolbar() {
   );
 }
 
-const PickingCandi = () => {
+const PickingCandi = ({infos}) => {
   const [order, setOrder] = React.useState('asc');
   const [orderBy, setOrderBy] = React.useState('rank');
   const [selected, setSelected] = React.useState([]);
@@ -168,22 +164,6 @@ const PickingCandi = () => {
   };
 
   const handleClick = (event, name) => {
-    // const selectedIndex = selected.indexOf(name);
-    // let newSelected = [];
-
-    // if (selectedIndex === -1) {
-    //   newSelected = newSelected.concat(selected, name);
-    // } else if (selectedIndex === 0) {
-    //   newSelected = newSelected.concat(selected.slice(1));
-    // } else if (selectedIndex === selected.length - 1) {
-    //   newSelected = newSelected.concat(selected.slice(0, -1));
-    // } else if (selectedIndex > 0) {
-    //   newSelected = newSelected.concat(
-    //       selected.slice(0, selectedIndex),
-    //       selected.slice(selectedIndex + 1),
-    //   );
-    // }
-
     setSelected(name);
   };
 
@@ -195,8 +175,6 @@ const PickingCandi = () => {
     setRowsPerPage(parseInt(event.target.value, 10));
     setPage(0);
   };
-
-  // const isSelected = (name) => selected.indexOf(name) !== -1;
   const isSelected = (name) => selected.toString().indexOf(name) !== -1;
 
   return (
@@ -209,8 +187,7 @@ const PickingCandi = () => {
               order={order}
               orderBy={orderBy}
               onRequestSort={handleRequestSort}
-              rowCount={rows.length}
-            />
+              rowCount={rows.length}/>
             <TableBody>
               {stableSort(rows, getComparator(order, orderBy))
                 .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
@@ -262,5 +239,9 @@ const PickingCandi = () => {
     </Box>
   );
 };
-// <ListItemText id={labelId} primary={`${value + 1}등 > Shorts ${value + 1} 00:00:00 - 00:00:00`} />
+
+PickingCandi.propTypes = {
+  infos : PropTypes.array,
+};
+
 export default PickingCandi;
