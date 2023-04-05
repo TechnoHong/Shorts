@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   Container,
   Divider,
@@ -21,6 +21,7 @@ function ShortsPicking() {
   const ytInfo = useSelector((state) => state.ytInfo.info);
   const navigate = useNavigate();
   const alert = useAlert();
+  const [timeStamp, setTimeStamp] = useState(0);
 
   useEffect(() => {
     if (ytInfo.url === '') {
@@ -28,6 +29,11 @@ function ShortsPicking() {
       alert.show('warning', t('message.redirection'));
     }
   }, []);
+
+  const moveYt = (timet) => {
+    setTimeStamp(timet);
+    console.log(timet);
+  };
 
   return (
     <ContentsWrapper disableGutters maxWidth={false} sx={{ padding: '0' }}>
@@ -83,7 +89,12 @@ function ShortsPicking() {
                   paddingTop: '56.25%' /* 720 / 1280 = 0.5625 */,
                 }}
             >
-              <VideoPreview isAutoPlay={false} ytURL={ytInfo.url} />
+              <VideoPreview
+                  isAutoPlay={false}
+                  ytURL={ytInfo.url}
+                  timeStamp={timeStamp}
+                  handleClick={moveYt}
+              />
             </div>
             <PreviewInfoContainer
                 title={ytInfo.title}
@@ -103,6 +114,7 @@ function ShortsPicking() {
           ></Stack>
           <PickingCandi
               mr_list={ytInfo.mr_info}
+              moveYt={moveYt}
               description={t('picking.candiBrief')}
           />
         </PickingContainer>

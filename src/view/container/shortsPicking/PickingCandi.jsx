@@ -8,7 +8,6 @@ import {
   TableCell,
   TableContainer,
   TableHead,
-  TablePagination,
   TableRow,
   TableSortLabel,
   Toolbar,
@@ -30,11 +29,13 @@ function createData(rank, rate, timet) {
 // todo : rows를 iter돌려서 createData
 // todo : 확인사항 : rank 순서대로 던져주는지
 const rows = [
-  createData(1, 30, '01:20:40 - 01:20:50'),
-  createData(2, 19, '01:00:10 - 01:00:20'),
+  createData(1, 30, '00:20:40 - 00:20:50'),
+  createData(2, 19, '00:00:10 - 00:00:20'),
   createData(3, 17, '00:20:30 - 00:20:40'),
   createData(4, 12, '00:53:50 - 00:54:00'),
-  createData(5, 23, '01:12:20 - 01:12:30'),
+  createData(5, 23, '00:12:20 - 00:22:30'),
+  createData(6, 17, '00:24:30 - 00:29:40'),
+  createData(7, 17, '00:27:30 - 00:34:40'),
 ];
 function descendingComparator(a, b, orderBy) {
   if (b[orderBy] < a[orderBy]) { return -1; }
@@ -150,12 +151,10 @@ function EnhancedTableToolbar() {
   );
 }
 
-const PickingCandi = ({infos}) => {
+const PickingCandi = ({infos, moveYt}) => {
   const [order, setOrder] = React.useState('asc');
   const [orderBy, setOrderBy] = React.useState('rank');
   const [selected, setSelected] = React.useState([]);
-  const [page, setPage] = React.useState(0);
-  const [rowsPerPage, setRowsPerPage] = React.useState(5);
 
   const handleRequestSort = (event, property) => {
     const isAsc = orderBy === property && order === 'asc';
@@ -163,18 +162,12 @@ const PickingCandi = ({infos}) => {
     setOrderBy(property);
   };
 
-  const handleClick = (event, name) => {
+  const handleClick = (event, name, timet) => {
     setSelected(name);
+    console.log('1');
+    moveYt(timet);
   };
 
-  const handleChangePage = (event, newPage) => {
-    setPage(newPage);
-  };
-
-  const handleChangeRowsPerPage = (event) => {
-    setRowsPerPage(parseInt(event.target.value, 10));
-    setPage(0);
-  };
   const isSelected = (name) => selected.toString().indexOf(name) !== -1;
 
   return (
@@ -190,7 +183,7 @@ const PickingCandi = ({infos}) => {
               rowCount={rows.length}/>
             <TableBody>
               {stableSort(rows, getComparator(order, orderBy))
-                .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                .slice()
                 .map((row, index) => {
                   const isItemSelected = isSelected(row.rank);
                   const labelId = `enhanced-table-checkbox-${index}`;
@@ -198,7 +191,7 @@ const PickingCandi = ({infos}) => {
                   return (
                     <TableRow
                       hover
-                      onClick={(event) => handleClick(event, row.rank)}
+                      onClick={(event) => handleClick(event, row.rank, row.timet)}
                       role="checkbox"
                       aria-checked={isItemSelected}
                       tabIndex={-1}
@@ -226,15 +219,7 @@ const PickingCandi = ({infos}) => {
             </TableBody>
           </Table>
         </TableContainer>
-        <TablePagination
-          rowsPerPageOptions={[5, 10, 25]}
-          component="div"
-          count={rows.length}
-          rowsPerPage={rowsPerPage}
-          page={page}
-          onPageChange={handleChangePage}
-          onRowsPerPageChange={handleChangeRowsPerPage}
-        />
+
       </Paper>
     </Box>
   );
@@ -242,6 +227,7 @@ const PickingCandi = ({infos}) => {
 
 PickingCandi.propTypes = {
   infos : PropTypes.array,
+  moveYt : PropTypes.func,
 };
 
 export default PickingCandi;

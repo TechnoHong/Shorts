@@ -1,8 +1,11 @@
-import React from 'react';
+import React, {useRef} from 'react';
 import ReactPlayer from 'react-player';
 import PropTypes from 'prop-types';
 
-const VideoPreview = ({ ytURL, isAutoPlay }) => {
+const VideoPreview = ({ ytURL, isAutoPlay, timestamp, handleClick }) => {
+    // need handling exception
+    const playerRef = useRef(null);
+
   return (
     <ReactPlayer
       style={{
@@ -11,6 +14,11 @@ const VideoPreview = ({ ytURL, isAutoPlay }) => {
         top: '0',
       }}
       url={ytURL}
+      ref={playerRef}
+      onProgress={(state) => {
+          // update the timestamp state with the current timestamp value
+          handleClick(state.playedSeconds);
+      }}
       playing={isAutoPlay}
       muted={isAutoPlay}
       controls
@@ -21,12 +29,15 @@ const VideoPreview = ({ ytURL, isAutoPlay }) => {
         youtube: { playerVars: { origin: 'https://www.youtube.com' } },
       }}
     />
+
   );
 };
 
 VideoPreview.propTypes = {
-  ytURL: PropTypes.string.isRequired,
-  isAutoPlay: PropTypes.bool.isRequired,
+    ytURL: PropTypes.string.isRequired,
+    isAutoPlay: PropTypes.bool.isRequired,
+    timestamp :  PropTypes.string.isRequired,
+    handleClick : PropTypes.func.isRequired,
 };
 
 export default VideoPreview;
