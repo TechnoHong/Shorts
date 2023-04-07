@@ -35,7 +35,7 @@ function Home() {
       alert.show('info', t('message.empty_url'));
       setIsEmptyInput(true);
     } else {
-      dispatch(action.getYtInfo({ ytURL, count }))
+      dispatch(action.getYtInfo({ ytURL, count, range }))
         .unwrap()
         .then(() => {
           navigate('/ShortsPicking');

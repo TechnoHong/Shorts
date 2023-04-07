@@ -2,10 +2,10 @@ import { createAsyncThunk, createReducer } from '@reduxjs/toolkit';
 import axios from 'axios';
 
 export const action = {
-  getYtInfo: createAsyncThunk('GET/YTINFO', async ({ ytURL, count }) => {
+  getYtInfo: createAsyncThunk('GET/YTINFO', async ({ ytURL, count, range }) => {
     return axios({
       method: 'post',
-      url: `/scraping/?url=${ytURL}&count=${count}&time=60`,
+      url: `/scraping/?url=${ytURL}&count=${count}&time=${range}`,
     }).then((response) => response.data);
   }),
 };
@@ -21,7 +21,7 @@ const initialState = {
     },
     upload_date: '',
     tags: [],
-    mr_info: '',
+    mr_info: [],
     view_count: '',
   },
   loading: false,

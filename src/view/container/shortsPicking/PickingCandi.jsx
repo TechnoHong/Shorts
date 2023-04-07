@@ -19,27 +19,13 @@ import { Download } from '@mui/icons-material';
 import { useTranslation } from 'react-i18next';
 import CloudDownloadIcon from '@mui/icons-material/CloudDownload';
 
-function createData(rank, rate, timet) {
-  return {
-    rank,
-    rate,
-    timet,
-  };
-}
-// todo : rows를 iter돌려서 createData
-// todo : 확인사항 : rank 순서대로 던져주는지
-const rows = [
-  createData(1, 30, '00:20:40 - 00:20:50'),
-  createData(2, 19, '00:00:10 - 00:00:20'),
-  createData(3, 17, '00:20:30 - 00:20:40'),
-  createData(4, 12, '00:53:50 - 00:54:00'),
-  createData(5, 23, '00:12:20 - 00:22:30'),
-  createData(6, 17, '00:24:30 - 00:29:40'),
-  createData(7, 17, '00:27:30 - 00:34:40'),
-];
 function descendingComparator(a, b, orderBy) {
-  if (b[orderBy] < a[orderBy]) { return -1; }
-  if (b[orderBy] > a[orderBy]) { return 1; }
+  if (b[orderBy] < a[orderBy]) {
+    return -1;
+  }
+  if (b[orderBy] > a[orderBy]) {
+    return 1;
+  }
   return 0;
 }
 
@@ -151,7 +137,7 @@ function EnhancedTableToolbar() {
   );
 }
 
-const PickingCandi = ({infos, moveYt}) => {
+const PickingCandi = ({ infos, moveYt }) => {
   const [order, setOrder] = React.useState('asc');
   const [orderBy, setOrderBy] = React.useState('rank');
   const [selected, setSelected] = React.useState([]);
@@ -180,22 +166,25 @@ const PickingCandi = ({infos, moveYt}) => {
               order={order}
               orderBy={orderBy}
               onRequestSort={handleRequestSort}
-              rowCount={rows.length}/>
+              rowCount={infos.length}
+            />
             <TableBody>
-              {stableSort(rows, getComparator(order, orderBy))
+              {stableSort(infos, getComparator(order, orderBy))
                 .slice()
                 .map((row, index) => {
-                  const isItemSelected = isSelected(row.rank);
+                  const isItemSelected = isSelected(index);
                   const labelId = `enhanced-table-checkbox-${index}`;
 
                   return (
                     <TableRow
                       hover
-                      onClick={(event) => handleClick(event, row.rank, row.timet)}
+                      onClick={(event) =>
+                        handleClick(event, index, row.start_time)
+                      }
                       role="checkbox"
                       aria-checked={isItemSelected}
                       tabIndex={-1}
-                      key={row.rank}
+                      key={index}
                       selected={isItemSelected}
                       sx={{ cursor: 'pointer' }}
                     >
@@ -206,10 +195,12 @@ const PickingCandi = ({infos, moveYt}) => {
                         padding="none"
                         align="center"
                       >
-                        {row.rank}
+                        {index}
                       </TableCell>
-                      <TableCell align="center">{row.rate}</TableCell>
-                      <TableCell align="center">{row.timet}</TableCell>
+                      <TableCell align="center">{row.ratio}</TableCell>
+                      <TableCell align="center">
+                        {row.start_time + '-' + row.end_time}
+                      </TableCell>
                       <IconButton aria-label="delete" size="large">
                         <Download color="primary" />
                       </IconButton>
@@ -219,15 +210,14 @@ const PickingCandi = ({infos, moveYt}) => {
             </TableBody>
           </Table>
         </TableContainer>
-
       </Paper>
     </Box>
   );
 };
 
 PickingCandi.propTypes = {
-  infos : PropTypes.array,
-  moveYt : PropTypes.func,
+  infos: PropTypes.array,
+  moveYt: PropTypes.func,
 };
 
 export default PickingCandi;

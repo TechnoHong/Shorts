@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   Container,
   Divider,
@@ -55,55 +55,57 @@ function ShortsPicking() {
         }}
       >
         <PickingContainer
-            disableGutters
-            sx={{
-              flexDirection: {
-                xs: 'column',
-                sm: 'column',
-                md: 'column',
-                lg: 'row',
-              }
-            }}>
+          disableGutters
+          maxWidth={false}
+          sx={{
+            flexDirection: {
+              xs: 'column',
+              sm: 'column',
+              md: 'column',
+              lg: 'row',
+            },
+          }}
+        >
           <PreviewPaper
-              sx={{
-                minWidth: {
-                  xs: '100%',
-                  sm: '100%',
-                  md: '100%',
-                  lg: '50%',
-                },
-                borderRadius: {
-                  xs: '0',
-                  sm: '0',
-                  md: '0',
-                  lg: '0.5rem',
-                },
-              }}
+            sx={{
+              minWidth: {
+                xs: '100%',
+                sm: '100%',
+                md: '100%',
+                lg: '50%',
+              },
+              borderRadius: {
+                xs: '0',
+                sm: '0',
+                md: '0',
+                lg: '0.5rem',
+              },
+            }}
           >
             <PreviewTitle align="left">
               {t('shortsDownload.preview')}
             </PreviewTitle>
             <div
-                style={{
-                  position: 'relative',
-                  paddingTop: '56.25%' /* 720 / 1280 = 0.5625 */,
-                }}
+              style={{
+                position: 'relative',
+                paddingTop: '56.25%' /* 720 / 1280 = 0.5625 */,
+              }}
             >
               <VideoPreview
-                  isAutoPlay={false}
-                  ytURL={ytInfo.url}
-                  timeStamp={timeStamp}
-                  handleClick={moveYt}
+                isAutoPlay={false}
+                ytURL={ytInfo.url}
+                timeStamp={timeStamp}
+                handleClick={moveYt}
               />
             </div>
             <PreviewInfoContainer
-                title={ytInfo.title}
-                uploader={ytInfo.owner.owner}
-                subscribers={ytInfo.owner.owner_subscribers}
-                uploadDate={ytInfo.upload_date}
-                tags={ytInfo.tags}
-                url={ytInfo.owner.owner_url}
-                viewCount={ytInfo.view_count}
+              title={ytInfo.title}
+              uploader={ytInfo.owner.owner}
+              subscribers={ytInfo.owner.owner_subscribers}
+              uploadDate={ytInfo.upload_date}
+              tags={ytInfo.tags}
+              url={ytInfo.owner.owner_url}
+              viewCount={ytInfo.view_count}
             />
           </PreviewPaper>
           <Stack
@@ -113,9 +115,9 @@ function ShortsPicking() {
             spacing={2}
           ></Stack>
           <PickingCandi
-              mr_list={ytInfo.mr_info}
-              moveYt={moveYt}
-              description={t('picking.candiBrief')}
+            infos={ytInfo.mr_info}
+            moveYt={moveYt}
+            description={t('picking.candiBrief')}
           />
         </PickingContainer>
       </MainContainer>
