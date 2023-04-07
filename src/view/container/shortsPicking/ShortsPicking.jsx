@@ -92,10 +92,13 @@ function ShortsPicking() {
               }}
             >
               <VideoPreview
-                isAutoPlay={false}
-                ytURL={ytInfo.url}
-                timeStamp={timeStamp}
-                handleClick={moveYt}
+                isAutoPlay={true}
+                ytURL={
+                  'https://youtu.be/' +
+                  ytInfo.video_id +
+                  '?t=' +
+                  timeStamp / 1000
+                }
               />
             </div>
             <PreviewInfoContainer

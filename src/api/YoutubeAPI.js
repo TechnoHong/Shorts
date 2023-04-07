@@ -23,6 +23,7 @@ const initialState = {
     tags: [],
     mr_info: [],
     view_count: '',
+    video_id: '',
   },
   loading: false,
 };
