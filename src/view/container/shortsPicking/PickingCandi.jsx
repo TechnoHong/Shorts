@@ -201,9 +201,11 @@ const PickingCandi = ({ infos, moveYt }) => {
                       <TableCell align="center">
                         {row.start_time + '-' + row.end_time}
                       </TableCell>
-                      <IconButton aria-label="delete" size="large">
-                        <Download color="primary" />
-                      </IconButton>
+                      <TableCell>
+                        <IconButton aria-label="delete" size="large">
+                          <Download color="primary" />
+                        </IconButton>
+                      </TableCell>
                     </TableRow>
                   );
                 })}
