@@ -19,6 +19,7 @@ import { Download } from '@mui/icons-material';
 import { useTranslation } from 'react-i18next';
 import CloudDownloadIcon from '@mui/icons-material/CloudDownload';
 
+
 function descendingComparator(a, b, orderBy) {
   if (b[orderBy] < a[orderBy]) {
     return -1;
@@ -28,7 +29,6 @@ function descendingComparator(a, b, orderBy) {
   }
   return 0;
 }
-
 function getComparator(order, orderBy) {
   return order === 'desc'
     ? (a, b) => descendingComparator(a, b, orderBy)
@@ -195,14 +195,14 @@ const PickingCandi = ({ infos, moveYt }) => {
                         padding="none"
                         align="center"
                       >
-                        {index}
+                        {index + 1}
                       </TableCell>
-                      <TableCell align="center">{row.ratio}</TableCell>
+                      <TableCell align="center">{row.ratio + ' %'}</TableCell>
                       <TableCell align="center">
-                        {row.start_time + '-' + row.end_time}
+                        { parseInt(row.start_time/60000) + '분' + parseInt((row.start_time%60000)) + ' 초 ' + (row.start_time%1000) + ' - ' + row.end_time}
                       </TableCell>
                       <TableCell>
-                        <IconButton aria-label="delete" size="large">
+                        <IconButton aria-label="download" size="large">
                           <Download color="primary" />
                         </IconButton>
                       </TableCell>

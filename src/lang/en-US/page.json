@@ -9,10 +9,12 @@
         "stepDescription1": "Input URL",
         "stepDescription2": "How long and many u wanna get?",
         "stepDescription3": "Move to Pick Shorts.",
-        "guideTitle1": "I'll take care of it",
-        "guideDesc1": "ShortsPicker automatically selects the part that viewers play the most in YouTube videos and converts it to fit the Short-Form.",
-        "guideTitle2": "Easy, Intuitive, and Automatic",
-        "guideDesc2": "ShortsPicker는 대현이 여기 뭐라고 적을까"
+        "guideTitle1": "Get your own shorts easily.",
+        "guideDesc1": "ShortsPicker automatically makes you shorts with its own algorithm.",
+        "guideTitle2": "100M view shorts? it's a breeze to us!",
+        "guideDesc2": "You can Download high-quality shorts without any cost.",
+        "guideTitle3": "Easy trim, easy change.",
+        "guideDesc3": "Ready to get shorts? Let's roll!"
     },
     "picking": {
         "mainDescription": "Pick what u wanna get.",

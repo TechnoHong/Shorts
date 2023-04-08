@@ -9,10 +9,12 @@
         "stepDescription1": "URL 입력",
         "stepDescription2": "Shorts 길이 및 갯수",
         "stepDescription3": "이동~~",
-        "guideTitle1": "알아서 할게요",
-        "guideDesc1": "ShortsPicker는 Youtube 영상에서 시청자들이 가장 많이 재생한 부분을 골라 자동으로 Short-Form으로 변환해줍니다.",
-        "guideTitle2": "쉽고, 직관적이며, 자동입니다",
-        "guideDesc2": "ShortsPicker는 대현이 여기 뭐라고 적을까"
+        "guideTitle1": "간편하게 Shorts를 만들어 보세요!",
+        "guideDesc1": "ShortsPicker만의 알고리즘으로 자동으로 Shorts를 만들어 드립니다.",
+        "guideTitle2": "100만 뷰 쇼츠? 무료로 만들어 드릴게요",
+        "guideDesc2": "별도의 편집자 없이 고퀄리티의 쇼츠를 무료로 다운로드해 보세요",
+        "guideTitle3": "깔끔하게 다듬거나, 원하는 구간으로 변경도 쉬워요!",
+        "guideDesc3": "나만의 쇼츠를 만들 준비가 되었나요? 그럼, 만들러 가볼까요?"
     },
     "picking": {
         "mainDescription": "마음에 드는 쇼츠를 골라주세요.",

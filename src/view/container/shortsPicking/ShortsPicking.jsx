@@ -18,13 +18,14 @@ import { useAlert } from '../../../hooks/useAlert';
 
 function ShortsPicking() {
   const { t } = useTranslation(['page']);
-  const ytInfo = useSelector((state) => state.ytInfo.info);
+  const scrapRet = useSelector((state) => state.ytInfo.info.success);
+  const ytInfo = useSelector((state) => state.ytInfo.info.result);
   const navigate = useNavigate();
   const alert = useAlert();
   const [timeStamp, setTimeStamp] = useState(0);
 
   useEffect(() => {
-    if (ytInfo.url === '') {
+    if (scrapRet === false || ytInfo.url === '') {
       navigate('/');
       alert.show('warning', t('message.redirection'));
     }

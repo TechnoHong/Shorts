@@ -128,6 +128,11 @@ function Home() {
           animationData={lottieData2}
           reverse={true}
         />
+        <GuideContainer
+            title={t('main.guideTitle3')}
+            desc={t('main.guideDesc3')}
+            animationData={lottieData2}
+        />
       </SubContainer>
     </ContentsWrapper>
   );
