@@ -19,8 +19,9 @@
     "picking": {
         "mainDescription": "Pick what u wanna get.",
         "table_rank": "rank",
-        "table_rate": "view rate(%)",
-        "table_timet": "timetable",
+        "table_rate": "score",
+        "s_time": "begin",
+        "e_time": "end",
         "step1": "set shorts info",
         "step2": "pick shorts up",
         "step3": "download",

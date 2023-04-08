@@ -18,7 +18,7 @@
     "eslint-plugin-prettier": "^4.2.1",
     "i18next": "^22.4.11",
     "i18next-browser-languagedetector": "^7.0.1",
-    "prettier": "^2.8.4",
+    "moment": "^2.29.4",
     "prop-types": "^15.8.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
@@ -56,12 +56,18 @@
     ]
   },
   "devDependencies": {
+    "@babel/core": "^7.21.4",
+    "@babel/eslint-parser": "^7.21.3",
+    "@babel/parser": "^7.21.4",
+    "@babel/preset-env": "^7.21.4",
+    "babel-eslint": "^10.1.0",
     "eslint": "^8.0.1",
     "eslint-config-standard": "^17.0.0",
     "eslint-plugin-import": "^2.25.2",
     "eslint-plugin-n": "^15.0.0",
     "eslint-plugin-promise": "^6.0.0",
-    "eslint-plugin-react": "^7.32.2"
+    "eslint-plugin-react": "^7.32.2",
+    "prettier": "^2.8.7"
   },
   "__comment__": "local test용 cors설정",
   "proxy": "http://127.0.0.1:8000"

@@ -49,10 +49,6 @@ function ShortsPicking() {
             md: 'column',
             lg: 'row',
           },
-          padding: {
-            md: '0',
-            lg: '0 5rem',
-          },
         }}
       >
         <PickingContainer

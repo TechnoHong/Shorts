@@ -18,7 +18,7 @@ import { visuallyHidden } from '@mui/utils';
 import { Download } from '@mui/icons-material';
 import { useTranslation } from 'react-i18next';
 import CloudDownloadIcon from '@mui/icons-material/CloudDownload';
-
+import TimeField from '../../components/TimeField';
 
 function descendingComparator(a, b, orderBy) {
   if (b[orderBy] < a[orderBy]) {
@@ -39,7 +39,8 @@ function GetLabelById(id) {
   const { t } = useTranslation(['page']);
   if (id === 'rank') return t('picking.table_rank');
   if (id === 'rate') return t('picking.table_rate');
-  else return t('picking.table_timet');
+  if ( id === 's_time') return t('picking.s_time');
+  else return t('picking.e_time');
 }
 
 function stableSort(array, comparator) {
@@ -66,7 +67,11 @@ const headCells = [
     label: 'rate (%)',
   },
   {
-    id: 'timet',
+    id: 's_time',
+    label: 'timestamp',
+  },
+  {
+    id: 'e_time',
     label: 'timestamp',
   },
 ];
@@ -150,7 +155,6 @@ const PickingCandi = ({ infos, moveYt }) => {
 
   const handleClick = (event, name, timet) => {
     setSelected(name);
-    console.log('1');
     moveYt(timet);
   };
 
@@ -158,10 +162,10 @@ const PickingCandi = ({ infos, moveYt }) => {
 
   return (
     <Box sx={{ width: '100%' }}>
-      <Paper sx={{ width: '100%', mb: 2 }}>
+      <Paper sx={{ width: '100%' }}>
         <EnhancedTableToolbar />
         <TableContainer>
-          <Table aria-labelledby="tableTitle">
+          <Table size="small" aria-labelledby="tableTitle">
             <EnhancedTableHead
               order={order}
               orderBy={orderBy}
@@ -179,7 +183,7 @@ const PickingCandi = ({ infos, moveYt }) => {
                     <TableRow
                       hover
                       onClick={(event) =>
-                        handleClick(event, index, row.start_time)
+                        handleClick(event, index, row.s_time)
                       }
                       role="checkbox"
                       aria-checked={isItemSelected}
@@ -190,6 +194,7 @@ const PickingCandi = ({ infos, moveYt }) => {
                     >
                       <TableCell
                         component="th"
+                        style={{width: '15%'}}
                         id={labelId}
                         scope="row"
                         padding="none"
@@ -197,11 +202,14 @@ const PickingCandi = ({ infos, moveYt }) => {
                       >
                         {index + 1}
                       </TableCell>
-                      <TableCell align="center">{row.ratio + ' %'}</TableCell>
-                      <TableCell align="center">
-                        { parseInt(row.start_time/60000) + '분' + parseInt((row.start_time%60000)) + ' 초 ' + (row.start_time%1000) + ' - ' + row.end_time}
+                      <TableCell align="center" style={{width: '18%'}}>{row.ratio + ' %'}</TableCell>
+                      <TableCell align="center" >
+                        <TimeField ytTime={row.startTime}/>
                       </TableCell>
-                      <TableCell>
+                      <TableCell align="center">
+                        <TimeField ytTime={row.endTime}/>
+                      </TableCell>
+                      <TableCell style={{width: '1%'}}>
                         <IconButton aria-label="download" size="large">
                           <Download color="primary" />
                         </IconButton>
@@ -216,7 +224,7 @@ const PickingCandi = ({ infos, moveYt }) => {
     </Box>
   );
 };
-
+// { parseInt(row.start_time/60000) + '분' + parseInt((row.start_time%60000)) + ' 초 ' + (row.start_time%1000) + ' - ' + row.end_time}
 PickingCandi.propTypes = {
   infos: PropTypes.array,
   moveYt: PropTypes.func,
