@@ -26,9 +26,6 @@ function ShortsPicking() {
   const [timeStamp, setTimeStamp] = useState(0);
 
   function handleVideoResponse(response) {
-    // 파일 유형 확인
-    if (response.headers['content-type'].indexOf('video/') !== -1) {
-      // 바이너리 데이터를 Blob 객체로 변환
       const blob = new Blob([response.data], { type: response.headers['content-type'] });
 
       // Blob URL 생성
@@ -37,11 +34,10 @@ function ShortsPicking() {
       // 비디오 다운로드 링크 생성
       const downloadLink = document.createElement('a');
       downloadLink.href = blobUrl;
-      downloadLink.download = 'my_video.mp4';
+      downloadLink.download = 'my_video0409.mp4';
 
       // 다운로드 링크 클릭 (다운로드 시작)
       downloadLink.click();
-    }
   }
 
   function handleVideoError(error) {
@@ -70,6 +66,7 @@ function ShortsPicking() {
     axios({
       method: 'post',
       url: `/yt_download/?url=${ytInfo.url}&user_want_time=${row.end_time - row.start_time}&start_time=${row.start_time}&end_time=${row.end_time}`,
+      responseType: 'blob'
     }).then(handleVideoResponse).catch(handleVideoError);;
     console.log('Download time : ',row.start_time, ' - ',row.end_time);
   };
