@@ -147,7 +147,7 @@ function EnhancedTableToolbar() {
  infos = { "start_time": 2094370, "end_time": 2104370, "ratio": 61.16 },
   {"start_time": 664030, "end_time": 674030,"ratio": 60.68 }, ...
  */
-const PickingCandi = ({ infos, moveYt }) => {
+const PickingCandi = ({ infos, moveYt, getShorts }) => {
   const [order, setOrder] = React.useState('asc');
   const [orderBy, setOrderBy] = React.useState('rank');
   const [selected, setSelected] = React.useState([]);
@@ -163,9 +163,19 @@ const PickingCandi = ({ infos, moveYt }) => {
     moveYt(timet);
     console.log('Clicked time : ',timet);
   };
-  const handleDownload = (event, name, row) => {
+  const handleDownload = (event, row) => {
+    getShorts(row);
     console.log('Download time : ',row.start_time, ' - ',row.end_time);
   };
+
+  // const setRowTimeChange = (row, tflag, changedTime) => {
+  //   if(tflag === 0){
+  //
+  //   }else{
+  //
+  //   }
+  //   console.log('Download time : ',row.start_time, ' - ',row.end_time);
+  // };
 
   const isSelected = (name) => selected.toString().indexOf(name) !== -1;
 
@@ -220,13 +230,13 @@ const PickingCandi = ({ infos, moveYt }) => {
                         <TimeField ytTime={row.start_time}/>
                       </TableCell>
                       <TableCell align="center">
-                        <TimeField ytTime={row.end_time}/>
+                        <TimeField ytTime={row.end_time} />
                       </TableCell>
                       <TableCell style={{width: '1%'}}>
                         <IconButton
                             aria-label="download"
                             size="large"
-                            onClick={(event) => handleDownload(event, index, row)}>
+                            onClick={(event) => handleDownload(event, row)}>
                           <Download color="primary" />
                         </IconButton>
                       </TableCell>
@@ -244,6 +254,7 @@ const PickingCandi = ({ infos, moveYt }) => {
 PickingCandi.propTypes = {
   infos: PropTypes.array,
   moveYt: PropTypes.func,
+  getShorts: PropTypes.func,
 };
 
 export default PickingCandi;

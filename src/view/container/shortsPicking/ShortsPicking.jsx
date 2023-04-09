@@ -15,6 +15,7 @@ import PreviewInfoContainer from './PreviewInfoContainer';
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { useAlert } from '../../../hooks/useAlert';
+import axios from "axios";
 
 function ShortsPicking() {
   const { t } = useTranslation(['page']);
@@ -39,6 +40,14 @@ function ShortsPicking() {
     else {
       setTimeStamp(timet);
     }
+  };
+
+  const getShorts = (row) => {
+    axios({
+      method: 'post',
+      url: `/yt_download/?url=${ytInfo.url}&user_want_time=${row.end_time - row.start_time}&start_time=${row.start_time}&end_time=${row.end_time}`,
+    }).then((response) => response.data);
+    console.log('Download time : ',row.start_time, ' - ',row.end_time);
   };
 
   return (
@@ -122,6 +131,7 @@ function ShortsPicking() {
           <PickingCandi
             infos={ytInfo.mr_info}
             moveYt={moveYt}
+            getShorts={getShorts}
             description={t('picking.candiBrief')}
           />
         </PickingContainer>

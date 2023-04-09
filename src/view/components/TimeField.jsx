@@ -32,6 +32,7 @@ const TimeField = ({ ytTime }) => {
         const { name, value } = event.target;
         setTime({ ...time, [name]: Number(value) });
         setMstime(convertToMs({ ...time, [name]: Number(value) }));
+
         console.log('handleChange::changed to', msTime, ytTime) ;
     };
 
