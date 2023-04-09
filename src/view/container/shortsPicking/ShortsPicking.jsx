@@ -47,6 +47,7 @@ function ShortsPicking() {
       method: 'post',
       url: `/yt_download/?url=${ytInfo.url}&user_want_time=${row.end_time - row.start_time}&start_time=${row.start_time}&end_time=${row.end_time}`,
     }).then((response) => response.data);
+    console.log('response: ', response.data);
     console.log('Download time : ',row.start_time, ' - ',row.end_time);
   };
 
