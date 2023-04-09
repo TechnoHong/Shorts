@@ -64,14 +64,16 @@ const headCells = [
   {
     id: 'rate',
     numeric: true,
-    label: 'rate (%)',
+    label: 'rate',
   },
   {
     id: 's_time',
+    numeric: true,
     label: 'timestamp',
   },
   {
     id: 'e_time',
+    numeric: true,
     label: 'timestamp',
   },
 ];
@@ -141,7 +143,10 @@ function EnhancedTableToolbar() {
     </Toolbar>
   );
 }
-
+/*
+ infos = { "start_time": 2094370, "end_time": 2104370, "ratio": 61.16 },
+  {"start_time": 664030, "end_time": 674030,"ratio": 60.68 }, ...
+ */
 const PickingCandi = ({ infos, moveYt }) => {
   const [order, setOrder] = React.useState('asc');
   const [orderBy, setOrderBy] = React.useState('rank');
@@ -156,6 +161,10 @@ const PickingCandi = ({ infos, moveYt }) => {
   const handleClick = (event, name, timet) => {
     setSelected(name);
     moveYt(timet);
+    console.log('Clicked time : ',timet);
+  };
+  const handleDownload = (event, name, row) => {
+    console.log('Download time : ',row.start_time, ' - ',row.end_time);
   };
 
   const isSelected = (name) => selected.toString().indexOf(name) !== -1;
@@ -182,9 +191,6 @@ const PickingCandi = ({ infos, moveYt }) => {
                   return (
                     <TableRow
                       hover
-                      onClick={(event) =>
-                        handleClick(event, index, row.s_time)
-                      }
                       role="checkbox"
                       aria-checked={isItemSelected}
                       tabIndex={-1}
@@ -199,18 +205,28 @@ const PickingCandi = ({ infos, moveYt }) => {
                         scope="row"
                         padding="none"
                         align="center"
+                        onClick={(event) => handleClick(event, index, row.start_time) }
                       >
                         {index + 1}
                       </TableCell>
-                      <TableCell align="center" style={{width: '18%'}}>{row.ratio + ' %'}</TableCell>
+                      <TableCell
+                          align="center"
+                          style={{width: '18%'}}
+                          onClick={(event) => handleClick(event, index, row) }
+                      >
+                        {row.ratio + ' %'}
+                      </TableCell>
                       <TableCell align="center" >
-                        <TimeField ytTime={row.startTime}/>
+                        <TimeField ytTime={row.start_time}/>
                       </TableCell>
                       <TableCell align="center">
-                        <TimeField ytTime={row.endTime}/>
+                        <TimeField ytTime={row.end_time}/>
                       </TableCell>
                       <TableCell style={{width: '1%'}}>
-                        <IconButton aria-label="download" size="large">
+                        <IconButton
+                            aria-label="download"
+                            size="large"
+                            onClick={(event) => handleDownload(event, index, row)}>
                           <Download color="primary" />
                         </IconButton>
                       </TableCell>
@@ -224,7 +240,7 @@ const PickingCandi = ({ infos, moveYt }) => {
     </Box>
   );
 };
-// { parseInt(row.start_time/60000) + '분' + parseInt((row.start_time%60000)) + ' 초 ' + (row.start_time%1000) + ' - ' + row.end_time}
+
 PickingCandi.propTypes = {
   infos: PropTypes.array,
   moveYt: PropTypes.func,

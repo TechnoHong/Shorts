@@ -1,32 +1,47 @@
-import React, { useState } from 'react';
+import React, {useState} from 'react';
 import {TableCell} from "@mui/material";
 import PropTypes from "prop-types";
 
-function TimeField(props) {
-    const { ytTime } = props;
-
-    const convertToTime = (milliseconds) => {
-        const hours = Math.floor(milliseconds / 3600000);
-        milliseconds %= 3600000;
-        const minutes = Math.floor(milliseconds / 60000);
-        milliseconds %= 60000;
-        const seconds = Math.floor(milliseconds / 1000);
-        milliseconds %= 1000;
-        return { hours, minutes, seconds, milliseconds };
+const convertToTime = (milliseconds) => {
+    const date = new Date(milliseconds);
+    return {
+        hours: date.getUTCHours(),
+        minutes: date.getUTCMinutes(),
+        seconds: date.getUTCSeconds(),
+        milliseconds: date.getUTCMilliseconds(),
     };
+};
+const convertToMs = (timet) => {
+    return timet.hours * 3600000 +
+        timet.minutes * 60000 +
+        timet.seconds * 1000 +
+        timet.milliseconds;
+};
 
-    const [time, setTime] = useState(convertToTime(ytTime * 1000));
+const TimeField = ({ ytTime }) => {
+    const [msTime, setMstime] = useState(ytTime);
+    const [time, setTime] = useState(convertToTime(ytTime));
+
+    // time 변경 함수를 부모에서 갖고 있어서, 변경될때마다 얘를 호출해야 할것으로 보임
+    React.useEffect(() => {
+        setMstime(ytTime);
+        setTime(convertToTime(ytTime));
+    }, [ytTime]);
 
     const handleChange = (event) => {
         const { name, value } = event.target;
         setTime({ ...time, [name]: Number(value) });
+        setMstime(convertToMs({ ...time, [name]: Number(value) }));
+        console.log('handleChange::changed to', msTime, ytTime) ;
     };
 
     const handleBlur = () => {
-        const totalMilliseconds =
-            time.hours * 3600000 + time.minutes * 60000 + time.seconds * 1000 + time.milliseconds;
+        const totalMilliseconds = convertToMs(time) ;
+        setMstime(totalMilliseconds);
         const convertedTime = convertToTime(totalMilliseconds);
         setTime(convertedTime);
+        console.log('handleBlur::changed to', totalMilliseconds, ytTime) ;
+
     };
 
     return (
@@ -36,18 +51,10 @@ function TimeField(props) {
                 value={time.hours}
                 onChange={handleChange}
                 onBlur={handleBlur}
-                style={{ width: '30px', fontSize: '14px', background: 'transparent', border: 'none' }}
-                type="text"
-                pattern="[0-9]*"
-                onKeyDown={(e) => {
-                    if (e.keyCode === 38 || e.keyCode === 40) {
-                        e.preventDefault();
-                    }
-                }}
-                onWheel={(e) => {
-                    e.currentTarget.blur();
-                    e.preventDefault();
-                }}
+                style={{ width: '40px', fontSize: '14px', background: 'transparent', border: 'none' }}
+                type="number"
+                min="0"
+                max="23"
             />
             시
             <input
@@ -55,18 +62,10 @@ function TimeField(props) {
                 value={time.minutes}
                 onChange={handleChange}
                 onBlur={handleBlur}
-                style={{ width: '30px', fontSize: '14px', background: 'transparent', border: 'none' }}
-                type="text"
-                pattern="[0-9]*"
-                onKeyDown={(e) => {
-                    if (e.keyCode === 38 || e.keyCode === 40) {
-                        e.preventDefault();
-                    }
-                }}
-                onWheel={(e) => {
-                    e.currentTarget.blur();
-                    e.preventDefault();
-                }}
+                style={{ width: '40px', fontSize: '14px', background: 'transparent', border: 'none' }}
+                type="number"
+                min="0"
+                max="23"
             />
             분
             <input
@@ -74,18 +73,10 @@ function TimeField(props) {
                 value={time.seconds}
                 onChange={handleChange}
                 onBlur={handleBlur}
-                style={{ width: '30px', fontSize: '14px', background: 'transparent', border: 'none' }}
-                type="text"
-                pattern="[0-9]*"
-                onKeyDown={(e) => {
-                    if (e.keyCode === 38 || e.keyCode === 40) {
-                        e.preventDefault();
-                    }
-                }}
-                onWheel={(e) => {
-                    e.currentTarget.blur();
-                    e.preventDefault();
-                }}
+                style={{ width: '40px', fontSize: '14px', background: 'transparent', border: 'none' }}
+                type="number"
+                min="0"
+                max="59"
             />
             초
             <input
@@ -93,18 +84,10 @@ function TimeField(props) {
                 value={time.milliseconds}
                 onChange={handleChange}
                 onBlur={handleBlur}
-                style={{ width: '30px', fontSize: '14px', background: 'transparent', border: 'none' }}
-                type="text"
-                pattern="[0-9]*"
-                onKeyDown={(e) => {
-                    if (e.keyCode === 38 || e.keyCode === 40) {
-                        e.preventDefault();
-                    }
-                }}
-                onWheel={(e) => {
-                    e.currentTarget.blur();
-                    e.preventDefault();
-                }}
+                style={{ width: '50px', fontSize: '14px', background: 'transparent', border: 'none' }}
+                type="number"
+                min="0"
+                max="999"
             />
         </TableCell>
     );

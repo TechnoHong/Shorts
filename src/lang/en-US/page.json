@@ -44,6 +44,7 @@
     "message": {
         "bad_request": "Bad Request. Try again",
         "redirection": "Try again",
+        "invalid_time": "Invalid time request. Check your input time",
         "empty_url": "Oops"
     }
 }

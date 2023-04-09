@@ -32,8 +32,13 @@ function ShortsPicking() {
   }, []);
 
   const moveYt = (timet) => {
-    setTimeStamp(timet);
-    console.log(timet);
+    console.log('moveYt : ', timet);
+    if (timet < 0 || timet >= ytInfo.video_length) {
+      alert.show('warning', t('message.invalid_time'));
+    }
+    else {
+      setTimeStamp(timet);
+    }
   };
 
   return (

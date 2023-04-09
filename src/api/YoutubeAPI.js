@@ -12,30 +12,44 @@ export const action = {
 
 /*
 {
-  "result": true,
-  "url": "https://www.youtube.com/watch?v=FVRXlaC1oZg",
-  "mr_info": [
-    88540,
-    93200,
-    102520
-  ],
-  "title": "개발을 시작한 당신에게 해주고 싶은 이야기",
-  "owner": {
-    "owner": "노마드 코더 Nomad Coders",
-    "owner_url": "/@nomadcoders",
-    "owner_subscribers": "구독자 45.9만명"
-  },
-  "upload_date": "2022. 8. 28.",
-  "tags": [],
-  "view_count": "조회수 231,298회"
+  "success": true,
+  "result": {
+    "url": "https://www.youtube.com/watch?v=UpzOzDkWsXA",
+    "mr_info": [
+      {
+        "start_time": 594820,
+        "end_time": 604820,
+        "ratio": 100
+      },
+      {
+        "start_time": 2071300,
+        "end_time": 2081300,
+        "ratio": 85.51
+      },
+      {
+        "start_time": 779380,
+        "end_time": 789380,
+        "ratio": 77.29
+      }
+    ],
+    "title": "[",
+    "owner": {
+      "owner": "디글 :Diggle",
+      "owner_url": "/@Diggle",
+      "owner_subscribers": "구독자 256만명"
+    },
+    "upload_date": "2023. 2. 1.",
+    "tags": [],
+    "view_count": "조회수 1,145,824회",
+    "video_length": 2307000,
+    "video_id": "UpzOzDkWsXA"
+  }
 }
-
 */
 const initialState = {
   info: {
     success: true ,
     result: {
-      video_id: '',
       url: '',
       mr_info: [],
       title: '',
@@ -47,6 +61,8 @@ const initialState = {
       upload_date: '',
       tags: [],
       view_count: '',
+      video_length: '',
+      video_id: '',
     }
   },
   loading: false,

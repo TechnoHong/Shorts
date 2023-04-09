@@ -43,7 +43,8 @@
     },
     "message": {
         "bad_request": "존재하지 않거나 분석할 수 없는 영상입니다.",
-        "redirection": "영상 정보를 다시 입력하세요.",
-        "empty_url": "영상 주소를 입력하세요."
+        "redirection": "영상 정보를 다시 입력해 주세요.",
+        "invalid_time": "시간 정보를 다시 입력해 주세요",
+        "empty_url": "영상 주소를 입력해 주세요."
     }
 }
