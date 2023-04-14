@@ -18,32 +18,36 @@ const convertToMs = (timet) => {
         timet.milliseconds;
 };
 
-const TimeField = ({ ytTime }) => {
-    const [msTime, setMstime] = useState(ytTime);
+const TimeField = (props) => {
+    const { ytTime, row, tflag, setRowTime } = props;
     const [time, setTime] = useState(convertToTime(ytTime));
 
     // time 변경 함수를 부모에서 갖고 있어서, 변경될때마다 얘를 호출해야 할것으로 보임
     React.useEffect(() => {
-        setMstime(ytTime);
+        console.log('useEffect::changed ',convertToMs(time),' --> ', ytTime) ;
         setTime(convertToTime(ytTime));
     }, [ytTime]);
 
     const handleChange = (event) => {
         const { name, value } = event.target;
-        setTime({ ...time, [name]: Number(value) });
-        setMstime(convertToMs({ ...time, [name]: Number(value) }));
-
-        console.log('handleChange::changed to', msTime, ytTime) ;
+        const newTime = { ...time, [name]: Number(value) };
+        setTime(newTime);
+        console.log('handleChange::changed ',convertToMs(time),' --> ', convertToMs(newTime)) ;
+        // setTime({ ...time, [name]: Number(value) });
+        // setMstime(convertToMs({ ...time, [name]: Number(value) }));
+        setRowTime(row, tflag, convertToMs(newTime));
     };
 
-    const handleBlur = () => {
-        const totalMilliseconds = convertToMs(time) ;
-        setMstime(totalMilliseconds);
-        const convertedTime = convertToTime(totalMilliseconds);
-        setTime(convertedTime);
-        console.log('handleBlur::changed to', totalMilliseconds, ytTime) ;
-
-    };
+    // focus out 되었을때 쓰는 함수래
+    // const handleBlur = (event) => {
+    //     const { name, value } = event.target;
+    //     const newTime = { ...time, [name]: Number(value) };
+    //     setTime(newTime);
+    //     console.log('handleBlur::changed ',convertToMs(time),' --> ', convertToMs(newTime)) ;
+    //     // setTime({ ...time, [name]: Number(value) });
+    //     // setMstime(convertToMs({ ...time, [name]: Number(value) }));
+    //     setRowTime(row, tflag, convertToMs(newTime));
+    // };
 
     return (
         <TableCell align="center">
@@ -51,8 +55,13 @@ const TimeField = ({ ytTime }) => {
                 name="hours"
                 value={time.hours}
                 onChange={handleChange}
-                onBlur={handleBlur}
-                style={{ width: '40px', fontSize: '14px', background: 'transparent', border: 'none' }}
+                style={{
+                    width: '40px',
+                    fontSize: '14px',
+                    background: 'transparent',
+                    border: 'none',
+                    textAlign: 'right', // add this line to align the value to the right
+                }}
                 type="number"
                 min="0"
                 max="23"
@@ -62,8 +71,13 @@ const TimeField = ({ ytTime }) => {
                 name="minutes"
                 value={time.minutes}
                 onChange={handleChange}
-                onBlur={handleBlur}
-                style={{ width: '40px', fontSize: '14px', background: 'transparent', border: 'none' }}
+                style={{
+                    width: '40px',
+                    fontSize: '14px',
+                    background: 'transparent',
+                    border: 'none',
+                    textAlign: 'right', // add this line to align the value to the right
+                }}
                 type="number"
                 min="0"
                 max="23"
@@ -73,8 +87,13 @@ const TimeField = ({ ytTime }) => {
                 name="seconds"
                 value={time.seconds}
                 onChange={handleChange}
-                onBlur={handleBlur}
-                style={{ width: '40px', fontSize: '14px', background: 'transparent', border: 'none' }}
+                style={{
+                    width: '40px',
+                    fontSize: '14px',
+                    background: 'transparent',
+                    border: 'none',
+                    textAlign: 'right', // add this line to align the value to the right
+                }}
                 type="number"
                 min="0"
                 max="59"
@@ -84,8 +103,13 @@ const TimeField = ({ ytTime }) => {
                 name="milliseconds"
                 value={time.milliseconds}
                 onChange={handleChange}
-                onBlur={handleBlur}
-                style={{ width: '50px', fontSize: '14px', background: 'transparent', border: 'none' }}
+                style={{
+                    width: '55px',
+                    fontSize: '14px',
+                    background: 'transparent',
+                    border: 'none',
+                    textAlign: 'right', // add this line to align the value to the right
+                }}
                 type="number"
                 min="0"
                 max="999"
@@ -95,5 +119,8 @@ const TimeField = ({ ytTime }) => {
 };
 TimeField.propTypes = {
     ytTime: PropTypes.number,
+    row: PropTypes.array,
+    tflag: PropTypes.number,
+    setRowTime : PropTypes.func,
 };
 export default TimeField;
