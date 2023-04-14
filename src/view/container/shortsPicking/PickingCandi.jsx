@@ -9,7 +9,6 @@ import {
   TableContainer,
   TableHead,
   TableRow,
-  TableSortLabel,
   Toolbar,
 } from '@mui/material';
 import Typography from '@mui/material/Typography';
@@ -19,6 +18,7 @@ import { Download } from '@mui/icons-material';
 import { useTranslation } from 'react-i18next';
 import CloudDownloadIcon from '@mui/icons-material/CloudDownload';
 import TimeField from '../../components/TimeField';
+import {useCallback, useMemo} from "react";
 
 function descendingComparator(a, b, orderBy) {
   if (b[orderBy] < a[orderBy]) {
@@ -79,10 +79,7 @@ const headCells = [
 ];
 
 function EnhancedTableHead(props) {
-  const { order, orderBy, onRequestSort } = props;
-  const createSortHandler = (property) => (event) => {
-    onRequestSort(event, property);
-  };
+  const { order, orderBy } = props;
 
   return (
     <TableHead>
@@ -94,18 +91,14 @@ function EnhancedTableHead(props) {
             padding={'normal'}
             sortDirection={orderBy === headCell.id ? order : false}
           >
-            <TableSortLabel
-              active={orderBy === headCell.id}
-              direction={orderBy === headCell.id ? order : 'asc'}
-              onClick={createSortHandler(headCell.id)}
-            >
+            <label>
               {GetLabelById(headCell.id)}
               {orderBy === headCell.id ? (
                 <Box component="span" sx={visuallyHidden}>
                   {order === 'desc' ? 'sorted descending' : 'sorted ascending'}
                 </Box>
               ) : null}
-            </TableSortLabel>
+            </label>
           </TableCell>
         ))}
       </TableRow>
@@ -114,10 +107,8 @@ function EnhancedTableHead(props) {
 }
 
 EnhancedTableHead.propTypes = {
-  onRequestSort: PropTypes.func.isRequired,
   order: PropTypes.oneOf(['asc', 'desc']).isRequired,
   orderBy: PropTypes.string.isRequired,
-  rowCount: PropTypes.number.isRequired,
 };
 
 function EnhancedTableToolbar() {
@@ -150,34 +141,59 @@ function EnhancedTableToolbar() {
 
 
 const PickingCandi = ({ infos, moveYt, getShorts }) => {
-  const [order, setOrder] = React.useState('asc');
-  const [orderBy, setOrderBy] = React.useState('rank');
   const [selected, setSelected] = React.useState([]);
+  const [tmInfo, setTmInfo] = React.useState([infos]);
 
-  const handleRequestSort = (event, property) => {
-    const isAsc = orderBy === property && order === 'asc';
-    setOrder(isAsc ? 'desc' : 'asc');
-    setOrderBy(property);
-  };
+  React.useEffect(() => {
+    console.log('.. ',tmInfo[0]) ;
+    setTmInfo(infos);
+  }, [infos]);
 
-  const handleClick = (event, name, timet) => {
-    setSelected(name);
-    moveYt(timet);
-    console.log('Clicked time : ',timet);
-  };
+  // const handleClick = (event, index, row) => {
+  //   setSelected([index]);
+  //   moveYt(row.start_time);
+  //   console.log('Clicked time : ',row.start_time);
+  // };
+  const sortedTmInfo = useMemo(() => stableSort(tmInfo, getComparator('asc', 'rank')), [tmInfo]);
+
+  const handleClick = useCallback((event, row) => {
+    setSelected([row.rank]);
+    moveYt(row.start_time);
+    console.log('Clicked time : ', row.start_time);
+  }, [setSelected, moveYt]);
   const handleDownload = (event, row) => {
     getShorts(row);
     console.log('Download time : ',row.start_time, ' - ',row.end_time);
   };
 
   // const setRowTimeChange = (row, tflag, changedTime) => {
-  //   if(tflag === 0){
-  //
-  //   }else{
-  //
-  //   }
-  //   console.log('Download time : ',row.start_time, ' - ',row.end_time);
+  //   if ( tflag === 0 ) row.start_time = changedTime ;
+  //   else row.end_time = changedTime ;
+  //   console.log('Change time[',row.rank,'] : ',row.start_time, ' - ',row.end_time);
   // };
+
+  // start_time이 end_time보다 큼 || end_time이 start_time보다 작음 >> error 발생시키기
+  const setRowTimeChange = (row, tflag, changedTime) => {
+    const index = tmInfo.findIndex((info) => info.id === row.id);
+    if (index === -1) return;
+
+    console.log(
+        'setRowTimeChange::before : ',
+        row.start_time, ' - ', row.end_time
+    );
+    console.log('setRowTimeChange::received : ', changedTime);
+    const updatedRow = { ...row };
+    if (tflag === 0) updatedRow.start_time = changedTime;
+    else updatedRow.end_time = changedTime;
+
+    const prevInfos = [...tmInfo];
+    prevInfos.splice(index, 1, updatedRow);
+    setTmInfo(prevInfos);
+    console.log(
+        'setRowTimeChange::Changed to  : ',
+        updatedRow.start_time, ' - ', updatedRow.end_time
+    );
+  };
 
   const isSelected = (name) => selected.toString().indexOf(name) !== -1;
 
@@ -188,15 +204,11 @@ const PickingCandi = ({ infos, moveYt, getShorts }) => {
         <TableContainer>
           <Table size="small" aria-labelledby="tableTitle">
             <EnhancedTableHead
-              order={order}
-              orderBy={orderBy}
-              onRequestSort={handleRequestSort}
-              rowCount={infos.length}
+              order={'asc'}
+              orderBy={'rank'}
             />
             <TableBody>
-              {stableSort(infos, getComparator(order, orderBy))
-                .slice()
-                .map((row, index) => {
+              {sortedTmInfo.map((row, index) => {
                   const isItemSelected = isSelected(index);
                   const labelId = `enhanced-table-checkbox-${index}`;
 
@@ -217,22 +229,22 @@ const PickingCandi = ({ infos, moveYt, getShorts }) => {
                         scope="row"
                         padding="none"
                         align="center"
-                        onClick={(event) => handleClick(event, index, row.start_time) }
+                        onClick={(event) => handleClick(event, row) }
                       >
                         {index + 1}
                       </TableCell>
                       <TableCell
                           align="center"
                           style={{width: '18%'}}
-                          onClick={(event) => handleClick(event, index, row) }
+                          onClick={(event) => handleClick(event, row) }
                       >
                         {row.ratio + ' %'}
                       </TableCell>
                       <TableCell align="center" >
-                        <TimeField ytTime={row.start_time}/>
+                        <TimeField ytTime={row.start_time} row={row} tflag={0} setRowTime={setRowTimeChange}/>
                       </TableCell>
                       <TableCell align="center">
-                        <TimeField ytTime={row.end_time} />
+                        <TimeField ytTime={row.end_time} row={row} tflag={1} setRowTime={setRowTimeChange}/>
                       </TableCell>
                       <TableCell style={{width: '1%'}}>
                         <IconButton
@@ -252,7 +264,10 @@ const PickingCandi = ({ infos, moveYt, getShorts }) => {
     </Box>
   );
 };
-
+// {stableSort(infos, getComparator('asc', 'rank'))
+// {stableSort(tmInfo, getComparator('asc', 'rank'))
+//     .slice()
+//     .map((row, index) => {
 PickingCandi.propTypes = {
   infos: PropTypes.array,
   moveYt: PropTypes.func,
