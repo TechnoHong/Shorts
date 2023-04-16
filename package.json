@@ -70,5 +70,5 @@
     "prettier": "^2.8.7"
   },
   "__comment__": "local test용 cors설정",
-  "proxy": "http://127.0.0.1:8000"
+  "proxy": "http://3.37.10.97:8000/"
 }
