@@ -19,6 +19,7 @@ import { useTranslation } from 'react-i18next';
 import CloudDownloadIcon from '@mui/icons-material/CloudDownload';
 import TimeField from '../../components/TimeField';
 import {useCallback, useMemo} from "react";
+import {useAlert} from "../../../hooks/useAlert";
 
 function descendingComparator(a, b, orderBy) {
   if (b[orderBy] < a[orderBy]) {
@@ -141,19 +142,16 @@ function EnhancedTableToolbar() {
 
 
 const PickingCandi = ({ infos, moveYt, getShorts }) => {
+  const { t } = useTranslation(['page']);
   const [selected, setSelected] = React.useState([]);
   const [tmInfo, setTmInfo] = React.useState([infos]);
+  const alert = useAlert();
 
   React.useEffect(() => {
     console.log('.. ',tmInfo[0]) ;
     setTmInfo(infos);
   }, [infos]);
 
-  // const handleClick = (event, index, row) => {
-  //   setSelected([index]);
-  //   moveYt(row.start_time);
-  //   console.log('Clicked time : ',row.start_time);
-  // };
   const sortedTmInfo = useMemo(() => stableSort(tmInfo, getComparator('asc', 'rank')), [tmInfo]);
 
   const handleClick = useCallback((event, row) => {
@@ -166,22 +164,18 @@ const PickingCandi = ({ infos, moveYt, getShorts }) => {
     console.log('Download time : ',row.start_time, ' - ',row.end_time);
   };
 
-  // const setRowTimeChange = (row, tflag, changedTime) => {
-  //   if ( tflag === 0 ) row.start_time = changedTime ;
-  //   else row.end_time = changedTime ;
-  //   console.log('Change time[',row.rank,'] : ',row.start_time, ' - ',row.end_time);
-  // };
-
   // start_time이 end_time보다 큼 || end_time이 start_time보다 작음 >> error 발생시키기
-  const setRowTimeChange = (row, tflag, changedTime) => {
-    const index = tmInfo.findIndex((info) => info.id === row.id);
-    if (index === -1) return;
+  const setRowTimeChange = (row, index, tflag, changedTime) => {
+    // const index = tmInfo.findIndex((info) => info.ratio === row.ratio);
 
-    console.log(
-        'setRowTimeChange::before : ',
-        row.start_time, ' - ', row.end_time
-    );
-    console.log('setRowTimeChange::received : ', changedTime);
+    // warning for invalid time input
+    if ((tflag === 0 && changedTime >= row.end_time) || (tflag === 1 && changedTime <= row.start_time) ){
+      console.log( 'setRowTimeChange::invalid time rcv : ', index );
+      alert.show('warning', (tflag === 0? t('message.invalid_s_time') : t('message.invalid_e_time')));
+      return;
+    }
+    console.log('setRowTimeChange::idx : ', index , ', ratio : ', row.ratio );
+    console.log('setRowTimeChange::before : ', row.start_time, ' - ', row.end_time);
     const updatedRow = { ...row };
     if (tflag === 0) updatedRow.start_time = changedTime;
     else updatedRow.end_time = changedTime;
@@ -190,7 +184,7 @@ const PickingCandi = ({ infos, moveYt, getShorts }) => {
     prevInfos.splice(index, 1, updatedRow);
     setTmInfo(prevInfos);
     console.log(
-        'setRowTimeChange::Changed to  : ',
+        'setRowTimeChange::Success Changing time : ',
         updatedRow.start_time, ' - ', updatedRow.end_time
     );
   };
@@ -241,10 +235,22 @@ const PickingCandi = ({ infos, moveYt, getShorts }) => {
                         {row.ratio + ' %'}
                       </TableCell>
                       <TableCell align="center" >
-                        <TimeField ytTime={row.start_time} row={row} tflag={0} setRowTime={setRowTimeChange}/>
+                        <TimeField
+                            ytTime={row.start_time}
+                            row={row}
+                            idx={index}
+                            tflag={0}
+                            setRowTime={setRowTimeChange}
+                        />
                       </TableCell>
                       <TableCell align="center">
-                        <TimeField ytTime={row.end_time} row={row} tflag={1} setRowTime={setRowTimeChange}/>
+                        <TimeField
+                            ytTime={row.end_time}
+                            row={row}
+                            idx={index}
+                            tflag={1}
+                            setRowTime={setRowTimeChange}
+                        />
                       </TableCell>
                       <TableCell style={{width: '1%'}}>
                         <IconButton

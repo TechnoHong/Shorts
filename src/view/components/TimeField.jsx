@@ -19,7 +19,7 @@ const convertToMs = (timet) => {
 };
 
 const TimeField = (props) => {
-    const { ytTime, row, tflag, setRowTime } = props;
+    const { ytTime, row, idx, tflag, setRowTime } = props;
     const [time, setTime] = useState(convertToTime(ytTime));
 
     // time 변경 함수를 부모에서 갖고 있어서, 변경될때마다 얘를 호출해야 할것으로 보임
@@ -31,11 +31,12 @@ const TimeField = (props) => {
     const handleChange = (event) => {
         const { name, value } = event.target;
         const newTime = { ...time, [name]: Number(value) };
-        setTime(newTime);
-        console.log('handleChange::changed ',convertToMs(time),' --> ', convertToMs(newTime)) ;
+        const newTimeMs = convertToMs(newTime);
+
+        // setTime(newTime);
+        console.log('handleChange::changed ',convertToMs(time),' --> ', newTimeMs) ;
         // setTime({ ...time, [name]: Number(value) });
-        // setMstime(convertToMs({ ...time, [name]: Number(value) }));
-        setRowTime(row, tflag, convertToMs(newTime));
+        setRowTime(row, idx, tflag, newTimeMs);
     };
 
     // focus out 되었을때 쓰는 함수래
@@ -119,7 +120,8 @@ const TimeField = (props) => {
 };
 TimeField.propTypes = {
     ytTime: PropTypes.number,
-    row: PropTypes.array,
+    row : PropTypes.array,
+    idx : PropTypes.number,
     tflag: PropTypes.number,
     setRowTime : PropTypes.func,
 };
