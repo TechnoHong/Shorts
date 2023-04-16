@@ -22,7 +22,6 @@ const TimeField = (props) => {
     const { ytTime, row, idx, tflag, setRowTime } = props;
     const [time, setTime] = useState(convertToTime(ytTime));
 
-    // time 변경 함수를 부모에서 갖고 있어서, 변경될때마다 얘를 호출해야 할것으로 보임
     React.useEffect(() => {
         console.log('useEffect::changed ',convertToMs(time),' --> ', ytTime) ;
         setTime(convertToTime(ytTime));
@@ -61,7 +60,7 @@ const TimeField = (props) => {
                     fontSize: '14px',
                     background: 'transparent',
                     border: 'none',
-                    textAlign: 'right', // add this line to align the value to the right
+                    textAlign: 'right',
                 }}
                 type="number"
                 min="0"
@@ -77,7 +76,7 @@ const TimeField = (props) => {
                     fontSize: '14px',
                     background: 'transparent',
                     border: 'none',
-                    textAlign: 'right', // add this line to align the value to the right
+                    textAlign: 'right',
                 }}
                 type="number"
                 min="0"
@@ -93,7 +92,7 @@ const TimeField = (props) => {
                     fontSize: '14px',
                     background: 'transparent',
                     border: 'none',
-                    textAlign: 'right', // add this line to align the value to the right
+                    textAlign: 'right',
                 }}
                 type="number"
                 min="0"
@@ -109,7 +108,7 @@ const TimeField = (props) => {
                     fontSize: '14px',
                     background: 'transparent',
                     border: 'none',
-                    textAlign: 'right', // add this line to align the value to the right
+                    textAlign: 'right',
                 }}
                 type="number"
                 min="0"
