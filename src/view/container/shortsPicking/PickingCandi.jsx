@@ -130,22 +130,26 @@ function EnhancedTableToolbar( props ) {
       >
         Shorts
       </Typography>
-      <Tooltip title={t('tips.btn_restore')} arrow>
-      <IconButton
-          aria-label="restore"
-          size="large"
-          onClick={(event) => setRestore(event, row, index)}>
-        <RestoreIcon color="primary" />
-      </IconButton>
-      </Tooltip>
-      <Tooltip title={t('tips.btn_download')} arrow>
-      <IconButton
-          aria-label="download"
-          size="large"
-          onClick={(event) => download(event, row)}>
-        <DownloadOutlinedIcon color="primary" />
-      </IconButton>
-      </Tooltip>
+      { index >= 0 &&
+        <Tooltip title={t('tips.btn_restore')} arrow>
+        <IconButton
+            aria-label="restore"
+            size="large"
+            onClick={(event) => setRestore(event, row, index)}>
+          <RestoreIcon color="primary" />
+        </IconButton>
+        </Tooltip>
+      }
+      { index >= 0 &&
+        <Tooltip title={t('tips.btn_download')} arrow>
+        <IconButton
+            aria-label="download"
+            size="large"
+            onClick={(event) => download(event, row)}>
+          <DownloadOutlinedIcon color="primary" />
+        </IconButton>
+        </Tooltip>
+      }
     </Toolbar>
   );
 }
