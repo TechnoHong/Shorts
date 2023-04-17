@@ -44,7 +44,12 @@
     "message": {
         "bad_request": "존재하지 않거나 분석할 수 없는 영상입니다.",
         "redirection": "영상 정보를 다시 입력해 주세요.",
-        "invalid_time": "시간 정보를 다시 입력해 주세요",
+        "invalid_s_time": "시작 시간이 끝 시간보다 클 수 없습니다.",
+        "invalid_e_time": "끝 시간이 시작 시간보다 작을 수 없습니다.",
         "empty_url": "영상 주소를 입력해 주세요."
+    },
+    "tips": {
+        "btn_restore": "시간 되돌리기",
+        "btn_download": "다운로드"
     }
 }

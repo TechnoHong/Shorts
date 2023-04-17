@@ -15,6 +15,7 @@ import PreviewInfoContainer from './PreviewInfoContainer';
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { useAlert } from '../../../hooks/useAlert';
+
 import axios from "axios";
 
 function ShortsPicking() {
@@ -27,14 +28,12 @@ function ShortsPicking() {
 
   function handleVideoResponse(response) {
       const blob = new Blob([response.data], { type: response.headers['content-type'] });
-
-      // Blob URL 생성
       const blobUrl = URL.createObjectURL(blob);
 
       // 비디오 다운로드 링크 생성
       const downloadLink = document.createElement('a');
       downloadLink.href = blobUrl;
-      downloadLink.download = 'my_video0409.mp4';
+      downloadLink.download = 'shorts_'+ytInfo.title.slice(0,10)+'.mp4';
 
       // 다운로드 링크 클릭 (다운로드 시작)
       downloadLink.click();
@@ -90,12 +89,14 @@ function ShortsPicking() {
           disableGutters
           maxWidth={false}
           sx={{
+            display: 'flex',
             flexDirection: {
               xs: 'column',
               sm: 'column',
               md: 'column',
               lg: 'row',
             },
+
           }}
         >
           <PreviewPaper
@@ -104,7 +105,7 @@ function ShortsPicking() {
                 xs: '100%',
                 sm: '100%',
                 md: '100%',
-                lg: '50%',
+                lg: '40%',
               },
               borderRadius: {
                 xs: '0',

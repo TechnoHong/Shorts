@@ -20,7 +20,7 @@
         "mainDescription": "Pick what u wanna get.",
         "table_rank": "rank",
         "table_rate": "score",
-        "s_time": "begin",
+        "s_time": "start",
         "e_time": "end",
         "step1": "set shorts info",
         "step2": "pick shorts up",
@@ -44,7 +44,12 @@
     "message": {
         "bad_request": "Bad Request. Try again",
         "redirection": "Try again",
-        "invalid_time": "Invalid time request. Check your input time",
+        "invalid_s_time": "The start time cannot be later than the end.",
+        "invalid_e_time": "The end time cannot be earlier than the start.",
         "empty_url": "Oops"
+    },
+    "tips": {
+        "btn_restore": "restore",
+        "btn_download": "download"
     }
 }
