@@ -115,6 +115,13 @@ EnhancedTableHead.propTypes = {
 function EnhancedTableToolbar( props ) {
   const { row, index, setRestore, download } = props;
   const { t } = useTranslation(['page']);
+
+  function isIndexValid( index ) {
+    console.log("row: ",row," index: ",index[0]);
+    if ( index.length > 0 && index[0] > -1) return true ;
+    return false ;
+  }
+
   return (
     <Toolbar
       sx={{
@@ -130,26 +137,36 @@ function EnhancedTableToolbar( props ) {
       >
         Shorts
       </Typography>
-      { index >= 0 &&
-        <Tooltip title={t('tips.btn_restore')} arrow>
-        <IconButton
-            aria-label="restore"
-            size="large"
-            onClick={(event) => setRestore(event, row, index)}>
-          <RestoreIcon color="primary" />
-        </IconButton>
-        </Tooltip>
-      }
-      { index >= 0 &&
-        <Tooltip title={t('tips.btn_download')} arrow>
-        <IconButton
-            aria-label="download"
-            size="large"
-            onClick={(event) => download(event, row)}>
-          <DownloadOutlinedIcon color="primary" />
-        </IconButton>
-        </Tooltip>
-      }
+      {index >= 0 && (
+          <Tooltip title={t('tips.btn_restore')} arrow>
+            {isIndexValid(index) ? (
+                <IconButton
+                    aria-label="restore"
+                    size="large"
+                    onClick={(event) => {
+                      setRestore(event, row, index);
+                    }}
+                >
+                  <RestoreIcon color="primary" />
+                </IconButton>
+            ) : <div/>}
+          </Tooltip>
+      )}
+      {index >= 0 && (
+          <Tooltip title={t('tips.btn_download')} arrow>
+            {isIndexValid(index) ? (
+                <IconButton
+                    aria-label="download"
+                    size="large"
+                    onClick={(event) => {
+                      download(event, row);
+                    }}
+                >
+                  <DownloadOutlinedIcon color="primary" />
+                </IconButton>
+            ) : <div/>}
+          </Tooltip>
+      )}
     </Toolbar>
   );
 }
@@ -287,7 +304,6 @@ const PickingCandi = ({ infos, moveYt, getShorts }) => {
                             setRowTime={setRowTimeChange}
                         />
                       </TableCell>
-
                     </TableRow>
                   );
                 })}

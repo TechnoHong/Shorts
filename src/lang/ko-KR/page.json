@@ -49,7 +49,7 @@
         "empty_url": "영상 주소를 입력해 주세요."
     },
     "tips": {
-        "btn_restore": "시간 되돌리기",
+        "btn_restore": "시간 리셋",
         "btn_download": "다운로드"
     }
 }
