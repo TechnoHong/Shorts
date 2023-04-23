@@ -18,6 +18,7 @@
     },
     "picking": {
         "mainDescription": "Pick what u wanna get.",
+        "tblDescription": "Click any time !",
         "table_rank": "rank",
         "table_rate": "score",
         "s_time": "start",

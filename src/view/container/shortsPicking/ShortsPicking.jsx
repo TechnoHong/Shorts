@@ -96,7 +96,7 @@ function ShortsPicking() {
               md: 'column',
               lg: 'row',
             },
-
+            marginTop: '-5rem',
           }}
         >
           <PreviewPaper
@@ -151,10 +151,10 @@ function ShortsPicking() {
             spacing={2}
           ></Stack>
           <PickingCandi
-            infos={ytInfo.mr_info}
-            moveYt={moveYt}
-            getShorts={getShorts}
-            description={t('picking.candiBrief')}
+              infos={ytInfo.mr_info}
+              moveYt={moveYt}
+              getShorts={getShorts}
+              description={t('picking.candiBrief')}
           />
         </PickingContainer>
       </MainContainer>
@@ -194,6 +194,7 @@ const PickingTitle = styled(Typography)(({ theme }) => ({
   width: '100%',
   padding: '2rem',
   background: theme.palette.primary.light,
+  fontSize: '24px',
 }));
 
 const PreviewTitle = styled(Typography)(({ theme }) => ({

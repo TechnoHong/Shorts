@@ -78,7 +78,10 @@ const headCells = [
     label: 'timestamp',
   },
 ];
-
+function isIndexValid( index ) {
+  if ( index.length > 0 && index[0] > -1) return true ;
+  return false ;
+}
 function EnhancedTableHead(props) {
   const { order, orderBy } = props;
 
@@ -116,12 +119,6 @@ function EnhancedTableToolbar( props ) {
   const { row, index, setRestore, download } = props;
   const { t } = useTranslation(['page']);
 
-  function isIndexValid( index ) {
-    console.log("row: ",row," index: ",index[0]);
-    if ( index.length > 0 && index[0] > -1) return true ;
-    return false ;
-  }
-
   return (
     <Toolbar
       sx={{
@@ -130,12 +127,20 @@ function EnhancedTableToolbar( props ) {
       }}
     >
       <Typography
-        sx={{ flex: '1 1 100%' }}
-        variant="h6"
-        id="tableTitle"
-        component="div"
+          sx={{ display: "flex", alignItems: "center", flex: "1" }}
+          variant="h6"
+          id="tableTitle"
+          component="div"
       >
         Shorts
+        {!isIndexValid(index) ? (
+            <h6 style={{
+              margin: "0",
+              color: "gray",
+              marginLeft: "auto",
+              animation: "blink 5s infinite"
+            }}>{t('picking.tblDescription')}</h6>
+        ) : <div/>}
       </Typography>
       {index >= 0 && (
           <Tooltip title={t('tips.btn_restore')} arrow>
@@ -200,7 +205,6 @@ const PickingCandi = ({ infos, moveYt, getShorts }) => {
 
   const handleDownload = (event, row) => {
     getShorts(row);
-    console.log('Download time : ',row.start_time, ' - ',row.end_time);
   };
   const handleRestore = (event, row, index) => {
     const updatedRow = { ...row };
@@ -248,7 +252,7 @@ const PickingCandi = ({ infos, moveYt, getShorts }) => {
             download={handleDownload}
         />
         <TableContainer>
-          <Table size="small" aria-labelledby="tableTitle">
+          <Table aria-labelledby="tableTitle">
             <EnhancedTableHead
               order={'asc'}
               orderBy={'rank'}
@@ -270,7 +274,7 @@ const PickingCandi = ({ infos, moveYt, getShorts }) => {
                     >
                       <TableCell
                         component="th"
-                        style={{width: '15%'}}
+                        style={{ width: '10%' }}
                         id={labelId}
                         scope="row"
                         padding="none"
@@ -281,12 +285,12 @@ const PickingCandi = ({ infos, moveYt, getShorts }) => {
                       </TableCell>
                       <TableCell
                           align="center"
-                          style={{width: '18%'}}
+                          style={{ width: '15%' }}
                           onClick={(event) => handleClick(event, row, index) }
                       >
                         {row.ratio + ' %'}
                       </TableCell>
-                      <TableCell align="center" >
+                      <TableCell align="center" style={{ padding: 0 }}>
                         <TimeField
                             ytTime={row.start_time}
                             row={row}
@@ -295,7 +299,7 @@ const PickingCandi = ({ infos, moveYt, getShorts }) => {
                             setRowTime={setRowTimeChange}
                         />
                       </TableCell>
-                      <TableCell align="center">
+                      <TableCell align="center" style={{ padding: 0 }}>
                         <TimeField
                             ytTime={row.end_time}
                             row={row}

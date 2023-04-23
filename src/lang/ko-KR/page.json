@@ -18,6 +18,7 @@
     },
     "picking": {
         "mainDescription": "마음에 드는 쇼츠를 골라주세요.",
+        "tblDescription": "구간을 선택해 보세요 !",
         "table_rank": "순위",
         "table_rate": "시청률",
         "s_time": "시작",
