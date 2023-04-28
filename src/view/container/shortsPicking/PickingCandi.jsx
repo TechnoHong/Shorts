@@ -9,7 +9,8 @@ import {
   TableContainer,
   TableHead,
   TableRow,
-  Toolbar, Tooltip,
+  Toolbar,
+  Tooltip,
 } from '@mui/material';
 import Typography from '@mui/material/Typography';
 import PropTypes from 'prop-types';
@@ -17,9 +18,9 @@ import { visuallyHidden } from '@mui/utils';
 import DownloadOutlinedIcon from '@mui/icons-material/DownloadOutlined';
 import RestoreIcon from '@mui/icons-material/Restore';
 import TimeField from '../../components/TimeField';
-import {useCallback, useMemo} from "react";
+import { useCallback, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
-import {useAlert} from "../../../hooks/useAlert";
+import { useAlert } from '../../../hooks/useAlert';
 
 function descendingComparator(a, b, orderBy) {
   if (b[orderBy] < a[orderBy]) {
@@ -78,9 +79,9 @@ const headCells = [
     label: 'timestamp',
   },
 ];
-function isIndexValid( index ) {
-  if ( index.length > 0 && index[0] > -1) return true ;
-  return false ;
+function isIndexValid(index) {
+  if (index.length > 0 && index[0] > -1) return true;
+  return false;
 }
 function EnhancedTableHead(props) {
   const { order, orderBy } = props;
@@ -115,7 +116,7 @@ EnhancedTableHead.propTypes = {
   orderBy: PropTypes.string.isRequired,
 };
 
-function EnhancedTableToolbar( props ) {
+function EnhancedTableToolbar(props) {
   const { row, index, setRestore, download } = props;
   const { t } = useTranslation(['page']);
 
@@ -127,58 +128,68 @@ function EnhancedTableToolbar( props ) {
       }}
     >
       <Typography
-          sx={{ display: "flex", alignItems: "center", flex: "1" }}
-          variant="h6"
-          id="tableTitle"
-          component="div"
+        sx={{ display: 'flex', alignItems: 'center', flex: '1' }}
+        variant="h6"
+        id="tableTitle"
+        component="div"
       >
         Shorts
         {!isIndexValid(index) ? (
-            <h6 style={{
-              margin: "0",
-              color: "gray",
-              marginLeft: "auto",
-              animation: "blink 5s infinite"
-            }}>{t('picking.tblDescription')}</h6>
-        ) : <div/>}
+          <h6
+            style={{
+              margin: '0',
+              color: 'gray',
+              marginLeft: 'auto',
+              animation: 'blink 5s infinite',
+            }}
+          >
+            {t('picking.tblDescription')}
+          </h6>
+        ) : (
+          <div />
+        )}
       </Typography>
       {index >= 0 && (
-          <Tooltip title={t('tips.btn_restore')} arrow>
-            {isIndexValid(index) ? (
-                <IconButton
-                    aria-label="restore"
-                    size="large"
-                    onClick={(event) => {
-                      setRestore(event, row, index);
-                    }}
-                >
-                  <RestoreIcon color="primary" />
-                </IconButton>
-            ) : <div/>}
-          </Tooltip>
+        <Tooltip title={t('tips.btn_restore')} arrow>
+          {isIndexValid(index) ? (
+            <IconButton
+              aria-label="restore"
+              size="large"
+              onClick={(event) => {
+                setRestore(event, row, index);
+              }}
+            >
+              <RestoreIcon color="primary" />
+            </IconButton>
+          ) : (
+            <div />
+          )}
+        </Tooltip>
       )}
       {index >= 0 && (
-          <Tooltip title={t('tips.btn_download')} arrow>
-            {isIndexValid(index) ? (
-                <IconButton
-                    aria-label="download"
-                    size="large"
-                    onClick={(event) => {
-                      download(event, row);
-                    }}
-                >
-                  <DownloadOutlinedIcon color="primary" />
-                </IconButton>
-            ) : <div/>}
-          </Tooltip>
+        <Tooltip title={t('tips.btn_download')} arrow>
+          {isIndexValid(index) ? (
+            <IconButton
+              aria-label="download"
+              size="large"
+              onClick={(event) => {
+                download(event, row);
+              }}
+            >
+              <DownloadOutlinedIcon color="primary" />
+            </IconButton>
+          ) : (
+            <div />
+          )}
+        </Tooltip>
       )}
     </Toolbar>
   );
 }
 
 EnhancedTableToolbar.propTypes = {
-  row : PropTypes.array,
-  index : PropTypes.number,
+  row: PropTypes.object,
+  index: PropTypes.array,
   setRestore: PropTypes.func.isRequired,
   download: PropTypes.func.isRequired,
 };
@@ -196,12 +207,18 @@ const PickingCandi = ({ infos, moveYt, getShorts }) => {
     setTmInfo(infos);
   }, [infos]);
 
-  const sortedTmInfo = useMemo(() => stableSort(tmInfo, getComparator('asc', 'rank')), [tmInfo]);
+  const sortedTmInfo = useMemo(
+    () => stableSort(tmInfo, getComparator('asc', 'rank')),
+    [tmInfo],
+  );
 
-  const handleClick = useCallback((event, row, index) => {
-    setSelected([index]);
-    moveYt(row.start_time);
-  }, [setSelected, moveYt]);
+  const handleClick = useCallback(
+    (event, row, index) => {
+      setSelected([index]);
+      moveYt(row.start_time);
+    },
+    [setSelected, moveYt],
+  );
 
   const handleDownload = (event, row) => {
     getShorts(row);
@@ -221,13 +238,24 @@ const PickingCandi = ({ infos, moveYt, getShorts }) => {
     // const index = tmInfo.findIndex((info) => info.ratio === row.ratio);
 
     // warning for invalid time input
-    if ((tflag === 0 && changedTime >= row.end_time) || (tflag === 1 && changedTime <= row.start_time) ){
-      console.log( 'setRowTimeChange::invalid time rcv : ', index );
-      alert.show('warning', (tflag === 0? t('message.invalid_s_time') : t('message.invalid_e_time')));
+    if (
+      (tflag === 0 && changedTime >= row.end_time) ||
+      (tflag === 1 && changedTime <= row.start_time)
+    ) {
+      console.log('setRowTimeChange::invalid time rcv : ', index);
+      alert.show(
+        'warning',
+        tflag === 0 ? t('message.invalid_s_time') : t('message.invalid_e_time'),
+      );
       return;
     }
-    console.log('setRowTimeChange::idx : ', index , ', ratio : ', row.ratio );
-    console.log('setRowTimeChange::before : ', row.start_time, ' - ', row.end_time);
+    console.log('setRowTimeChange::idx : ', index, ', ratio : ', row.ratio);
+    console.log(
+      'setRowTimeChange::before : ',
+      row.start_time,
+      ' - ',
+      row.end_time,
+    );
     const updatedRow = { ...row };
     if (tflag === 0) updatedRow.start_time = changedTime;
     else updatedRow.end_time = changedTime;
@@ -236,8 +264,10 @@ const PickingCandi = ({ infos, moveYt, getShorts }) => {
     prevInfos.splice(index, 1, updatedRow);
     setTmInfo(prevInfos);
     console.log(
-        'setRowTimeChange::Success Changing time : ',
-        updatedRow.start_time, ' - ', updatedRow.end_time
+      'setRowTimeChange::Success Changing time : ',
+      updatedRow.start_time,
+      ' - ',
+      updatedRow.end_time,
     );
   };
   const isSelected = (index) => selected.indexOf(index) !== -1;
@@ -246,71 +276,68 @@ const PickingCandi = ({ infos, moveYt, getShorts }) => {
     <Box sx={{ width: '100%' }}>
       <Paper sx={{ width: '100%' }}>
         <EnhancedTableToolbar
-            row={tmInfo[selected]}
-            index={selected}
-            setRestore={handleRestore}
-            download={handleDownload}
+          row={tmInfo[selected]}
+          index={selected}
+          setRestore={handleRestore}
+          download={handleDownload}
         />
         <TableContainer>
           <Table aria-labelledby="tableTitle">
-            <EnhancedTableHead
-              order={'asc'}
-              orderBy={'rank'}
-            />
+            <EnhancedTableHead order={'asc'} orderBy={'rank'} />
             <TableBody>
               {sortedTmInfo.map((row, index) => {
-                  const isItemSelected = isSelected(index);
-                  const labelId = `enhanced-table-checkbox-${index}`;
+                const isItemSelected = isSelected(index);
+                const labelId = `enhanced-table-checkbox-${index}`;
 
-                  return (
-                    <TableRow
-                      hover
-                      role="checkbox"
-                      aria-checked={isItemSelected}
-                      tabIndex={-1}
-                      key={index}
-                      selected={isItemSelected}
-                      sx={{ cursor: 'pointer' }}
+                return (
+                  <TableRow
+                    hover
+                    role="checkbox"
+                    aria-checked={isItemSelected}
+                    tabIndex={-1}
+                    key={index}
+                    selected={isItemSelected}
+                    sx={{ cursor: 'pointer' }}
+                  >
+                    <TableCell
+                      component="th"
+                      style={{ width: '10%' }}
+                      id={labelId}
+                      scope="row"
+                      padding="none"
+                      align="center"
+                      onClick={(event) => handleClick(event, row, index)}
                     >
-                      <TableCell
-                        component="th"
-                        style={{ width: '10%' }}
-                        id={labelId}
-                        scope="row"
-                        padding="none"
-                        align="center"
-                        onClick={(event) => handleClick(event, row, index) }
-                      >
-                        {index + 1}
-                      </TableCell>
-                      <TableCell
-                          align="center"
-                          style={{ width: '15%' }}
-                          onClick={(event) => handleClick(event, row, index) }
-                      >
-                        {row.ratio + ' %'}
-                      </TableCell>
-                      <TableCell align="center" style={{ padding: 0 }}>
-                        <TimeField
-                            ytTime={row.start_time}
-                            row={row}
-                            idx={index}
-                            tflag={0}
-                            setRowTime={setRowTimeChange}
-                        />
-                      </TableCell>
-                      <TableCell align="center" style={{ padding: 0 }}>
-                        <TimeField
-                            ytTime={row.end_time}
-                            row={row}
-                            idx={index}
-                            tflag={1}
-                            setRowTime={setRowTimeChange}
-                        />
-                      </TableCell>
-                    </TableRow>
-                  );
-                })}
+                      {index + 1}
+                    </TableCell>
+                    <TableCell
+                      align="center"
+                      style={{ width: '15%' }}
+                      onClick={(event) => handleClick(event, row, index)}
+                    >
+                      {row.ratio + ' %'}
+                    </TableCell>
+                    <TableCell align="center" style={{ padding: 0 }}>
+                      <TimeField
+                        ytTime={row.start_time}
+                        row={row}
+                        idx={index}
+                        tflag={0}
+                        setRowTime={setRowTimeChange}
+                      />
+                    </TableCell>
+                    <TableCell align="center" style={{ padding: 0 }}>
+                      <TimeField
+                        ytTime={row.end_time}
+                        row={row}
+                        idx={index}
+                        tflag={1}
+                        setRowTime={setRowTimeChange}
+                      />
+                    </TableCell>
+                  </TableRow>
+                );
+              })}
             </TableBody>
           </Table>
         </TableContainer>

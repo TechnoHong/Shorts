@@ -44,6 +44,7 @@ const PreviewInfoContainer = ({
             title={t('picking.info.title')}
             text={title}
             icon={<PlayArrow />}
+            shortcut=""
           />
           <InfoItemContainer
             title={t('picking.info.uploader')}
@@ -55,17 +56,20 @@ const PreviewInfoContainer = ({
             title={t('picking.info.view_count')}
             text={viewCount}
             icon={<Visibility />}
+            shortcut=""
           />
           <InfoItemContainer
             title={t('picking.info.date')}
             text={uploadDate}
             icon={<Event />}
+            shortcut=""
           />
           {Array.isArray(tags) && tags.length !== 0 && (
             <InfoItemContainer
               title={t('picking.info.tag')}
               text={tags.toString()}
               icon={<Sell />}
+              shortcut=""
             />
           )}
         </List>
@@ -74,7 +78,7 @@ const PreviewInfoContainer = ({
   );
 };
 
-const InfoItemContainer = ({title, text, icon, shortcut}) => {
+const InfoItemContainer = ({ title, text, icon, shortcut }) => {
   return (
     <ListItem disablePadding>
       <ListItemIcon>{icon}</ListItemIcon>
@@ -103,10 +107,10 @@ PreviewInfoContainer.propTypes = {
 };
 
 InfoItemContainer.propTypes = {
-  title : PropTypes.string,
-  text : PropTypes.string,
-  icon : PropTypes.node,
-  shortcut : PropTypes.string.isRequired,
+  title: PropTypes.string,
+  text: PropTypes.string,
+  icon: PropTypes.node,
+  shortcut: PropTypes.string.isRequired,
 };
 
 export default PreviewInfoContainer;
