@@ -16,7 +16,7 @@ import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { useAlert } from '../../../hooks/useAlert';
 
-import axios from "axios";
+import axios from 'axios';
 
 function ShortsPicking() {
   const { t } = useTranslation(['page']);
@@ -27,22 +27,23 @@ function ShortsPicking() {
   const [timeStamp, setTimeStamp] = useState(0);
 
   function handleVideoResponse(response) {
-      const blob = new Blob([response.data], { type: response.headers['content-type'] });
-      const blobUrl = URL.createObjectURL(blob);
+    const blob = new Blob([response.data], {
+      type: response.headers['content-type'],
+    });
+    const blobUrl = URL.createObjectURL(blob);
 
-      // 비디오 다운로드 링크 생성
-      const downloadLink = document.createElement('a');
-      downloadLink.href = blobUrl;
-      downloadLink.download = 'shorts_'+ytInfo.title.slice(0,10)+'.mp4';
+    // 비디오 다운로드 링크 생성
+    const downloadLink = document.createElement('a');
+    downloadLink.href = blobUrl;
+    downloadLink.download = 'shorts_' + ytInfo.title.slice(0, 10) + '.mp4';
 
-      // 다운로드 링크 클릭 (다운로드 시작)
-      downloadLink.click();
+    // 다운로드 링크 클릭 (다운로드 시작)
+    downloadLink.click();
   }
 
   function handleVideoError(error) {
     console.error(error);
   }
-
 
   useEffect(() => {
     if (scrapRet === false || ytInfo.url === '') {
@@ -55,8 +56,7 @@ function ShortsPicking() {
     console.log('moveYt : ', timet);
     if (timet < 0 || timet >= ytInfo.video_length) {
       alert.show('warning', t('message.invalid_time'));
-    }
-    else {
+    } else {
       setTimeStamp(timet);
     }
   };
@@ -64,10 +64,14 @@ function ShortsPicking() {
   const getShorts = (row) => {
     axios({
       method: 'post',
-      url: `/yt_download/?url=${ytInfo.url}&user_want_time=${row.end_time - row.start_time}&start_time=${row.start_time}&end_time=${row.end_time}`,
-      responseType: 'blob'
-    }).then(handleVideoResponse).catch(handleVideoError);;
-    console.log('Download time : ',row.start_time, ' - ',row.end_time);
+      url: `/yt_download/?url=${ytInfo.url}&user_want_time=${
+        row.end_time - row.start_time
+      }&start_time=${row.start_time}&end_time=${row.end_time}`,
+      responseType: 'blob',
+    })
+      .then(handleVideoResponse)
+      .catch(handleVideoError);
+    console.log('Download time : ', row.start_time, ' - ', row.end_time);
   };
 
   return (
@@ -96,7 +100,6 @@ function ShortsPicking() {
               md: 'column',
               lg: 'row',
             },
-            marginTop: '-5rem',
           }}
         >
           <PreviewPaper
@@ -151,10 +154,10 @@ function ShortsPicking() {
             spacing={2}
           ></Stack>
           <PickingCandi
-              infos={ytInfo.mr_info}
-              moveYt={moveYt}
-              getShorts={getShorts}
-              description={t('picking.candiBrief')}
+            infos={ytInfo.mr_info}
+            moveYt={moveYt}
+            getShorts={getShorts}
+            description={t('picking.candiBrief')}
           />
         </PickingContainer>
       </MainContainer>
