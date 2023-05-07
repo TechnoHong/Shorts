@@ -1,7 +1,9 @@
 import * as React from 'react';
 import IconButton from '@mui/material/IconButton';
 import {
+  Backdrop,
   Box,
+  CircularProgress,
   Paper,
   Table,
   TableBody,
@@ -9,190 +11,13 @@ import {
   TableContainer,
   TableHead,
   TableRow,
-  Toolbar,
-  Tooltip,
 } from '@mui/material';
-import Typography from '@mui/material/Typography';
 import PropTypes from 'prop-types';
-import { visuallyHidden } from '@mui/utils';
-import DownloadOutlinedIcon from '@mui/icons-material/DownloadOutlined';
-import RestoreIcon from '@mui/icons-material/Restore';
 import TimeField from '../../components/TimeField';
-import { useCallback, useMemo } from 'react';
+import { useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useAlert } from '../../../hooks/useAlert';
-
-function descendingComparator(a, b, orderBy) {
-  if (b[orderBy] < a[orderBy]) {
-    return -1;
-  }
-  if (b[orderBy] > a[orderBy]) {
-    return 1;
-  }
-  return 0;
-}
-function getComparator(order, orderBy) {
-  return order === 'desc'
-    ? (a, b) => descendingComparator(a, b, orderBy)
-    : (a, b) => -descendingComparator(a, b, orderBy);
-}
-
-function GetLabelById(id) {
-  const { t } = useTranslation(['page']);
-  if (id === 'rank') return t('picking.table_rank');
-  if (id === 'rate') return t('picking.table_rate');
-  if (id === 's_time') return t('picking.s_time');
-  else return t('picking.e_time');
-}
-
-function stableSort(array, comparator) {
-  const stabilizedThis = array.map((el, index) => [el, index]);
-  stabilizedThis.sort((a, b) => {
-    const order = comparator(a[0], b[0]);
-    if (order !== 0) {
-      return order;
-    }
-    return a[1] - b[1];
-  });
-  return stabilizedThis.map((el) => el[0]);
-}
-
-const headCells = [
-  {
-    id: 'rank',
-    numeric: true,
-    label: 'rank',
-  },
-  {
-    id: 'rate',
-    numeric: true,
-    label: 'rate',
-  },
-  {
-    id: 's_time',
-    numeric: true,
-    label: 'timestamp',
-  },
-  {
-    id: 'e_time',
-    numeric: true,
-    label: 'timestamp',
-  },
-];
-function isIndexValid(index) {
-  if (index.length > 0 && index[0] > -1) return true;
-  return false;
-}
-function EnhancedTableHead(props) {
-  const { order, orderBy } = props;
-
-  return (
-    <TableHead>
-      <TableRow>
-        {headCells.map((headCell) => (
-          <TableCell
-            key={headCell.id}
-            align={'center'}
-            padding={'normal'}
-            sortDirection={orderBy === headCell.id ? order : false}
-          >
-            <label>
-              {GetLabelById(headCell.id)}
-              {orderBy === headCell.id ? (
-                <Box component="span" sx={visuallyHidden}>
-                  {order === 'desc' ? 'sorted descending' : 'sorted ascending'}
-                </Box>
-              ) : null}
-            </label>
-          </TableCell>
-        ))}
-      </TableRow>
-    </TableHead>
-  );
-}
-
-EnhancedTableHead.propTypes = {
-  order: PropTypes.oneOf(['asc', 'desc']).isRequired,
-  orderBy: PropTypes.string.isRequired,
-};
-
-function EnhancedTableToolbar(props) {
-  const { row, index, setRestore, download } = props;
-  const { t } = useTranslation(['page']);
-
-  return (
-    <Toolbar
-      sx={{
-        pl: { sm: 2 },
-        pr: { xs: 1, sm: 1 },
-      }}
-    >
-      <Typography
-        sx={{ display: 'flex', alignItems: 'center', flex: '1' }}
-        variant="h6"
-        id="tableTitle"
-        component="div"
-      >
-        Shorts
-        {!isIndexValid(index) ? (
-          <h6
-            style={{
-              margin: '0',
-              color: 'gray',
-              marginLeft: 'auto',
-              animation: 'blink 5s infinite',
-            }}
-          >
-            {t('picking.tblDescription')}
-          </h6>
-        ) : (
-          <div />
-        )}
-      </Typography>
-      {index >= 0 && (
-        <Tooltip title={t('tips.btn_restore')} arrow>
-          {isIndexValid(index) ? (
-            <IconButton
-              aria-label="restore"
-              size="large"
-              onClick={(event) => {
-                setRestore(event, row, index);
-              }}
-            >
-              <RestoreIcon color="primary" />
-            </IconButton>
-          ) : (
-            <div />
-          )}
-        </Tooltip>
-      )}
-      {index >= 0 && (
-        <Tooltip title={t('tips.btn_download')} arrow>
-          {isIndexValid(index) ? (
-            <IconButton
-              aria-label="download"
-              size="large"
-              onClick={(event) => {
-                download(event, row);
-              }}
-            >
-              <DownloadOutlinedIcon color="primary" />
-            </IconButton>
-          ) : (
-            <div />
-          )}
-        </Tooltip>
-      )}
-    </Toolbar>
-  );
-}
-
-EnhancedTableToolbar.propTypes = {
-  row: PropTypes.object,
-  index: PropTypes.array,
-  setRestore: PropTypes.func.isRequired,
-  download: PropTypes.func.isRequired,
-};
+import { Download, PlayArrowRounded } from '@mui/icons-material';
 /*
  infos = { "start_time": 2094370, "end_time": 2104370, "ratio": 61.16 },
   {"start_time": 664030, "end_time": 674030,"ratio": 60.68 }, ...
@@ -201,16 +26,12 @@ const PickingCandi = ({ infos, moveYt, getShorts }) => {
   const { t } = useTranslation(['page']);
   const [selected, setSelected] = React.useState([]);
   const [tmInfo, setTmInfo] = React.useState([infos]);
+  const [loading, setLoading] = React.useState(false);
   const alert = useAlert();
 
   React.useEffect(() => {
     setTmInfo(infos);
   }, [infos]);
-
-  const sortedTmInfo = useMemo(
-    () => stableSort(tmInfo, getComparator('asc', 'rank')),
-    [tmInfo],
-  );
 
   const handleClick = useCallback(
     (event, row, index) => {
@@ -221,19 +42,10 @@ const PickingCandi = ({ infos, moveYt, getShorts }) => {
   );
 
   const handleDownload = (event, row) => {
-    getShorts(row);
+    setLoading(true);
+    getShorts(row).then(() => setLoading(false));
   };
-  const handleRestore = (event, row, index) => {
-    const updatedRow = { ...row };
-    // const prevInfos = [...infos];
-    const prevInfos = [...tmInfo];
 
-    updatedRow.start_time = infos[index].start_time;
-    updatedRow.end_time = infos[index].end_time;
-    prevInfos.splice(index, 1, updatedRow);
-    setTmInfo(prevInfos);
-    console.log('handleRestore::Success');
-  };
   const setRowTimeChange = (row, index, tflag, changedTime) => {
     // const index = tmInfo.findIndex((info) => info.ratio === row.ratio);
 
@@ -275,46 +87,34 @@ const PickingCandi = ({ infos, moveYt, getShorts }) => {
   return (
     <Box sx={{ width: '100%' }}>
       <Paper sx={{ width: '100%' }}>
-        <EnhancedTableToolbar
-          row={tmInfo[selected]}
-          index={selected}
-          setRestore={handleRestore}
-          download={handleDownload}
-        />
         <TableContainer>
           <Table aria-labelledby="tableTitle">
-            <EnhancedTableHead order={'asc'} orderBy={'rank'} />
+            <TableHead>
+              <TableRow>
+                <TableCell align="center">순위</TableCell>
+                <TableCell align="center">재시청률</TableCell>
+                <TableCell align="center">시작</TableCell>
+                <TableCell align="center">종료</TableCell>
+                <TableCell align="center">재생</TableCell>
+                <TableCell align="center">저장</TableCell>
+              </TableRow>
+            </TableHead>
             <TableBody>
-              {sortedTmInfo.map((row, index) => {
+              {tmInfo.map((row, index) => {
                 const isItemSelected = isSelected(index);
-                const labelId = `enhanced-table-checkbox-${index}`;
 
                 return (
-                  <TableRow
-                    hover
-                    role="checkbox"
-                    aria-checked={isItemSelected}
-                    tabIndex={-1}
-                    key={index}
-                    selected={isItemSelected}
-                    sx={{ cursor: 'pointer' }}
-                  >
+                  <TableRow hover key={index} selected={isItemSelected}>
                     <TableCell
                       component="th"
                       style={{ width: '10%' }}
-                      id={labelId}
                       scope="row"
                       padding="none"
                       align="center"
-                      onClick={(event) => handleClick(event, row, index)}
                     >
                       {index + 1}
                     </TableCell>
-                    <TableCell
-                      align="center"
-                      style={{ width: '15%' }}
-                      onClick={(event) => handleClick(event, row, index)}
-                    >
+                    <TableCell align="center" style={{ width: '15%' }}>
                       {row.ratio + ' %'}
                     </TableCell>
                     <TableCell align="center" style={{ padding: 0 }}>
@@ -335,6 +135,16 @@ const PickingCandi = ({ infos, moveYt, getShorts }) => {
                         setRowTime={setRowTimeChange}
                       />
                     </TableCell>
+                    <TableCell align="center">
+                      <IconButton onClick={(e) => handleClick(e, row, index)}>
+                        <PlayArrowRounded />
+                      </IconButton>
+                    </TableCell>
+                    <TableCell align="center">
+                      <IconButton onClick={(e) => handleDownload(e, row)}>
+                        <Download />
+                      </IconButton>
+                    </TableCell>
                   </TableRow>
                 );
               })}
@@ -342,6 +152,9 @@ const PickingCandi = ({ infos, moveYt, getShorts }) => {
           </Table>
         </TableContainer>
       </Paper>
+      <Backdrop open={loading}>
+        <CircularProgress />
+      </Backdrop>
     </Box>
   );
 };

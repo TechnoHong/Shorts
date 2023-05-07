@@ -1,6 +1,4 @@
 import React, { useState } from 'react';
-import { TableCell } from '@mui/material';
-import PropTypes from 'prop-types';
 
 const convertToTime = (milliseconds) => {
   const date = new Date(milliseconds);
@@ -8,16 +6,10 @@ const convertToTime = (milliseconds) => {
     hours: date.getUTCHours(),
     minutes: date.getUTCMinutes(),
     seconds: date.getUTCSeconds(),
-    milliseconds: date.getUTCMilliseconds(),
   };
 };
 const convertToMs = (timet) => {
-  return (
-    timet.hours * 3600000 +
-    timet.minutes * 60000 +
-    timet.seconds * 1000 +
-    timet.milliseconds
-  );
+  return timet.hours * 3600000 + timet.minutes * 60000 + timet.seconds * 1000;
 };
 
 const TimeField = (props) => {
@@ -34,14 +26,13 @@ const TimeField = (props) => {
     const newTime = { ...time, [name]: Number(value) };
     const newTimeMs = convertToMs(newTime);
 
-    // setTime(newTime);
     console.log(
       'handleChange::changed ',
       convertToMs(time),
       ' --> ',
       newTimeMs,
     );
-    // setTime({ ...time, [name]: Number(value) });
+
     setRowTime(row, idx, tflag, newTimeMs);
   };
 
@@ -57,10 +48,10 @@ const TimeField = (props) => {
   // };
 
   return (
-    <TableCell align="center">
+    <>
       <input
         name="hours"
-        value={time.hours}
+        value={time.hours.toString()}
         onChange={handleChange}
         style={{
           width: '40px',
@@ -73,10 +64,10 @@ const TimeField = (props) => {
         min="0"
         max="23"
       />
-      시
+      :
       <input
         name="minutes"
-        value={time.minutes}
+        value={time.minutes.toString()}
         onChange={handleChange}
         style={{
           width: '40px',
@@ -89,10 +80,10 @@ const TimeField = (props) => {
         min="0"
         max="23"
       />
-      분
+      :
       <input
         name="seconds"
-        value={time.seconds}
+        value={time.seconds.toString()}
         onChange={handleChange}
         style={{
           width: '40px',
@@ -105,30 +96,8 @@ const TimeField = (props) => {
         min="0"
         max="59"
       />
-      초
-      <input
-        name="milliseconds"
-        value={time.milliseconds}
-        onChange={handleChange}
-        style={{
-          width: '55px',
-          fontSize: '14px',
-          background: 'transparent',
-          border: 'none',
-          textAlign: 'right',
-        }}
-        type="number"
-        min="0"
-        max="999"
-      />
-    </TableCell>
+    </>
   );
 };
-TimeField.propTypes = {
-  ytTime: PropTypes.number,
-  row: PropTypes.object,
-  idx: PropTypes.number,
-  tflag: PropTypes.number,
-  setRowTime: PropTypes.func,
-};
+
 export default TimeField;

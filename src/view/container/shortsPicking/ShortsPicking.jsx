@@ -61,8 +61,8 @@ function ShortsPicking() {
     }
   };
 
-  const getShorts = (row) => {
-    axios({
+  const getShorts = async (row) => {
+    await axios({
       method: 'post',
       url: `/yt_download/?url=${ytInfo.url}&user_want_time=${
         row.end_time - row.start_time
@@ -188,7 +188,6 @@ const PreviewPaper = styled(Paper)(({ theme }) => ({
   ...theme.components.MuiPaper,
   position: 'static',
   top: '1rem',
-  zIndex: '99',
   background: theme.palette.grey['900'],
 }));
 
