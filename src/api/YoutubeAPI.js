@@ -5,6 +5,7 @@ export const action = {
   getYtInfo: createAsyncThunk('GET/YTINFO', async ({ ytURL, count, range }) => {
     return axios({
       method: 'post',
+      crossDomain : true,
       url: `http://13.209.70.218:5000/scraping/?url=${ytURL}&count=${count}&time=${range}`
     }).then((response) => response.data);
   }),
