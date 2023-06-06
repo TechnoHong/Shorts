@@ -6,7 +6,7 @@ export const action = {
     return axios({
       method: 'post',
       crossDomain : true,
-      url: `http://172.31.32.189:5000/scraping/?url=${ytURL}&count=${count}&time=${range}`
+      url: `http://13.209.70.218:5000/scraping/?url=${ytURL}&count=${count}&time=${range}`
     }).then((response) => response.data);
   }),
 };
