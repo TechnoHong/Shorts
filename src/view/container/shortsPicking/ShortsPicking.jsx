@@ -64,7 +64,7 @@ function ShortsPicking() {
   const getShorts = async (row) => {
     await axios({
       method: 'post',
-      url: `http://43.201.99.75:5000/yt_download/?url=${ytInfo.url}&user_want_time=${
+      url: `http://13.209.70.218:5000/yt_download/?url=${ytInfo.url}&user_want_time=${
         row.end_time - row.start_time
       }&start_time=${row.start_time}&end_time=${row.end_time}`,
       responseType: 'blob',
