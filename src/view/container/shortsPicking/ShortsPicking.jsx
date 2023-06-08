@@ -53,7 +53,6 @@ function ShortsPicking() {
   }, []);
 
   const moveYt = (timet) => {
-    console.log('moveYt : ', timet);
     if (timet < 0 || timet >= ytInfo.video_length) {
       alert.show('warning', t('message.invalid_time'));
     } else {
@@ -71,7 +70,6 @@ function ShortsPicking() {
     })
       .then(handleVideoResponse)
       .catch(handleVideoError);
-    console.log('Download time : ', row.start_time, ' - ', row.end_time);
   };
 
   return (

@@ -54,20 +54,12 @@ const PickingCandi = ({ infos, moveYt, getShorts }) => {
       (tflag === 0 && changedTime >= row.end_time) ||
       (tflag === 1 && changedTime <= row.start_time)
     ) {
-      console.log('setRowTimeChange::invalid time rcv : ', index);
       alert.show(
         'warning',
         tflag === 0 ? t('message.invalid_s_time') : t('message.invalid_e_time'),
       );
       return;
     }
-    console.log('setRowTimeChange::idx : ', index, ', ratio : ', row.ratio);
-    console.log(
-      'setRowTimeChange::before : ',
-      row.start_time,
-      ' - ',
-      row.end_time,
-    );
     const updatedRow = { ...row };
     if (tflag === 0) updatedRow.start_time = changedTime;
     else updatedRow.end_time = changedTime;
@@ -75,12 +67,6 @@ const PickingCandi = ({ infos, moveYt, getShorts }) => {
     const prevInfos = [...tmInfo];
     prevInfos.splice(index, 1, updatedRow);
     setTmInfo(prevInfos);
-    console.log(
-      'setRowTimeChange::Success Changing time : ',
-      updatedRow.start_time,
-      ' - ',
-      updatedRow.end_time,
-    );
   };
   const isSelected = (index) => selected.indexOf(index) !== -1;
 

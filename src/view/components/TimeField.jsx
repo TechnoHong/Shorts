@@ -17,7 +17,6 @@ const TimeField = (props) => {
   const [time, setTime] = useState(convertToTime(ytTime));
 
   React.useEffect(() => {
-    console.log('useEffect::changed ', convertToMs(time), ' --> ', ytTime);
     setTime(convertToTime(ytTime));
   }, [ytTime]);
 
@@ -25,13 +24,6 @@ const TimeField = (props) => {
     const { name, value } = event.target;
     const newTime = { ...time, [name]: Number(value) };
     const newTimeMs = convertToMs(newTime);
-
-    console.log(
-      'handleChange::changed ',
-      convertToMs(time),
-      ' --> ',
-      newTimeMs,
-    );
 
     setRowTime(row, idx, tflag, newTimeMs);
   };
