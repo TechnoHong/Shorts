@@ -1,31 +1,19 @@
 import React, { useState } from 'react';
+import {convertToMs, convertToTime} from "../../utils/utils";
+import {Box, Input} from "@mui/material";
 
-const convertToTime = (milliseconds) => {
-  const date = new Date(milliseconds);
-  return {
-    hours: date.getUTCHours(),
-    minutes: date.getUTCMinutes(),
-    seconds: date.getUTCSeconds(),
-  };
-};
-const convertToMs = (timet) => {
-  return timet.hours * 3600000 + timet.minutes * 60000 + timet.seconds * 1000;
-};
-
-const TimeField = (props) => {
-  const { ytTime, row, idx, tflag, setRowTime } = props;
-  const [time, setTime] = useState(convertToTime(ytTime));
+const TimeField = ({ timestamp, onChange }) => {
+  const [time, setTime] = useState(convertToTime(timestamp));
 
   React.useEffect(() => {
-    setTime(convertToTime(ytTime));
-  }, [ytTime]);
+    setTime(convertToTime(timestamp));
+  }, [timestamp]);
 
   const handleChange = (event) => {
     const { name, value } = event.target;
     const newTime = { ...time, [name]: Number(value) };
-    const newTimeMs = convertToMs(newTime);
 
-    setRowTime(row, idx, tflag, newTimeMs);
+    onChange(convertToMs(newTime))
   };
 
   // focus out 되었을때 쓰는 함수래
@@ -40,55 +28,61 @@ const TimeField = (props) => {
   // };
 
   return (
-    <>
-      <input
+    <Box padding={2}>
+      <Input
         name="hours"
         value={time.hours.toString()}
         onChange={handleChange}
-        style={{
-          width: '40px',
-          fontSize: '14px',
-          background: 'transparent',
-          border: 'none',
-          textAlign: 'right',
-        }}
         type="number"
-        min="0"
-        max="23"
+        inputProps={{
+          min: 0,
+          max: 59,
+          style: {
+            width: '40px',
+            fontSize: '14px',
+            background: 'transparent',
+            border: 'none',
+            textAlign: 'center',
+          }
+        }}
       />
       :
-      <input
+      <Input
         name="minutes"
         value={time.minutes.toString()}
         onChange={handleChange}
-        style={{
-          width: '40px',
-          fontSize: '14px',
-          background: 'transparent',
-          border: 'none',
-          textAlign: 'right',
-        }}
         type="number"
-        min="0"
-        max="23"
+        inputProps={{
+          min: 0,
+          max: 59,
+          style: {
+            width: '40px',
+            fontSize: '14px',
+            background: 'transparent',
+            border: 'none',
+            textAlign: 'center',
+          }
+        }}
       />
       :
-      <input
+      <Input
         name="seconds"
         value={time.seconds.toString()}
         onChange={handleChange}
-        style={{
-          width: '40px',
-          fontSize: '14px',
-          background: 'transparent',
-          border: 'none',
-          textAlign: 'right',
-        }}
         type="number"
-        min="0"
-        max="59"
+        inputProps={{
+          min: 0,
+          max: 59,
+          style: {
+            width: '40px',
+            fontSize: '14px',
+            background: 'transparent',
+            border: 'none',
+            textAlign: 'center',
+          }
+        }}
       />
-    </>
+    </Box>
   );
 };
 

@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import {
   Container,
-  Divider,
   Paper,
   Stack,
   styled,
@@ -9,7 +8,6 @@ import {
 } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import { ContentsWrapper } from '../../components/ContentsWrapper';
-import PickingCandi from './PickingCandi';
 import VideoPreview from '../../components/VideoPreview';
 import PreviewInfoContainer from './PreviewInfoContainer';
 import { useSelector } from 'react-redux';
@@ -17,6 +15,8 @@ import { useNavigate } from 'react-router-dom';
 import { useAlert } from '../../../hooks/useAlert';
 
 import axios from 'axios';
+import ShortsItem from "./ShortsItem";
+import TimeRangeContainer from "./TimeRangeContainer";
 
 function ShortsPicking() {
   const { t } = useTranslation(['page']);
@@ -25,6 +25,8 @@ function ShortsPicking() {
   const navigate = useNavigate();
   const alert = useAlert();
   const [timeStamp, setTimeStamp] = useState(0);
+  const [startTime, setStartTime] = useState(0);
+  const [endTime, setEndTime] = useState(0);
 
   function handleVideoResponse(response) {
     const blob = new Blob([response.data], {
@@ -43,6 +45,7 @@ function ShortsPicking() {
 
   function handleVideoError(error) {
     console.error(error);
+    alert.show('error', t(error.message));
   }
 
   useEffect(() => {
@@ -54,23 +57,31 @@ function ShortsPicking() {
 
   const moveYt = (timet) => {
     if (timet < 0 || timet >= ytInfo.video_length) {
-      alert.show('warning', t('message.invalid_time'));
+      alert.show('warning', t('부적절한 영상 구간입니다. 다시 선택하세요.'));
     } else {
       setTimeStamp(timet);
     }
   };
 
-  const getShorts = async (row) => {
+  const getShorts = async (startTime, endTime) => {
     await axios({
       method: 'post',
       url: `http://13.209.70.218:5000/yt_download/?url=${ytInfo.url}&user_want_time=${
-        row.end_time - row.start_time
-      }&start_time=${row.start_time}&end_time=${row.end_time}`,
+        endTime - startTime
+      }&start_time=${startTime}&end_time=${endTime}`,
       responseType: 'blob',
     })
       .then(handleVideoResponse)
       .catch(handleVideoError);
   };
+
+  const onChangeStartTime = (time) => {
+    setStartTime(time)
+  }
+
+  const onChangeEndTime = (time) => {
+    setEndTime(time)
+  }
 
   return (
     <ContentsWrapper disableGutters maxWidth={false} sx={{ padding: '0' }}>
@@ -79,43 +90,18 @@ function ShortsPicking() {
         disableGutters
         maxWidth={false}
         sx={{
-          flexDirection: {
-            xs: 'column',
-            sm: 'column',
-            md: 'column',
-            lg: 'row',
-          },
+          flexDirection: 'column',
         }}
       >
         <PickingContainer
           disableGutters
-          maxWidth={false}
+          maxWidth='md'
           sx={{
             display: 'flex',
-            flexDirection: {
-              xs: 'column',
-              sm: 'column',
-              md: 'column',
-              lg: 'row',
-            },
+            flexDirection: 'column',
           }}
         >
-          <PreviewPaper
-            sx={{
-              minWidth: {
-                xs: '100%',
-                sm: '100%',
-                md: '100%',
-                lg: '40%',
-              },
-              borderRadius: {
-                xs: '0',
-                sm: '0',
-                md: '0',
-                lg: '0.5rem',
-              },
-            }}
-          >
+          <PreviewPaper sx={{ width: '100%' }}>
             <PreviewTitle align="left">
               {t('shortsDownload.preview')}
             </PreviewTitle>
@@ -145,18 +131,29 @@ function ShortsPicking() {
               viewCount={ytInfo.view_count}
             />
           </PreviewPaper>
-          <Stack
-            direction="row"
-            divider={<Divider orientation="vertical" flexItem />}
-            justifyContent="flex-end"
-            spacing={2}
-          ></Stack>
-          <PickingCandi
-            infos={ytInfo.mr_info}
+          <TimeRangeContainer
+            startTime={startTime}
+            endTime={endTime}
+            onChangeStartTime={onChangeStartTime}
+            onChangeEndTime={onChangeEndTime}
             moveYt={moveYt}
             getShorts={getShorts}
-            description={t('picking.candiBrief')}
           />
+          <Stack width='100%' spacing={2}>
+            {
+              ytInfo.mr_info.map((item, index) => (
+                <ShortsItem
+                  key={index}
+                  info={item}
+                  index={index}
+                  moveYt={moveYt}
+                  getShorts={getShorts}
+                  onChangeStartTime={onChangeStartTime}
+                  onChangeEndTime={onChangeEndTime}
+                />
+              ))
+            }
+          </Stack>
         </PickingContainer>
       </MainContainer>
     </ContentsWrapper>
