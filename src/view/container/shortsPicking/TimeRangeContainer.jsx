@@ -21,21 +21,30 @@ const TimeRangeContainer = ({ startTime, endTime, moveYt, onChangeStartTime, onC
   return (
     <Paper sx={{ width: '100%' }}>
       <Stack
+        padding={2}
         justifyContent='center'
         alignItems='center'
         sx={{ flexDirection: {
           sm: 'row',
           xs: 'column',
-        }}}>
-        <TimeField
-          timestamp={startTime}
-          onChange={onChangeStartTime}
-        />
+          },
+          gap: '1rem',
+        }}>
+        <Stack direction='column' alignItems='center'>
+          <Typography variant='body2'>START</Typography>
+          <TimeField
+            timestamp={startTime}
+            onChange={onChangeStartTime}
+          />
+        </Stack>
         <Typography variant="body1">-</Typography>
-        <TimeField
-          timestamp={endTime}
-          onChange={onChangeEndTime}
-        />
+        <Stack direction='column' alignItems='center'>
+          <Typography variant='body2'>END</Typography>
+          <TimeField
+            timestamp={endTime}
+            onChange={onChangeEndTime}
+          />
+        </Stack>
       </Stack>
       <Stack
         direction='row'

@@ -28,7 +28,7 @@ const TimeField = ({ timestamp, onChange }) => {
   // };
 
   return (
-    <Box padding={2}>
+    <Box>
       <Input
         name="hours"
         value={time.hours.toString()}
