@@ -1,9 +1,10 @@
 import React, {useCallback} from 'react';
-import {Backdrop, Button, CircularProgress, Divider, Paper, Stack, styled} from "@mui/material";
+import {Button, Divider, Paper, Stack, styled} from "@mui/material";
 import Typography from "@mui/material/Typography";
 import {useTranslation} from "react-i18next";
 import {Download, PlayArrowRounded} from "@mui/icons-material";
 import {convertToTime} from "../../../utils/utils";
+import LoadingBackdrop from "./LoadingBackdrop";
 
 const ShortsItem = ({ info, index, moveYt, getShorts, onChangeStartTime, onChangeEndTime }) => {
   const { t } = useTranslation(['page']);
@@ -49,9 +50,7 @@ const ShortsItem = ({ info, index, moveYt, getShorts, onChangeStartTime, onChang
           다운로드
         </Button>
       </Stack>
-      <Backdrop open={loading}>
-        <CircularProgress />
-      </Backdrop>
+      <LoadingBackdrop loading={loading}/>
     </Item>
   );
 };
@@ -62,6 +61,7 @@ const Item = styled(Paper)(({ theme }) => ({
   color: theme.palette.text.primary,
   lineHeight: '60px',
   padding: '0',
+  position: 'relative',
 }));
 
 export default ShortsItem;

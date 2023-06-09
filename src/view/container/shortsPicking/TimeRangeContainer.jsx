@@ -4,6 +4,7 @@ import TimeField from "../../components/TimeField";
 import {useTranslation} from "react-i18next";
 import {Download, PlayArrowRounded} from "@mui/icons-material";
 import Typography from "@mui/material/Typography";
+import LoadingBackdrop from "./LoadingBackdrop";
 
 const TimeRangeContainer = ({ startTime, endTime, moveYt, onChangeStartTime, onChangeEndTime, getShorts }) => {
   const { t } = useTranslation(['page']);
@@ -19,7 +20,7 @@ const TimeRangeContainer = ({ startTime, endTime, moveYt, onChangeStartTime, onC
   };
 
   return (
-    <Paper sx={{ width: '100%' }}>
+    <Paper sx={{ width: '100%', position: 'relative' }}>
       <Stack
         padding={2}
         justifyContent='center'
@@ -59,9 +60,7 @@ const TimeRangeContainer = ({ startTime, endTime, moveYt, onChangeStartTime, onC
           다운로드
         </Button>
       </Stack>
-      <Backdrop open={loading}>
-        <CircularProgress />
-      </Backdrop>
+      <LoadingBackdrop loading={loading}/>
     </Paper>
   );
 };
