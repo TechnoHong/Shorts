@@ -5,18 +5,25 @@ import {useTranslation} from "react-i18next";
 import {Download, PlayArrowRounded} from "@mui/icons-material";
 import Typography from "@mui/material/Typography";
 import LoadingBackdrop from "./LoadingBackdrop";
+import {convertToTime} from "../../../utils/utils";
+import {useAlert} from "../../../hooks/useAlert";
 
 const TimeRangeContainer = ({ startTime, endTime, moveYt, onChangeStartTime, onChangeEndTime, getShorts }) => {
   const { t } = useTranslation(['page']);
   const [loading, setLoading] = useState(false)
+  const alert = useAlert();
 
   const onPlayYt = (startTime) => {
     moveYt(startTime)
   }
 
   const handleDownload = (startTime, endTime) => {
-    setLoading(true);
-    getShorts(startTime, endTime).then(() => setLoading(false));
+    if( startTime >= endTime ){
+        alert.show('info','종료시간이 시작시간보다 큽니다. 시간을 변경해 주세요');
+        return;
+    }
+      setLoading(true);
+      getShorts(startTime, endTime).then(() => setLoading(false));
   };
 
   return (
