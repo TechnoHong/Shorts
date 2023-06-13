@@ -49,7 +49,6 @@ const MainTypography = styled(Typography)(({ theme, gradient }) => ({
   backgroundClip: gradient && 'text',
   WebkitBackgroundClip: gradient && 'text',
   color: gradient ? 'transparent' : theme.palette.text.mainDescription,
-  fontFamily: 'Gowun Batang, serif',
 }));
 
 MainDescription.propTypes = {

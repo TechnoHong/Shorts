@@ -66,7 +66,7 @@ function ShortsPicking() {
   const getShorts = async (startTime, endTime) => {
     await axios({
       method: 'post',
-      url: `http://13.209.70.218:5000/yt_download/?url=${ytInfo.url}&user_want_time=${
+      url: `${process.env.REACT_APP_BASE_URL}/yt_download/?url=${ytInfo.url}&user_want_time=${
         endTime - startTime
       }&start_time=${startTime}&end_time=${endTime}`,
       responseType: 'blob',

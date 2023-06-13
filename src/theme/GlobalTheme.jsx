@@ -81,8 +81,7 @@ export const theme = (mode) =>
     },
     typography: {
       fontFamily: [
-        'Hahmlet',
-        'serif',
+        'Noto Sans KR', 'sans-serif',
         '-apple-system',
         'BlinkMacSystemFont',
         'Segoe UI',
