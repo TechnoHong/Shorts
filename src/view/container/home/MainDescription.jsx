@@ -11,7 +11,7 @@ const MainDescription = ({ description }) => {
   return (
     <Box
       sx={{
-        width: { sm: '100%', lg: '30%' },
+        width: '100%',
         padding: '2rem',
         display: 'flex',
         justifyContent: 'center',
@@ -28,11 +28,7 @@ const MainDescription = ({ description }) => {
           key={token + index}
         >
           <MainTypography
-            gradient={
-              index === stringTokenizer(description).length - 1
-                ? 'true'
-                : undefined
-            }
+            gradient={undefined}
           >
             {token}
           </MainTypography>

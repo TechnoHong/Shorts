@@ -22,7 +22,7 @@ function Home() {
   const { t } = useTranslation(['page']);
   const [ytURL, setYtURL] = useState('');
   const [range, setRange] = useState(60);
-  const [count, setCount] = useState(5);
+  const [count, setCount] = useState(10);
   const [isEmptyInput, setIsEmptyInput] = useState(false);
 
   const loading = useSelector((state) => state.ytInfo.loading);
@@ -66,13 +66,8 @@ function Home() {
           display: 'flex',
           gap: '3rem',
           alignItems: 'center',
-          flexDirection: {
-            xs: 'column',
-            sm: 'column',
-            md: 'column',
-            lg: 'row',
-          },
-          padding: { md: '0', lg: '7rem' },
+          flexDirection: 'column',
+          padding: '0',
         }}
       >
         <MainDescription description={t('main.mainDescription')} />
@@ -80,10 +75,9 @@ function Home() {
           disableGutters
           maxWidth="md"
           sx={{
-            borderRadius: { md: 'none', lg: '30px' },
+            borderRadius: { md: 'none', lg: '20px 20px 0 0' },
           }}
         >
-          <StepDescription step="1." description={t('main.stepDescription1')} />
           <TextField
             error={isEmptyInput}
             id="url-text-field"
@@ -96,18 +90,11 @@ function Home() {
               setYtURL(e.target.value);
             }}
           />
-          <Divider flexItem />
-          <StepDescription step="2." description={t('main.stepDescription2')} />
-          <RangeSlider range={range} setRange={setRange} />
-          <ShortsAmountSelector count={count} setCount={setCount} />
-          <Divider flexItem />
-          <StepDescription step="3." description={t('main.stepDescription3')} />
           <LoadingButton
             loading={loading && true}
             disableElevation
-            fullWidth
             variant="contained"
-            sx={{ fontSize: '1.5rem', textTransform: 'none' }}
+            sx={{ fontSize: '1rem', textTransform: 'none' }}
             endIcon={<Send />}
             onClick={handlePickingButton}
           >
@@ -141,9 +128,10 @@ function Home() {
 const SearchContainer = styled(Container)(({ theme }) => ({
   ...theme.components.MuiContainer,
   display: 'flex',
-  flexDirection: 'column',
+  flexDirection: 'row',
   padding: '2rem',
-  alignItems: 'center',
+  alignItems: 'stretch',
+  justifyContent: 'center',
   gap: '1rem',
   background: theme.palette.background.homeSearchContainer,
 }));
