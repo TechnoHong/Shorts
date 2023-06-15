@@ -16,7 +16,7 @@ import { useAlert } from '../../../hooks/useAlert';
 
 import axios from 'axios';
 import ShortsItem from "./ShortsItem";
-import TimeRangeContainer from "./TimeRangeContainer";
+import ShortsCustomContainer from "./ShortsCustomContainer";
 
 function ShortsPicking() {
   const { t } = useTranslation(['page']);
@@ -63,7 +63,7 @@ function ShortsPicking() {
     }
   };
 
-  const getShorts = async (startTime, endTime) => {
+  const getShorts = async (startTime, endTime, option = 'fullWidth') => { //TODO: api 파라미터 수정 후 작업
     await axios({
       method: 'post',
       url: `${process.env.REACT_APP_BASE_URL}/yt_download/?url=${ytInfo.url}&user_want_time=${
@@ -131,7 +131,7 @@ function ShortsPicking() {
               viewCount={ytInfo.view_count}
             />
           </PreviewPaper>
-          <TimeRangeContainer
+          <ShortsCustomContainer
             startTime={startTime}
             endTime={endTime}
             onChangeStartTime={onChangeStartTime}

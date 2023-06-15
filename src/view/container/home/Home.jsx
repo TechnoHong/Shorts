@@ -2,16 +2,14 @@ import * as React from 'react';
 import TextField from '@mui/material/TextField';
 import { ContentsWrapper } from '../../components/ContentsWrapper';
 import { useTranslation } from 'react-i18next';
-import { Container, Divider, styled } from '@mui/material';
-import RangeSlider from './RangeSlider';
-import ShortsAmountSelector from './ShortsAmountSelector';
+import { Container, styled } from '@mui/material';
 import { Send } from '@mui/icons-material';
-import StepDescription from './StepDescription';
 import MainDescription from './MainDescription';
 import { useState } from 'react';
 import GuideContainer from './GuideContainer';
 import lottieData1 from '../../../assets/images/lotties/youtube-content.json';
-import lottieData2 from '../../../assets/images/lotties/video-editting.json';
+import lottieData2 from '../../../assets/images/lotties/video-editing.json';
+import lottieData3 from '../../../assets/images/lotties/video-editing2.json';
 import { action } from '../../../api/YoutubeAPI';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
@@ -118,7 +116,7 @@ function Home() {
         <GuideContainer
             title={t('main.guideTitle3')}
             desc={t('main.guideDesc3')}
-            animationData={lottieData2}
+            animationData={lottieData3}
         />
       </SubContainer>
     </ContentsWrapper>
