@@ -66,9 +66,7 @@ function ShortsPicking() {
   const getShorts = async (startTime, endTime, option = 'fullWidth') => { //TODO: api 파라미터 수정 후 작업
     await axios({
       method: 'post',
-      url: `${process.env.REACT_APP_BASE_URL}/yt_download/?url=${ytInfo.url}&user_want_time=${
-        endTime - startTime
-      }&start_time=${startTime}&end_time=${endTime}`,
+      url: `${process.env.REACT_APP_BASE_URL}/yt_download/?url=${ytInfo.url}&&start_time=${startTime}&end_time=${endTime}&option=${option}`,
       responseType: 'blob',
     })
       .then(handleVideoResponse)
