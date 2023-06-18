@@ -57,7 +57,7 @@ function ShortsPicking() {
 
   const moveYt = (timet) => {
     if (timet < 0 || timet >= ytInfo.video_length) {
-      alert.show('warning', t('부적절한 영상 구간입니다. 다시 선택하세요.'));
+      alert.show('warning', t('message.time_error'));
     } else {
       setTimeStamp(timet);
     }

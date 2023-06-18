@@ -70,11 +70,11 @@ const ShortsCustomContainer = ({ startTime, endTime, moveYt, onChangeStartTime, 
       >
         <Button onClick={() => onPlayYt(startTime)} fullWidth sx={{ flexDirection: 'column' }}>
           <PlayArrowRounded/>
-          미리보기
+            {t('shortsDownload.preview')}
         </Button>
         <Button onClick={() => handleDownload(startTime, endTime)} fullWidth sx={{ flexDirection: 'column' }}>
           <Download/>
-          다운로드
+            {t('tips.btn_download')}
         </Button>
       </Stack>
       <LoadingBackdrop loading={loading}/>

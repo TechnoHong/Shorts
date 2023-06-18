@@ -47,7 +47,8 @@
         "redirection": "Try again",
         "invalid_s_time": "The start time cannot be later than the end.",
         "invalid_e_time": "The end time cannot be earlier than the start.",
-        "empty_url": "Oops"
+        "empty_url": "Oops",
+        "time_error": "Invalid video interval. Please choose again."
     },
     "tips": {
         "btn_restore": "restore",

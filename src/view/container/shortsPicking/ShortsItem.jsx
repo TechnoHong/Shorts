@@ -43,11 +43,11 @@ const ShortsItem = ({ info, index, moveYt, getShorts, onChangeStartTime, onChang
       >
         <Button onClick={() => handleClick(info)} fullWidth sx={{ flexDirection: 'column' }}>
           <PlayArrowRounded/>
-          미리보기
+            {t('shortsDownload.preview')}
         </Button>
         <Button onClick={() => handleDownload(info.start_time, info.end_time)} fullWidth sx={{ flexDirection: 'column' }}>
           <Download/>
-          다운로드
+            {t('tips.btn_download')}
         </Button>
       </Stack>
       <LoadingBackdrop loading={loading}/>
