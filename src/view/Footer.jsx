@@ -6,7 +6,7 @@ const ButtonAppBar = () => {
   return (
     <Footer>
       <Typography align="center" gutterBottom variant="body2">
-        ⓒ 2023 Team TCNK All rights reserved.
+        ⓒ 2023 Team TCNK All rights reserved. v{process.env.REACT_APP_VERSION}
       </Typography>
     </Footer>
   );
