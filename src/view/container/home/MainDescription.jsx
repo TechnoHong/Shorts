@@ -1,54 +1,41 @@
 import React from 'react';
-import { Box, Fade, styled } from '@mui/material';
-import Typography from '@mui/material/Typography';
-import PropTypes from 'prop-types';
+import {Box, Fade, Typography} from '@mui/material';
+import {useTranslation} from "react-i18next";
 
-const MainDescription = ({ description }) => {
-  const stringTokenizer = (str) => {
-    return str.split(' ');
-  };
+const MainDescription = () => {
+  const { t } = useTranslation(['page']);
 
   return (
     <Box
       sx={{
         width: '100%',
-        padding: '2rem',
+        padding: '0.5rem',
         display: 'flex',
         justifyContent: 'center',
-        alignItems: 'center',
-        gap: '0.5rem',
+        alignItems: {
+          xs: 'center',
+          sm: 'center',
+          md: 'start',
+        },
+        flexDirection: 'column',
+        gap: '0.25rem',
         flexWrap: 'wrap',
       }}
     >
-      {stringTokenizer(description).map((token, index) => (
-        <Fade
-          in
-          timeout={500}
-          style={{ transitionDelay: `${index * 120}ms` }}
-          key={token + index}
-        >
-          <MainTypography
-            gradient={undefined}
-          >
-            {token}
-          </MainTypography>
-        </Fade>
-      ))}
+      <Fade in timeout={500} style={{ transitionDelay: '0ms' }}>
+        <Typography style={{ fontSize: '1rem', fontWeight: 500 }}>{t('main.mainDesc1')}</Typography>
+      </Fade>
+      <Fade in timeout={500} style={{ transitionDelay: '300ms' }}>
+        <Typography sx={{
+          display: {
+            xs: 'none',
+            sm: 'none',
+            md: 'block',
+          }
+        }} style={{ fontSize: '0.825rem'}}>{t('main.mainDesc2')}</Typography>
+      </Fade>
     </Box>
   );
-};
-
-const MainTypography = styled(Typography)(({ theme, gradient }) => ({
-  ...theme.components.MuiTypography,
-  fontSize: '1.5rem',
-  background: gradient && theme.palette.background.homeTypoGradient,
-  backgroundClip: gradient && 'text',
-  WebkitBackgroundClip: gradient && 'text',
-  color: gradient ? 'transparent' : theme.palette.text.mainDescription,
-}));
-
-MainDescription.propTypes = {
-  description: PropTypes.string.isRequired,
 };
 
 export default MainDescription;

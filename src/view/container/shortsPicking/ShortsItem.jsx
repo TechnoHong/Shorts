@@ -1,13 +1,12 @@
 import React, {useCallback} from 'react';
-import {Button, Divider, Paper, Stack, styled} from "@mui/material";
+import {Button, Paper, Stack, styled} from "@mui/material";
 import Typography from "@mui/material/Typography";
 import {useTranslation} from "react-i18next";
-import {Download, PlayArrowRounded} from "@mui/icons-material";
+import {PlayArrowRounded} from "@mui/icons-material";
 import {convertToTime} from "../../../utils/utils";
 import LoadingBackdrop from "./LoadingBackdrop";
 
-const ShortsItem = ({ info, index, moveYt, getShorts, onChangeStartTime, onChangeEndTime }) => {
-  const { t } = useTranslation(['page']);
+const ShortsItem = ({ info, index, moveYt, onChangeStartTime, onChangeEndTime }) => {
   const [loading, setLoading] = React.useState(false);
 
   const handleClick = useCallback(
@@ -20,34 +19,20 @@ const ShortsItem = ({ info, index, moveYt, getShorts, onChangeStartTime, onChang
     [moveYt],
   );
 
-  const handleDownload = (startTime, endTime) => {
-    setLoading(true);
-    getShorts(startTime, endTime).then(() => setLoading(false));
-  };
-
   const getTimeStr = (millis) => {
     const time = convertToTime(millis)
     return `${time.hours}:${time.minutes}:${time.seconds}`
   }
 
   return (
-    <Item>
-      <Stack direction='row' alignItems='end' spacing={2} padding={2}>
-        <Typography variant="h5" textAlign='start'>{`#${index + 1}`}</Typography>
-        <Typography variant="body2" textAlign='start'>{`${getTimeStr(info.start_time)} - ${getTimeStr(info.end_time)}`}</Typography>
-      </Stack>
-      <Stack
-        direction='row'
-        justifyContent='space-evenly'
-        divider={<Divider orientation="vertical" flexItem />}
-      >
-        <Button onClick={() => handleClick(info)} fullWidth sx={{ flexDirection: 'column' }}>
-          <PlayArrowRounded/>
-            {t('shortsDownload.preview')}
-        </Button>
-        <Button onClick={() => handleDownload(info.start_time, info.end_time)} fullWidth sx={{ flexDirection: 'column' }}>
-          <Download/>
-            {t('tips.btn_download')}
+    <Item elevation={0}>
+      <Stack direction='row' alignItems='center' spacing={2} padding={2} justifyContent='space-between'>
+        <Stack direction='row' alignItems='center' spacing={2}>
+          <Typography variant="h5" textAlign='start' sx={{ fontWeight: 700, paddingLeft: '0.5rem' }}>{`${index + 1}`}</Typography>
+          <Typography variant="body2" textAlign='start'>{`${getTimeStr(info.start_time)} - ${getTimeStr(info.end_time)}`}</Typography>
+        </Stack>
+        <Button onClick={() => handleClick(info)}>
+          <PlayArrowRounded color='secondary'/>
         </Button>
       </Stack>
       <LoadingBackdrop loading={loading}/>
@@ -57,11 +42,14 @@ const ShortsItem = ({ info, index, moveYt, getShorts, onChangeStartTime, onChang
 
 const Item = styled(Paper)(({ theme }) => ({
   ...theme.typography.body2,
+  width: '20rem',
   textAlign: 'center',
   color: theme.palette.text.primary,
   lineHeight: '60px',
   padding: '0',
   position: 'relative',
+  border: `1px solid ${theme.palette.primary.dark}`,
+  borderRadius: '10rem',
 }));
 
 export default ShortsItem;

@@ -34,7 +34,7 @@ const PreviewInfoContainer = ({
   const { t } = useTranslation(['page']);
 
   return (
-    <Accordion>
+    <Accordion elevation={0} disableGutters={true} >
       <AccordionSummary expandIcon={<ExpandMore />}>
         <Typography>{t('picking.info.more_info')}</Typography>
       </AccordionSummary>

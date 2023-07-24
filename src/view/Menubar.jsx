@@ -8,7 +8,7 @@ import {
   Menu,
   Button,
   Tooltip,
-  Container,
+  Container, styled,
 } from '@mui/material';
 import Typography from '@mui/material/Typography';
 import IconButton from '@mui/material/IconButton';
@@ -21,6 +21,7 @@ import {
 import { ColorModeContext } from '../context/ColorContext';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import MainLogo from "./components/MainLogo";
 
 const pages = null;
 
@@ -34,7 +35,7 @@ const ColorModeContainer = () => {
         <IconButton
           sx={{ ml: 1, p: 0 }}
           onClick={colorMode.toggleColorMode}
-          color="inherit"
+          color="secondary"
         >
           {theme.palette.mode === 'dark' ? <Brightness4 /> : <Brightness7 />}
         </IconButton>
@@ -58,7 +59,7 @@ const ChangeLangContainer = () => {
         <IconButton
           sx={{ ml: 1, p: 0 }}
           onClick={handleChangeLang}
-          color="inherit"
+          color="secondary"
         >
           <Language />
         </IconButton>
@@ -79,22 +80,10 @@ const ButtonAppBar = () => {
   };
 
   return (
-    <AppBar position="static" elevation={0} enableColorOnDark>
+    <MenuBarWrapper position="fixed" elevation={0} enableColorOnDark color='transparent'>
       <Container maxWidth={false}>
-        <Toolbar disableGutters>
-          <a
-            href={'/'}
-            style={{
-              display: 'flex',
-              flexGrow: 1,
-            }}
-          >
-            <img
-              alt="logo"
-              src={process.env.PUBLIC_URL + '/logo192.png'}
-              style={{ height: '100%', maxWidth: '10rem' }}
-            />
-          </a>
+        <Toolbar disableGutters variant='dense'>
+          <MainLogo />
           {pages && (
             <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
               <IconButton
@@ -150,7 +139,15 @@ const ButtonAppBar = () => {
           <ColorModeContainer />
         </Toolbar>
       </Container>
-    </AppBar>
+    </MenuBarWrapper>
   );
 };
+
+const MenuBarWrapper = styled(AppBar)(({ theme }) => ({
+  ...theme.components.MuiAppBar,
+  borderBottom: `1px ${theme.palette.primary.light} solid`,
+  background: theme.palette.background.halfOpacity,
+  backdropFilter: `blur(15px)`,
+}))
+
 export default ButtonAppBar;

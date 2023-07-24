@@ -1,22 +1,20 @@
 import React, { useEffect, useState } from 'react';
 import {
   Container,
-  Paper,
   Stack,
   styled,
-  Typography,
 } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import { ContentsWrapper } from '../../components/ContentsWrapper';
-import VideoPreview from '../../components/VideoPreview';
-import PreviewInfoContainer from './PreviewInfoContainer';
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { useAlert } from '../../../hooks/useAlert';
 
 import axios from 'axios';
 import ShortsItem from "./ShortsItem";
-import ShortsCustomContainer from "./ShortsCustomContainer";
+import PreviewContainer from "./PreviewContainer";
+import Button from "@mui/material/Button";
+import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
 
 function ShortsPicking() {
   const { t } = useTranslation(['page']);
@@ -27,6 +25,7 @@ function ShortsPicking() {
   const [timeStamp, setTimeStamp] = useState(0);
   const [startTime, setStartTime] = useState(0);
   const [endTime, setEndTime] = useState(0);
+  const [ratio, setRatio] = useState('fullWidth')
 
   function handleVideoResponse(response) {
     const blob = new Blob([response.data], {
@@ -81,9 +80,16 @@ function ShortsPicking() {
     setEndTime(time)
   }
 
+  const handleChangeRatio = (event) => {
+    setRatio(event.target.value);
+  };
+
+  const handleDownload = (startTime, endTime) => {
+    getShorts(startTime, endTime).then(r => console.log(r, 'done'))
+  }
+
   return (
     <ContentsWrapper disableGutters maxWidth={false} sx={{ padding: '0' }}>
-      <PickingTitle align="center">{t('picking.mainDescription')}</PickingTitle>
       <MainContainer
         disableGutters
         maxWidth={false}
@@ -91,53 +97,35 @@ function ShortsPicking() {
           flexDirection: 'column',
         }}
       >
+        <Button //todo 여기 감싸서 유튜브 검색 창, 다운로드 버튼 같은 기능 버튼들 모아두기
+          variant="contained"
+          disableElevation
+          endIcon={<KeyboardArrowRightIcon />}
+          onClick={() => handleDownload(startTime, endTime)}
+          color='secondary'
+        >
+          {t('tips.btn_download')}
+        </Button>
         <PickingContainer
           disableGutters
-          maxWidth='md'
+          maxWidth={false}
           sx={{
-            display: 'flex',
-            flexDirection: 'column',
+            flexDirection: {
+              xs: 'column',
+              sm: 'column',
+              md: 'row',
+            },
           }}
         >
-          <PreviewPaper sx={{ width: '100%' }}>
-            <PreviewTitle align="left">
-              {t('shortsDownload.preview')}
-            </PreviewTitle>
-            <div
-              style={{
-                position: 'relative',
-                paddingTop: '56.25%' /* 720 / 1280 = 0.5625 */,
-              }}
-            >
-              <VideoPreview
-                isAutoPlay={true}
-                ytURL={
-                  'https://youtu.be/' +
-                  ytInfo.video_id +
-                  '?t=' +
-                  timeStamp / 1000
-                }
-              />
-            </div>
-            <PreviewInfoContainer
-              title={ytInfo.title}
-              uploader={ytInfo.owner.owner}
-              subscribers={ytInfo.owner.owner_subscribers}
-              uploadDate={ytInfo.upload_date}
-              tags={ytInfo.tags}
-              url={ytInfo.owner.owner_url}
-              viewCount={ytInfo.view_count}
-            />
-          </PreviewPaper>
-          <ShortsCustomContainer
-            startTime={startTime}
-            endTime={endTime}
-            onChangeStartTime={onChangeStartTime}
-            onChangeEndTime={onChangeEndTime}
-            moveYt={moveYt}
-            getShorts={getShorts}
-          />
-          <Stack width='100%' spacing={2}>
+          {/*<ShortsCustomContainer*/}
+          {/*  startTime={startTime}*/}
+          {/*  endTime={endTime}*/}
+          {/*  onChangeStartTime={onChangeStartTime}*/}
+          {/*  onChangeEndTime={onChangeEndTime}*/}
+          {/*  moveYt={moveYt}*/}
+          {/*  getShorts={getShorts}*/}
+          {/*/>*/}
+          <Stack spacing={2}>
             {
               ytInfo.mr_info.map((item, index) => (
                 <ShortsItem
@@ -152,6 +140,7 @@ function ShortsPicking() {
               ))
             }
           </Stack>
+          <PreviewContainer ytInfo={ytInfo} timeStamp={timeStamp} handleChangeRatio={handleChangeRatio} ratio={ratio}/>
         </PickingContainer>
       </MainContainer>
     </ContentsWrapper>
@@ -160,11 +149,11 @@ function ShortsPicking() {
 const PickingContainer = styled(Container)(({ theme }) => ({
   ...theme.components.MuiContainer,
   display: 'flex',
-  flexDirection: 'column',
+  alignItems: 'start',
+  justifyContent: 'space-between',
   padding: '2rem',
-  alignItems: 'center',
-  gap: '2rem',
-  background: theme.palette.background.homeSearchContainer,
+  gap: '1rem',
+  background: theme.palette.background.halfOpacity,
 }));
 
 const MainContainer = styled(Container)(({ theme }) => ({
@@ -174,28 +163,7 @@ const MainContainer = styled(Container)(({ theme }) => ({
   height: '100%',
   gap: '2rem',
   paddingBottom: '1.5rem',
-  background: theme.palette.primary.light,
-}));
-
-const PreviewPaper = styled(Paper)(({ theme }) => ({
-  ...theme.components.MuiPaper,
-  position: 'static',
-  top: '1rem',
-  background: theme.palette.grey['900'],
-}));
-
-const PickingTitle = styled(Typography)(({ theme }) => ({
-  ...theme.components.MuiTypography,
-  width: '100%',
-  padding: '2rem',
-  background: theme.palette.primary.light,
-  fontSize: '24px',
-}));
-
-const PreviewTitle = styled(Typography)(({ theme }) => ({
-  ...theme.components.MuiTypography,
-  color: theme.palette.primary.light,
-  padding: '0.5rem 1rem',
+  background: theme.palette.primary.main,
 }));
 
 export default ShortsPicking;

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Box, Container, styled, Typography } from '@mui/material';
+import {Box, Container, styled, Typography} from '@mui/material';
 import Lottie from 'react-lottie';
 import PropTypes from 'prop-types';
 
@@ -28,17 +28,22 @@ const GuideContainer = ({ title, desc, animationData, reverse }) => {
         alignItems: 'center',
       }}
     >
-      <Lottie
-        options={lottieOptions}
-        width="15rem"
-        height="15rem"
-        style={{ margin: 0 }}
-      />
+      { animationData && (
+        <Lottie
+          options={lottieOptions}
+          width="15rem"
+          height="15rem"
+          style={{ margin: 0 }}
+        />
+      )}
       <GuideDescription>
-        <GuideTypo variant="h5" reverse={reverse && 'true'}>
+        <GuideTypo reverse={reverse && 'true'} sx={{
+          fontSize: '1rem',
+          fontWeight: 700,
+        }}>
           {title}
         </GuideTypo>
-        <GuideTypo variant="body1" reverse={reverse && 'true'}>
+        <GuideTypo variant="body2" reverse={reverse && 'true'} sub={'true'}>
           {desc}
         </GuideTypo>
       </GuideDescription>
@@ -48,11 +53,11 @@ const GuideContainer = ({ title, desc, animationData, reverse }) => {
 
 const GuideBox = styled(Box)(({ theme }) => ({
   display: 'flex',
-  padding: '2rem',
-  borderRadius: '30px',
-  border: '1px solid',
-  borderColor: theme.palette.primary.light,
-  background: theme.palette.background.homeSearchContainer,
+  padding: '1rem',
+  borderRadius: '5px',
+  border: `1px ${theme.palette.primary.dark} solid`,
+  background: theme.palette.primary.main,
+  zIndex: 1,
 }));
 
 const GuideDescription = styled(Container)(({ theme }) => ({
@@ -63,9 +68,9 @@ const GuideDescription = styled(Container)(({ theme }) => ({
   flexDirection: 'column',
 }));
 
-const GuideTypo = styled(Typography)(({ theme, reverse }) => ({
+const GuideTypo = styled(Typography)(({ theme, reverse, sub }) => ({
   ...theme.components.MuiTypography,
-  color: theme.palette.text.guide,
+  color: sub ? theme.palette.text.guide : theme.palette.text.primary,
   alignSelf: reverse ? 'end' : 'start',
 }));
 

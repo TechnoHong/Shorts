@@ -2,19 +2,18 @@ import * as React from 'react';
 import TextField from '@mui/material/TextField';
 import { ContentsWrapper } from '../../components/ContentsWrapper';
 import { useTranslation } from 'react-i18next';
-import { Container, styled } from '@mui/material';
-import { Send } from '@mui/icons-material';
+import {Container, Paper, styled} from '@mui/material';
+import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight';
 import MainDescription from './MainDescription';
 import { useState } from 'react';
 import GuideContainer from './GuideContainer';
-import lottieData1 from '../../../assets/images/lotties/youtube-content.json';
-import lottieData2 from '../../../assets/images/lotties/video-editing.json';
-import lottieData3 from '../../../assets/images/lotties/video-editing2.json';
 import { action } from '../../../api/YoutubeAPI';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { LoadingButton } from '@mui/lab';
 import { useAlert } from '../../../hooks/useAlert';
+import Title from "./Title";
+import HomeDeco from "../../components/HomeDeco";
 
 function Home() {
   const { t } = useTranslation(['page']);
@@ -57,68 +56,84 @@ function Home() {
       maxWidth={false}
       sx={{ padding: '0 0 1.5rem' }}
     >
-      <MainContainer
-        disableGutters
-        maxWidth={false}
-        sx={{
-          display: 'flex',
-          gap: '3rem',
-          alignItems: 'center',
-          flexDirection: 'column',
-          padding: '0',
-        }}
-      >
-        <MainDescription description={t('main.mainDescription')} />
-        <SearchContainer
+      <RootContainer  sx={{
+        flexDirection: {
+          xs: 'column',
+          sm: 'column',
+          md: 'row',
+        }
+      }}>
+        <MainContainer
           disableGutters
-          maxWidth="md"
+          maxWidth={false}
           sx={{
-            borderRadius: { md: 'none', lg: '20px 20px 0 0' },
+            display: 'flex',
+            gap: '1rem',
+            alignItems: {
+              xs: 'center',
+              sm: 'center',
+              md: 'start',
+            },
+            flexDirection: 'column',
+            padding: '2rem',
           }}
         >
-          <TextField
-            error={isEmptyInput}
-            id="url-text-field"
-            placeholder={t('main.searchLabel')}
-            variant="filled"
-            sx={{ minWidth: '80%' }}
-            value={ytURL}
-            onChange={(e) => {
-              setIsEmptyInput(false);
-              setYtURL(e.target.value);
+          <Title/>
+          <MainDescription />
+          <SearchContainer
+            disableGutters
+            sx={{
+              alignItems: {
+                sm: 'center',
+                md: 'start',
+              },
             }}
-          />
-          <LoadingButton
-            loading={loading && true}
-            disableElevation
-            variant="contained"
-            sx={{ fontSize: '1rem', textTransform: 'none' }}
-            endIcon={<Send />}
-            onClick={handlePickingButton}
           >
-            Picking
-          </LoadingButton>
-        </SearchContainer>
-      </MainContainer>
+            <TextField
+              error={isEmptyInput}
+              id="url-text-field"
+              placeholder={t('main.searchLabel')}
+              variant="outlined"
+              color='secondary'
+              sx={{ minWidth: '80%' }}
+              value={ytURL}
+              onChange={(e) => {
+                setIsEmptyInput(false);
+                setYtURL(e.target.value);
+              }}
+            />
+            <LoadingButton
+              loading={loading && true}
+              variant="outlined"
+              endIcon={<KeyboardArrowRightIcon />}
+              onClick={handlePickingButton}
+              color='secondary'
+            >
+              Picking
+            </LoadingButton>
+          </SearchContainer>
+        </MainContainer>
 
-      <SubContainer maxWidth={false}>
-        <GuideContainer
-          title={t('main.guideTitle1')}
-          desc={t('main.guideDesc1')}
-          animationData={lottieData1}
-        />
-        <GuideContainer
-          title={t('main.guideTitle2')}
-          desc={t('main.guideDesc2')}
-          animationData={lottieData2}
-          reverse={true}
-        />
-        <GuideContainer
+        <SubContainer elevation={0}>
+          <GuideContainer
+            title={t('main.guideTitle1')}
+            desc={t('main.guideDesc1')}
+          />
+          <GuideContainer
+            title={t('main.guideTitle2')}
+            desc={t('main.guideDesc2')}
+          />
+          <GuideContainer
             title={t('main.guideTitle3')}
             desc={t('main.guideDesc3')}
-            animationData={lottieData3}
-        />
-      </SubContainer>
+          />
+          <GuideContainer
+            title={t('main.guideTitle4')}
+            desc={t('main.guideDesc4')}
+          />
+          <HomeDeco />
+        </SubContainer>
+      </RootContainer>
     </ContentsWrapper>
   );
 }
@@ -126,26 +141,34 @@ function Home() {
 const SearchContainer = styled(Container)(({ theme }) => ({
   ...theme.components.MuiContainer,
   display: 'flex',
-  flexDirection: 'row',
-  padding: '2rem',
-  alignItems: 'stretch',
-  justifyContent: 'center',
+  flexDirection: 'column',
   gap: '1rem',
-  background: theme.palette.background.homeSearchContainer,
+  background: 'transparent',
 }));
+
+const RootContainer = styled(Paper)(({ theme }) => ({
+  ...theme.components.MuiPaper,
+  display: 'flex',
+  alignItems: 'center',
+  width: 'inherit',
+  minHeight: `calc(100vh - 3rem)`,
+}))
 
 const MainContainer = styled(Container)(({ theme }) => ({
   ...theme.components.MuiContainer,
-  background: theme.palette.background.homeMainContainer,
 }));
 
-const SubContainer = styled(Container)(({ theme }) => ({
-  ...theme.components.MuiContainer,
+const SubContainer = styled(Paper)(({ theme }) => ({
+  ...theme.components.MuiPaper,
+  width: '100%',
+  height: '100%',
   display: 'flex',
   flexDirection: 'column',
-  gap: '2rem',
-  background: theme.palette.background.homeSubContainer,
+  gap: '1rem',
   padding: '2rem',
+  background: theme.palette.background.subContainer,
+  borderRadius: '0',
+  position: 'relative',
 }));
 
 export default Home;

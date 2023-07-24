@@ -7,4 +7,5 @@ export const ContentsWrapper = styled(Container)(({ theme }) => ({
   flex: 1,
   padding: '1.5rem',
   alignItems: 'center',
+  marginTop: '3rem',
 }));
