@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import {
   Container,
-  Stack,
   styled,
 } from '@mui/material';
 import { useTranslation } from 'react-i18next';
@@ -11,10 +10,10 @@ import { useNavigate } from 'react-router-dom';
 import { useAlert } from '../../../hooks/useAlert';
 
 import axios from 'axios';
-import ShortsItem from "./ShortsItem";
 import PreviewContainer from "./PreviewContainer";
 import Header from "./Header";
 import {changeEndTime, changeRatio, changeStartTime} from "../../../controllers/editSlice";
+import RecommendedContainer from "./RecommendedContainer";
 
 function ShortsPicking() {
   const { t } = useTranslation(['page']);
@@ -27,6 +26,7 @@ function ShortsPicking() {
   const dispatch = useDispatch();
 
   function handleVideoResponse(response) {
+    console.log('hong', JSON.stringify(response))
     const blob = new Blob([response.data], {
       type: response.headers['content-type'],
     });
@@ -93,7 +93,7 @@ function ShortsPicking() {
     <ContentsWrapper disableGutters maxWidth={false} sx={{ padding: '0' }}>
       <MainContainer
         disableGutters
-        maxWidth={false}
+        maxWidth='lg'
         sx={{
           flexDirection: 'column',
         }}>
@@ -107,22 +107,19 @@ function ShortsPicking() {
               sm: 'column-reverse',
               md: 'row',
             },
+            padding: {
+              xs: '0.5rem',
+              sm: '0.5rem',
+              md: '1rem',
+            }
           }}
         >
-          <Stack spacing={2}>
-            {
-              ytInfo.mr_info.map((item, index) => (
-                <ShortsItem
-                  key={index}
-                  info={item}
-                  index={index}
-                  moveYt={moveYt}
-                  onChangeStartTime={onChangeStartTime}
-                  onChangeEndTime={onChangeEndTime}
-                />
-              ))
-            }
-          </Stack>
+          <RecommendedContainer
+            ytInfo={ytInfo}
+            moveYt={moveYt}
+            onChangeStartTime={onChangeStartTime}
+            onChangeEndTime={onChangeEndTime}
+          />
           <PreviewContainer
             ytInfo={ytInfo}
             timeStamp={timeStamp}
@@ -135,12 +132,12 @@ function ShortsPicking() {
     </ContentsWrapper>
   );
 }
+
 const PickingContainer = styled(Container)(({ theme }) => ({
   ...theme.components.MuiContainer,
   display: 'flex',
   alignItems: 'start',
   justifyContent: 'space-between',
-  padding: '2rem',
   gap: '1rem',
   background: theme.palette.background.halfOpacity,
 }));
@@ -150,7 +147,6 @@ const MainContainer = styled(Container)(({ theme }) => ({
   display: 'flex',
   alignItems: 'center',
   height: '100%',
-  gap: '2rem',
   paddingBottom: '1.5rem',
   background: theme.palette.primary.main,
 }));

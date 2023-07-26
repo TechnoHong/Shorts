@@ -22,13 +22,19 @@ const ShortsItem = ({ info, index, moveYt, onChangeStartTime, onChangeEndTime })
   }
 
   return (
-    <Item elevation={0}>
-      <Stack direction='row' alignItems='center' spacing={2} padding={2} justifyContent='space-between'>
+    <Item elevation={0} onClick={() => handleClick(info)} sx={{
+      width: {
+        xs: '100%',
+        sm: '100%',
+        md: '18rem',
+      }
+    }}>
+      <Stack direction='row' alignItems='center' spacing={2} padding={1} justifyContent='space-between'>
         <Stack direction='row' alignItems='center' spacing={2}>
           <Typography variant="h5" textAlign='start' sx={{ fontWeight: 700, paddingLeft: '0.5rem' }}>{`${index + 1}`}</Typography>
           <Typography variant="body2" textAlign='start'>{`${getTimeStr(info.start_time)} - ${getTimeStr(info.end_time)}`}</Typography>
         </Stack>
-        <Button onClick={() => handleClick(info)}>
+        <Button>
           <PlayArrowRounded color='secondary'/>
         </Button>
       </Stack>
@@ -38,14 +44,17 @@ const ShortsItem = ({ info, index, moveYt, onChangeStartTime, onChangeEndTime })
 
 const Item = styled(Paper)(({ theme }) => ({
   ...theme.typography.body2,
-  width: '20rem',
   textAlign: 'center',
   color: theme.palette.text.primary,
   lineHeight: '60px',
   padding: '0',
   position: 'relative',
   border: `1px solid ${theme.palette.primary.dark}`,
-  borderRadius: '10rem',
+  borderRadius: '0.5rem',
+  '&:hover': {
+    background: theme.palette.primary.dark,
+    cursor: 'pointer',
+  },
 }));
 
 export default ShortsItem;
