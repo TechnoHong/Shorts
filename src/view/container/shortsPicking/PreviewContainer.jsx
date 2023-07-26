@@ -1,12 +1,16 @@
 import React from 'react';
-import {Paper, Stack, styled, Typography} from "@mui/material";
+import {Box, Paper, Stack, styled, Typography} from "@mui/material";
 import VideoPreview from "../../components/VideoPreview";
 import PreviewInfoContainer from "./PreviewInfoContainer";
 import {useTranslation} from "react-i18next";
 import RatioSelector from "./RatioSelector";
+import AccessTimeIcon from '@mui/icons-material/AccessTime';
+import {useSelector} from "react-redux";
 
-const PreviewContainer = ({ ytInfo, timeStamp, handleChangeRatio, ratio }) => {
+const PreviewContainer = ({ ytInfo, timeStamp, handleChangeRatio }) => {
   const { t } = useTranslation(['page']);
+  const duration = useSelector(state => state.edit.duration)
+  const ratio = useSelector(state => state.edit.ratio)
 
   return (
     <PreviewPaper elevation={5}>
@@ -15,6 +19,10 @@ const PreviewContainer = ({ ytInfo, timeStamp, handleChangeRatio, ratio }) => {
           {t('shortsDownload.preview')}
         </PreviewTitle>
         <RatioSelector handleChangeRatio={handleChangeRatio} ratio={ratio} />
+        <LengthInfo>
+          <AccessTimeIcon/>
+          {`${duration / 1000}s`}
+        </LengthInfo>
       </PreviewHeader>
       <div
         style={{
@@ -60,6 +68,15 @@ const PreviewTitle = styled(Typography)(({ theme }) => ({
   color: theme.palette.text.secondary,
   fontSize: '1rem',
   fontWeight: 500,
+  padding: '0.5rem 0',
+}));
+
+const LengthInfo = styled(Box)(({ theme }) => ({
+  display: 'flex',
+  alignItems: 'end',
+  gap: '0.25rem',
+  color: theme.palette.text.secondary,
+  fontSize: '1rem',
   padding: '0.5rem 0',
 }));
 

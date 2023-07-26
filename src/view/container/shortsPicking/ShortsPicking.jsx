@@ -6,26 +6,25 @@ import {
 } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import { ContentsWrapper } from '../../components/ContentsWrapper';
-import { useSelector } from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { useAlert } from '../../../hooks/useAlert';
 
 import axios from 'axios';
 import ShortsItem from "./ShortsItem";
 import PreviewContainer from "./PreviewContainer";
-import Button from "@mui/material/Button";
-import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
+import Header from "./Header";
+import {changeEndTime, changeRatio, changeStartTime} from "../../../controllers/editSlice";
 
 function ShortsPicking() {
   const { t } = useTranslation(['page']);
   const scrapRet = useSelector((state) => state.ytInfo.info.success);
   const ytInfo = useSelector((state) => state.ytInfo.info.result);
+  const editInfo = useSelector((state) => state.edit);
   const navigate = useNavigate();
   const alert = useAlert();
   const [timeStamp, setTimeStamp] = useState(0);
-  const [startTime, setStartTime] = useState(0);
-  const [endTime, setEndTime] = useState(0);
-  const [ratio, setRatio] = useState('fullWidth')
+  const dispatch = useDispatch();
 
   function handleVideoResponse(response) {
     const blob = new Blob([response.data], {
@@ -62,7 +61,7 @@ function ShortsPicking() {
     }
   };
 
-  const getShorts = async (startTime, endTime, option = 'fullWidth') => { //TODO: api 파라미터 수정 후 작업
+  const getShorts = async (startTime, endTime, option = 'fullWidth') => {
     await axios({
       method: 'post',
       url: `${process.env.REACT_APP_BASE_URL}/yt_download/?url=${ytInfo.url}&&start_time=${startTime}&end_time=${endTime}&option=${option}`,
@@ -73,19 +72,21 @@ function ShortsPicking() {
   };
 
   const onChangeStartTime = (time) => {
-    setStartTime(time)
+    dispatch(changeStartTime(time))
   }
 
   const onChangeEndTime = (time) => {
-    setEndTime(time)
+    dispatch(changeEndTime(time))
   }
 
   const handleChangeRatio = (event) => {
-    setRatio(event.target.value);
+    dispatch(changeRatio(event.target.value))
   };
 
-  const handleDownload = (startTime, endTime) => {
-    getShorts(startTime, endTime).then(r => console.log(r, 'done'))
+  const handleDownload = () => {
+    getShorts(editInfo.startTime, editInfo.endTime, editInfo.ratio).then(() => {
+      alert.show('success', '다운로드 완료');
+    })
   }
 
   return (
@@ -95,36 +96,19 @@ function ShortsPicking() {
         maxWidth={false}
         sx={{
           flexDirection: 'column',
-        }}
-      >
-        <Button //todo 여기 감싸서 유튜브 검색 창, 다운로드 버튼 같은 기능 버튼들 모아두기
-          variant="contained"
-          disableElevation
-          endIcon={<KeyboardArrowRightIcon />}
-          onClick={() => handleDownload(startTime, endTime)}
-          color='secondary'
-        >
-          {t('tips.btn_download')}
-        </Button>
+        }}>
+        <Header onClickDownload={handleDownload}/>
         <PickingContainer
           disableGutters
           maxWidth={false}
           sx={{
             flexDirection: {
-              xs: 'column',
-              sm: 'column',
+              xs: 'column-reverse',
+              sm: 'column-reverse',
               md: 'row',
             },
           }}
         >
-          {/*<ShortsCustomContainer*/}
-          {/*  startTime={startTime}*/}
-          {/*  endTime={endTime}*/}
-          {/*  onChangeStartTime={onChangeStartTime}*/}
-          {/*  onChangeEndTime={onChangeEndTime}*/}
-          {/*  moveYt={moveYt}*/}
-          {/*  getShorts={getShorts}*/}
-          {/*/>*/}
           <Stack spacing={2}>
             {
               ytInfo.mr_info.map((item, index) => (
@@ -133,14 +117,19 @@ function ShortsPicking() {
                   info={item}
                   index={index}
                   moveYt={moveYt}
-                  getShorts={getShorts}
                   onChangeStartTime={onChangeStartTime}
                   onChangeEndTime={onChangeEndTime}
                 />
               ))
             }
           </Stack>
-          <PreviewContainer ytInfo={ytInfo} timeStamp={timeStamp} handleChangeRatio={handleChangeRatio} ratio={ratio}/>
+          <PreviewContainer
+            ytInfo={ytInfo}
+            timeStamp={timeStamp}
+            handleChangeRatio={handleChangeRatio}
+            onChangeStartTime={onChangeStartTime}
+            onChangeEndTime={onChangeEndTime}
+          />
         </PickingContainer>
       </MainContainer>
     </ContentsWrapper>

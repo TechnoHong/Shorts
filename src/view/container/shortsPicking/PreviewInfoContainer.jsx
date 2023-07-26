@@ -1,18 +1,14 @@
-import React from 'react';
-import {
-  Accordion,
-  AccordionDetails,
-  AccordionSummary,
+import React, {useState} from 'react';
+import { Box, Button, Dialog, DialogTitle,
   IconButton,
   List,
   ListItem,
   ListItemIcon,
-  ListItemText,
-  Typography,
+  ListItemText, styled,
 } from '@mui/material';
 import {
   Event,
-  ExpandMore,
+  InfoOutlined,
   Launch,
   PlayArrow,
   Portrait,
@@ -21,25 +17,37 @@ import {
 } from '@mui/icons-material';
 import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
+import ShortsCustomContainer from "./ShortsCustomContainer";
 
 const PreviewInfoContainer = ({
-  title,
-  uploader,
-  subscribers,
-  uploadDate,
-  url,
-  tags,
-  viewCount,
+                                title,
+                                uploader,
+                                subscribers,
+                                uploadDate,
+                                url,
+                                tags,
+                                viewCount,
 }) => {
   const { t } = useTranslation(['page']);
+  const [open, setOpen] = useState(false)
+
+  const handleClose = () => {
+    setOpen(false)
+  }
+
+  const handleOpen = () => {
+    setOpen(true)
+  }
 
   return (
-    <Accordion elevation={0} disableGutters={true} >
-      <AccordionSummary expandIcon={<ExpandMore />}>
-        <Typography>{t('picking.info.more_info')}</Typography>
-      </AccordionSummary>
-      <AccordionDetails>
-        <List disablePadding>
+    <Root>
+      <Button variant='outlined' onClick={handleOpen} endIcon={<InfoOutlined/>} sx={{ alignSelf: 'end' }}>
+        {t('picking.info.more_info')}
+      </Button>
+      <ShortsCustomContainer/>
+      <Dialog open={open} onClose={handleClose}>
+        <DialogTitle>{t('picking.info.more_info')}</DialogTitle>
+        <InfoList>
           <InfoItemContainer
             title={t('picking.info.title')}
             text={title}
@@ -72,15 +80,15 @@ const PreviewInfoContainer = ({
               shortcut=""
             />
           )}
-        </List>
-      </AccordionDetails>
-    </Accordion>
+        </InfoList>
+      </Dialog>
+    </Root>
   );
 };
 
 const InfoItemContainer = ({ title, text, icon, shortcut }) => {
   return (
-    <ListItem disablePadding>
+    <ListItem>
       <ListItemIcon>{icon}</ListItemIcon>
       <ListItemText
         primary={title}
@@ -95,6 +103,18 @@ const InfoItemContainer = ({ title, text, icon, shortcut }) => {
     </ListItem>
   );
 };
+
+const InfoList = styled(List)(({ theme }) => ({
+  ...theme.components.MuiList,
+  background: theme.palette.secondary.main,
+}))
+
+const Root = styled(Box)(({ theme }) => ({
+  display: 'flex',
+  flexDirection: 'column',
+  padding: '0.5rem 0',
+  gap: '0.5rem',
+}))
 
 PreviewInfoContainer.propTypes = {
   title: PropTypes.string,

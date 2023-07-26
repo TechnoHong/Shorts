@@ -1,11 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {convertToMs, convertToTime} from "../../utils/utils";
 import {Box, Input} from "@mui/material";
 
 const TimeField = ({ timestamp, onChange }) => {
   const [time, setTime] = useState(convertToTime(timestamp));
 
-  React.useEffect(() => {
+  useEffect(() => {
     setTime(convertToTime(timestamp));
   }, [timestamp]);
 

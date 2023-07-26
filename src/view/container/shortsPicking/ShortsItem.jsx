@@ -1,13 +1,10 @@
 import React, {useCallback} from 'react';
 import {Button, Paper, Stack, styled} from "@mui/material";
 import Typography from "@mui/material/Typography";
-import {useTranslation} from "react-i18next";
 import {PlayArrowRounded} from "@mui/icons-material";
 import {convertToTime} from "../../../utils/utils";
-import LoadingBackdrop from "./LoadingBackdrop";
 
 const ShortsItem = ({ info, index, moveYt, onChangeStartTime, onChangeEndTime }) => {
-  const [loading, setLoading] = React.useState(false);
 
   const handleClick = useCallback(
     (item) => {
@@ -35,7 +32,6 @@ const ShortsItem = ({ info, index, moveYt, onChangeStartTime, onChangeEndTime })
           <PlayArrowRounded color='secondary'/>
         </Button>
       </Stack>
-      <LoadingBackdrop loading={loading}/>
     </Item>
   );
 };
