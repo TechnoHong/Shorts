@@ -114,12 +114,16 @@ function ShortsPicking() {
             }
           }}
         >
-          <RecommendedContainer
-            ytInfo={ytInfo}
-            moveYt={moveYt}
-            onChangeStartTime={onChangeStartTime}
-            onChangeEndTime={onChangeEndTime}
-          />
+          {
+            ytInfo.mr_info && (
+              <RecommendedContainer
+                ytInfo={ytInfo}
+                moveYt={moveYt}
+                onChangeStartTime={onChangeStartTime}
+                onChangeEndTime={onChangeEndTime}
+              />
+            )
+          }
           <PreviewContainer
             ytInfo={ytInfo}
             timeStamp={timeStamp}
