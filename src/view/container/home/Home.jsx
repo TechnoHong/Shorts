@@ -15,6 +15,7 @@ import { useAlert } from '../../../hooks/useAlert';
 import Title from "./Title";
 import HomeDeco from "../../components/HomeDeco";
 import YoutubeSearchBox from "./YoutubeSearchBox";
+import CoupangBanner from "./CoupangBanner";
 
 function Home() {
   const { t } = useTranslation(['page']);
@@ -134,6 +135,7 @@ function Home() {
             desc={t('main.guideDesc3')}
           />
           <YoutubeSearchBox/>
+          <CoupangBanner/>
           <GuideContainer
             title={t('main.guideTitle4')}
             desc={t('main.guideDesc4')}

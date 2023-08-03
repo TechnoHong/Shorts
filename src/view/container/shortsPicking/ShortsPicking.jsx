@@ -14,6 +14,7 @@ import PreviewContainer from "./PreviewContainer";
 import Header from "./Header";
 import {changeEndTime, changeRatio, changeStartTime} from "../../../controllers/editSlice";
 import RecommendedContainer from "./RecommendedContainer";
+import CoupangBanner from "../home/CoupangBanner";
 
 function ShortsPicking() {
   const { t } = useTranslation(['page']);
@@ -98,6 +99,7 @@ function ShortsPicking() {
           flexDirection: 'column',
         }}>
         <Header onClickDownload={handleDownload}/>
+        <CoupangBanner/>
         <PickingContainer
           disableGutters
           maxWidth={false}
