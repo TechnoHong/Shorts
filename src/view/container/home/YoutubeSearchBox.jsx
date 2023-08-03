@@ -2,8 +2,8 @@ import React, {useState} from 'react';
 import {GuideBox, GuideDescription, GuideTypo} from "./GuideContainer";
 import {useTranslation} from "react-i18next";
 import TextField from "@mui/material/TextField";
-import {IconButton, styled} from "@mui/material";
-import {YouTube} from "@mui/icons-material";
+import {IconButton, styled, Tooltip} from "@mui/material";
+import {Search, Whatshot, YouTube} from "@mui/icons-material";
 
 const YoutubeSearchBox = () => {
   const { t } = useTranslation(['page']);
@@ -55,6 +55,11 @@ const YoutubeSearchBox = () => {
           {t('main.guideTitle5')}
         </GuideTypo>
         <SearchWrapper>
+          <Tooltip title='YouTube'>
+            <IconButton onClick={() => window.open('https://www.youtube.com/')}>
+              <YouTube color='error'/>
+            </IconButton>
+          </Tooltip>
           <TextField
             placeholder={t('main.youtubePlaceholder')}
             variant="outlined"
@@ -65,9 +70,16 @@ const YoutubeSearchBox = () => {
             onChange={onChangeInput}
             onKeyUp={onPressEnter}
           />
-          <IconButton onClick={onClickSearch}>
-            <YouTube color='secondary'/>
-          </IconButton>
+          <Tooltip title='검색'>
+            <IconButton onClick={onClickSearch}>
+              <Search color='secondary'/>
+            </IconButton>
+          </Tooltip>
+          <Tooltip title='인기 급상승'>
+            <IconButton onClick={() => window.open('https://www.youtube.com/feed/trending')}>
+              <Whatshot color='warning'/>
+            </IconButton>
+          </Tooltip>
         </SearchWrapper>
       </GuideDescription>
     </GuideBox>
