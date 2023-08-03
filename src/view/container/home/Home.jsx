@@ -14,6 +14,7 @@ import { LoadingButton } from '@mui/lab';
 import { useAlert } from '../../../hooks/useAlert';
 import Title from "./Title";
 import HomeDeco from "../../components/HomeDeco";
+import YoutubeSearchBox from "./YoutubeSearchBox";
 
 function Home() {
   const { t } = useTranslation(['page']);
@@ -49,6 +50,12 @@ function Home() {
         });
     }
   };
+
+  const onPressEnter = (e) => {
+    if (e.key === 'Enter') {
+      handlePickingButton()
+    }
+  }
 
   return (
     <ContentsWrapper
@@ -101,6 +108,7 @@ function Home() {
                 setIsEmptyInput(false);
                 setYtURL(e.target.value);
               }}
+              onKeyUp={onPressEnter}
             />
             <LoadingButton
               loading={loading && true}
@@ -127,6 +135,7 @@ function Home() {
             title={t('main.guideTitle3')}
             desc={t('main.guideDesc3')}
           />
+          <YoutubeSearchBox/>
           <GuideContainer
             title={t('main.guideTitle4')}
             desc={t('main.guideDesc4')}

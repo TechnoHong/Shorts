@@ -51,7 +51,7 @@ const GuideContainer = ({ title, desc, animationData, reverse }) => {
   );
 };
 
-const GuideBox = styled(Box)(({ theme }) => ({
+export const GuideBox = styled(Box)(({ theme }) => ({
   display: 'flex',
   padding: '1rem',
   borderRadius: '5px',
@@ -60,7 +60,7 @@ const GuideBox = styled(Box)(({ theme }) => ({
   zIndex: 1,
 }));
 
-const GuideDescription = styled(Container)(({ theme }) => ({
+export const GuideDescription = styled(Container)(({ theme }) => ({
   ...theme.components.MuiContainer,
   display: 'flex',
   gap: '0.5rem',
@@ -68,7 +68,7 @@ const GuideDescription = styled(Container)(({ theme }) => ({
   flexDirection: 'column',
 }));
 
-const GuideTypo = styled(Typography)(({ theme, reverse, sub }) => ({
+export const GuideTypo = styled(Typography)(({ theme, reverse, sub }) => ({
   ...theme.components.MuiTypography,
   color: sub ? theme.palette.text.guide : theme.palette.text.primary,
   alignSelf: reverse ? 'end' : 'start',
