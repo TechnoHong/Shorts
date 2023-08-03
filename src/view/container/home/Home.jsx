@@ -19,8 +19,6 @@ import YoutubeSearchBox from "./YoutubeSearchBox";
 function Home() {
   const { t } = useTranslation(['page']);
   const [ytURL, setYtURL] = useState('');
-  const [range, setRange] = useState(60);
-  const [count, setCount] = useState(10);
   const [isEmptyInput, setIsEmptyInput] = useState(false);
 
   const loading = useSelector((state) => state.ytInfo.loading);
@@ -33,7 +31,7 @@ function Home() {
       alert.show('info', t('message.empty_url'));
       setIsEmptyInput(true);
     } else {
-      dispatch(action.getYtInfo({ ytURL, count, range }))
+      dispatch(action.getYtInfo({ ytURL: ytURL, count: 10, range: 30 }))
         .unwrap()
         .then(() => {
           navigate('/ShortsPicking');
