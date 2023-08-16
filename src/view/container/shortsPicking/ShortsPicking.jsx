@@ -22,6 +22,7 @@ function ShortsPicking() {
   const scrapRet = useSelector((state) => state.ytInfo.info.success);
   const ytInfo = useSelector((state) => state.ytInfo.info.result);
   const editInfo = useSelector((state) => state.edit);
+  const downloadHistories = useSelector((state) => state.download);
   const navigate = useNavigate();
   const alert = useAlert();
   const [timeStamp, setTimeStamp] = useState(0);
@@ -40,6 +41,9 @@ function ShortsPicking() {
 
     // 다운로드 링크 클릭 (다운로드 시작)
     downloadLink.click();
+
+    dispatch(completeDownload(response.config.url))
+    alert.show('success', '다운로드 완료');
 
     return response
   }
@@ -67,6 +71,12 @@ function ShortsPicking() {
   const getShorts = async (startTime, endTime, option = 'fullWidth') => {
     const requestUrl = `/yt_download/?url=${ytInfo.url}&&start_time=${startTime}&end_time=${endTime}&option=${option}`
 
+    if (downloadHistories.find((item) => item.url === requestUrl) ) {
+      alert.show('info', '이미 다운로드 내역에 존재하는 영상입니다.')
+      return
+    }
+
+
     dispatch(appendHistory({ url: requestUrl, title: ytInfo.title, startTime: startTime, endTime: endTime, option: option }))
 
     return await axios({
@@ -91,10 +101,11 @@ function ShortsPicking() {
   };
 
   const handleDownload = () => {
-    getShorts(editInfo.startTime, editInfo.endTime, editInfo.ratio).then((response) => {
-      dispatch(completeDownload(response.config.url))
-      alert.show('success', '다운로드 완료');
-    })
+    if ( editInfo.endTime - editInfo.startTime > 0 && editInfo.endTime - editInfo.startTime <= 60000 ) {
+      getShorts(editInfo.startTime, editInfo.endTime, editInfo.ratio)
+    } else {
+      alert.show('error', '시간 시간과 종료 시간을 다시 설정해 주세요. 영상 길이는 최대 1분까지 지원됩니다.')
+    }
   }
 
   return (
