@@ -2,7 +2,7 @@ import React, {useCallback} from 'react';
 import {Button, Paper, Stack, styled} from "@mui/material";
 import Typography from "@mui/material/Typography";
 import {PlayArrowRounded} from "@mui/icons-material";
-import {convertToTime} from "../../../utils/utils";
+import {getTimeStr} from "../../../utils/utils";
 
 const ShortsItem = ({ info, index, moveYt, onChangeStartTime, onChangeEndTime }) => {
 
@@ -15,11 +15,6 @@ const ShortsItem = ({ info, index, moveYt, onChangeStartTime, onChangeEndTime })
     },
     [moveYt],
   );
-
-  const getTimeStr = (millis) => {
-    const time = convertToTime(millis)
-    return `${time.hours}:${time.minutes}:${time.seconds}`
-  }
 
   return (
     <Item elevation={0} onClick={() => handleClick(info)} sx={{
