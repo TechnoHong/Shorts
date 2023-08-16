@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import Button from "@mui/material/Button";
 import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
-import {Drawer, Grid, styled} from "@mui/material";
+import {Badge, Drawer, Grid, styled} from "@mui/material";
 import {useTranslation} from "react-i18next";
 import IconButton from "@mui/material/IconButton";
 import {useNavigate} from "react-router-dom";
@@ -10,7 +10,7 @@ import HistoryIcon from '@mui/icons-material/History';
 import ButtonGroup from "@mui/material/ButtonGroup";
 import HistoryDrawer from "./HistoryDrawer";
 
-const Header = ({ onClickDownload }) => {
+const Header = ({ onClickDownload, badge }) => {
   const navigate = useNavigate();
   const { t } = useTranslation(['page']);
   const [drawer, setDrawer] = useState(false)
@@ -22,6 +22,8 @@ const Header = ({ onClickDownload }) => {
   const toggleDrawer = () => {
     setDrawer(!drawer)
   }
+
+  console.log('hong', badge)
 
   return (
     <HeaderContainer container justifyContent='space-between' alignItems='center'>
@@ -37,9 +39,11 @@ const Header = ({ onClickDownload }) => {
           color='secondary'>
           {t('tips.btn_download')}
         </Button>
-        <IconButton onClick={toggleDrawer}>
-          <HistoryIcon/>
-        </IconButton>
+        <Badge badgeContent={badge} color='secondary' invisible={badge <= 0}>
+          <IconButton onClick={toggleDrawer}>
+            <HistoryIcon/>
+          </IconButton>
+        </Badge>
       </DownloadButtonGroup>
       <Drawer
         anchor='right'

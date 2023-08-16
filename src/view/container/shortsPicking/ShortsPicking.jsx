@@ -101,6 +101,7 @@ function ShortsPicking() {
 
   const handleDownload = () => {
     if ( editInfo.endTime - editInfo.startTime > 0 && editInfo.endTime - editInfo.startTime <= 60000 ) {
+      alert.show('info', '다운로드 시작...')
       getShorts(editInfo.startTime, editInfo.endTime, editInfo.ratio)
     } else {
       alert.show('error', '시간 시간과 종료 시간을 다시 설정해 주세요. 영상 길이는 최대 1분까지 지원됩니다.')
@@ -115,7 +116,7 @@ function ShortsPicking() {
         sx={{
           flexDirection: 'column',
         }}>
-        <Header onClickDownload={handleDownload}/>
+        <Header onClickDownload={handleDownload} badge={downloadHistories.length}/>
         <CoupangBanner/>
         <PickingContainer
           disableGutters
