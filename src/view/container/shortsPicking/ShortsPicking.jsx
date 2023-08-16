@@ -15,7 +15,7 @@ import Header from "./Header";
 import {changeEndTime, changeRatio, changeStartTime} from "../../../controllers/editSlice";
 import RecommendedContainer from "./RecommendedContainer";
 import CoupangBanner from "../home/CoupangBanner";
-import {appendHistory, completeDownload} from "../../../controllers/downloadSlice";
+import {appendHistory, completeDownload, failedDownload} from "../../../controllers/downloadSlice";
 
 function ShortsPicking() {
   const { t } = useTranslation(['page']);
@@ -49,8 +49,8 @@ function ShortsPicking() {
   }
 
   function handleVideoError(error) {
-    console.error(error);
-    alert.show('error', t(error.message));
+    dispatch(failedDownload(error.config.url))
+    alert.show('error', error.message);
   }
 
   useEffect(() => {
@@ -71,11 +71,10 @@ function ShortsPicking() {
   const getShorts = async (startTime, endTime, option = 'fullWidth') => {
     const requestUrl = `/yt_download/?url=${ytInfo.url}&&start_time=${startTime}&end_time=${endTime}&option=${option}`
 
-    if (downloadHistories.find((item) => item.url === requestUrl) ) {
-      alert.show('info', '이미 다운로드 내역에 존재하는 영상입니다.')
+    if (downloadHistories.find((item) => item.url === requestUrl && item.status !== 'failed') ) {
+      alert.show('info', '다운로드 중이거나 이미 다운로드한 구간입니다.')
       return
     }
-
 
     dispatch(appendHistory({ url: requestUrl, title: ytInfo.title, startTime: startTime, endTime: endTime, option: option }))
 

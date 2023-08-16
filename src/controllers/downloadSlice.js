@@ -19,8 +19,15 @@ const downloadSlice = createSlice({
         return item
       })
     },
+    failedDownload(state, action) {
+      return state.map((item) => {
+        if (item.url === action.payload)
+          return {...item, status: 'failed'}
+        return item
+      })
+    },
   },
 });
 
-export const { appendHistory, completeDownload } = downloadSlice.actions;
+export const { appendHistory, completeDownload, failedDownload } = downloadSlice.actions;
 export default downloadSlice.reducer;
