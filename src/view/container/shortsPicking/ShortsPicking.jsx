@@ -15,6 +15,7 @@ import Header from "./Header";
 import {changeEndTime, changeRatio, changeStartTime} from "../../../controllers/editSlice";
 import RecommendedContainer from "./RecommendedContainer";
 import CoupangBanner from "../home/CoupangBanner";
+import {appendHistory, completeDownload} from "../../../controllers/downloadSlice";
 
 function ShortsPicking() {
   const { t } = useTranslation(['page']);
@@ -27,7 +28,6 @@ function ShortsPicking() {
   const dispatch = useDispatch();
 
   function handleVideoResponse(response) {
-    console.log('hong', JSON.stringify(response))
     const blob = new Blob([response.data], {
       type: response.headers['content-type'],
     });
@@ -36,10 +36,12 @@ function ShortsPicking() {
     // 비디오 다운로드 링크 생성
     const downloadLink = document.createElement('a');
     downloadLink.href = blobUrl;
-    downloadLink.download = 'shorts_' + ytInfo.title.slice(0, 10) + '.mp4';
+    downloadLink.download = '#shorts ' + ytInfo.title + '.mp4';
 
     // 다운로드 링크 클릭 (다운로드 시작)
     downloadLink.click();
+
+    return response
   }
 
   function handleVideoError(error) {
@@ -63,9 +65,13 @@ function ShortsPicking() {
   };
 
   const getShorts = async (startTime, endTime, option = 'fullWidth') => {
-    await axios({
+    const requestUrl = `/yt_download/?url=${ytInfo.url}&&start_time=${startTime}&end_time=${endTime}&option=${option}`
+
+    dispatch(appendHistory({ url: requestUrl, title: ytInfo.title, startTime: startTime, endTime: endTime, option: option }))
+
+    return await axios({
       method: 'post',
-      url: `${process.env.REACT_APP_BASE_URL}/yt_download/?url=${ytInfo.url}&&start_time=${startTime}&end_time=${endTime}&option=${option}`,
+      url: `${process.env.REACT_APP_BASE_URL}${requestUrl}`,
       responseType: 'blob',
     })
       .then(handleVideoResponse)
@@ -85,7 +91,8 @@ function ShortsPicking() {
   };
 
   const handleDownload = () => {
-    getShorts(editInfo.startTime, editInfo.endTime, editInfo.ratio).then(() => {
+    getShorts(editInfo.startTime, editInfo.endTime, editInfo.ratio).then((response) => {
+      dispatch(completeDownload(response.config.url))
       alert.show('success', '다운로드 완료');
     })
   }
