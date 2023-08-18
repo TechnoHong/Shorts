@@ -81,7 +81,11 @@ function Home() {
               md: 'start',
             },
             flexDirection: 'column',
-            padding: '2rem',
+            padding: {
+              xs: '2rem',
+              sm: '2rem',
+              md: '2rem 2rem 12rem',
+            },
           }}
         >
           <Title/>
