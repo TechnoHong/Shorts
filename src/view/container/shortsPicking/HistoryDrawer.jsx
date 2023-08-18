@@ -12,8 +12,10 @@ import {
 import {useSelector} from "react-redux";
 import {getTimeStr} from "../../../utils/utils";
 import {Close, Done, PriorityHigh} from "@mui/icons-material";
+import {useTranslation} from "react-i18next";
 
 const HistoryDrawer = ({ handleClose }) => {
+  const { t } = useTranslation(['page']);
   const downloadHistories = useSelector((state) => state.download);
 
   const setItemChip = (status) => {
@@ -57,7 +59,7 @@ const HistoryDrawer = ({ handleClose }) => {
     <Box>
       <ListHeaderWrapper>
         <Typography variant='h6'>
-          다운로드 내역
+          {t('picking.download_history')}
         </Typography>
         <IconButton onClick={handleClose}>
           <Close/>
@@ -69,7 +71,7 @@ const HistoryDrawer = ({ handleClose }) => {
             { downloadHistories.map((item, index) => <Item item={item} key={index}/>) }
           </List>
         ) :
-        <div> No Histories </div>
+        <div> {t('picking.no_histories')} </div>
       }
     </Box>
   );

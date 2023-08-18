@@ -23,8 +23,6 @@ const Header = ({ onClickDownload, badge }) => {
     setDrawer(!drawer)
   }
 
-  console.log('hong', badge)
-
   return (
     <HeaderContainer container justifyContent='space-between' alignItems='center'>
       <IconButton onClick={onClickToMain}>

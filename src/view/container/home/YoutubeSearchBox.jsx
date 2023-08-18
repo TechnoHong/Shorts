@@ -70,12 +70,12 @@ const YoutubeSearchBox = () => {
             onChange={onChangeInput}
             onKeyUp={onPressEnter}
           />
-          <Tooltip title='검색'>
+          <Tooltip title={t('main.search')}>
             <IconButton onClick={onClickSearch}>
               <Search color='secondary'/>
             </IconButton>
           </Tooltip>
-          <Tooltip title='인기 급상승'>
+          <Tooltip title={t('main.trending')}>
             <IconButton onClick={() => window.open('https://www.youtube.com/feed/trending')}>
               <Whatshot color='warning'/>
             </IconButton>

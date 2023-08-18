@@ -1,8 +1,10 @@
 import React from 'react';
 import {Stack, styled, Typography} from "@mui/material";
 import ShortsItem from "./ShortsItem";
+import {useTranslation} from "react-i18next";
 
 const RecommendedContainer = ({ ytInfo, moveYt, onChangeStartTime, onChangeEndTime }) => {
+  const { t } = useTranslation(['page']);
   return (
     <RecommendedList spacing={2} sx={{
       width: {
@@ -11,7 +13,7 @@ const RecommendedContainer = ({ ytInfo, moveYt, onChangeStartTime, onChangeEndTi
         md: 'auto',
       }
     }}>
-      <RecommendedTitle>추천 구간</RecommendedTitle>
+      <RecommendedTitle>{t('picking.recommend_title')}</RecommendedTitle>
       {
         ytInfo.mr_info.map((item, index) => (
           <ShortsItem

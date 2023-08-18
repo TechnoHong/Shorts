@@ -38,7 +38,10 @@
             "view_count": "조회수",
             "date": "날짜",
             "tag": "태그"
-        }
+        },
+        "download_history": "다운로드 내역",
+        "no_histories": "내역이 없습니다.",
+        "recommend_title": "추천 구간"
     },
     "shortsDownload": {
         "preview": "미리보기",
@@ -53,7 +56,11 @@
         "invalid_s_time": "시작 시간이 끝 시간보다 클 수 없습니다.",
         "invalid_e_time": "끝 시간이 시작 시간보다 작을 수 없습니다.",
         "empty_url": "영상 주소를 입력해 주세요.",
-        "time_error": "종료시간이 시작시간보다 큽니다. 시간을 변경해 주세요"
+        "time_error": "종료시간이 시작시간보다 큽니다. 시간을 변경해 주세요",
+        "alert_download_success": "다운로드 완료",
+        "alert_download_dup": "다운로드 중이거나 이미 다운로드한 구간입니다.",
+        "alert_download_start": "다운로드 시작...",
+        "alert_time_range": "시간 시간과 종료 시간을 다시 설정해 주세요. 영상 길이는 최대 1분까지 지원됩니다."
     },
     "tips": {
         "btn_restore": "시간 리셋",

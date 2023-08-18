@@ -38,7 +38,10 @@
             "view_count": "Views",
             "date": "Date",
             "tag": "Tags"
-        }
+        },
+        "download_history": "Histories",
+        "no_histories": "No Histories.",
+        "recommend_title": "Recommended"
     },
     "shortsDownload": {
         "preview": "Preview",
@@ -53,7 +56,11 @@
         "invalid_s_time": "The start time cannot be later than the end.",
         "invalid_e_time": "The end time cannot be earlier than the start.",
         "empty_url": "Oops",
-        "time_error": "Invalid video interval. Please choose again."
+        "time_error": "Invalid video interval. Please choose again.",
+        "alert_download_success": "Download Success",
+        "alert_download_dup": "Downloading now or already downloaded section.",
+        "alert_download_start": "Start Download",
+        "alert_time_range": "Please reset. Video length is supported for up to 1 minute."
     },
     "tips": {
         "btn_restore": "restore",

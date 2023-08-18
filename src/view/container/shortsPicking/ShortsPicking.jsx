@@ -43,7 +43,7 @@ function ShortsPicking() {
     downloadLink.click();
 
     dispatch(completeDownload(response.config.url))
-    alert.show('success', '다운로드 완료');
+    alert.show('success', t('message.alert_download_success'));
 
     return response
   }
@@ -72,7 +72,7 @@ function ShortsPicking() {
     const requestUrl = `/yt_download/?url=${ytInfo.url}&&start_time=${startTime}&end_time=${endTime}&option=${option}`
 
     if (downloadHistories.find((item) => item.url === requestUrl && item.status !== 'failed') ) {
-      alert.show('info', '다운로드 중이거나 이미 다운로드한 구간입니다.')
+      alert.show('info', t('massage.alert_download_dup'))
       return
     }
 
@@ -101,10 +101,10 @@ function ShortsPicking() {
 
   const handleDownload = () => {
     if ( editInfo.endTime - editInfo.startTime > 0 && editInfo.endTime - editInfo.startTime <= 60000 ) {
-      alert.show('info', '다운로드 시작...')
+      alert.show('info', t('massage.alert_download_start'))
       getShorts(editInfo.startTime, editInfo.endTime, editInfo.ratio)
     } else {
-      alert.show('error', '시간 시간과 종료 시간을 다시 설정해 주세요. 영상 길이는 최대 1분까지 지원됩니다.')
+      alert.show('error', t('massage.alert_time_range'))
     }
   }
 
