@@ -72,7 +72,7 @@ function ShortsPicking() {
     const requestUrl = `/yt_download/?url=${ytInfo.url}&&start_time=${startTime}&end_time=${endTime}&option=${option}`
 
     if (downloadHistories.find((item) => item.url === requestUrl && item.status !== 'failed') ) {
-      alert.show('info', t('massage.alert_download_dup'))
+      alert.show('info', t('message.alert_download_dup'))
       return
     }
 
@@ -101,10 +101,10 @@ function ShortsPicking() {
 
   const handleDownload = () => {
     if ( editInfo.endTime - editInfo.startTime > 0 && editInfo.endTime - editInfo.startTime <= 60000 ) {
-      alert.show('info', t('massage.alert_download_start'))
+      alert.show('info', t('message.alert_download_start'))
       getShorts(editInfo.startTime, editInfo.endTime, editInfo.ratio)
     } else {
-      alert.show('error', t('massage.alert_time_range'))
+      alert.show('error', t('message.alert_time_range'))
     }
   }
 
