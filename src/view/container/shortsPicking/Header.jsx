@@ -50,7 +50,7 @@ const Header = ({ onClickDownload, badge }) => {
         open={drawer}
         onClose={toggleDrawer}
       >
-        <HistoryDrawer/>
+        <HistoryDrawer handleClose={toggleDrawer}/>
       </Drawer>
     </HeaderContainer>
   );

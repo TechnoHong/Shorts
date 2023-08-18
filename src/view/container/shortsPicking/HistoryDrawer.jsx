@@ -1,10 +1,19 @@
 import React from 'react';
-import {Box, Chip, LinearProgress, List, ListItem, styled} from "@mui/material";
+import {
+  Box,
+  Chip,
+  CircularProgress,
+  IconButton,
+  List,
+  ListItem,
+  styled,
+  Typography
+} from "@mui/material";
 import {useSelector} from "react-redux";
 import {getTimeStr} from "../../../utils/utils";
-import {Done, PriorityHigh} from "@mui/icons-material";
+import {Close, Done, PriorityHigh} from "@mui/icons-material";
 
-const HistoryDrawer = () => {
+const HistoryDrawer = ({ handleClose }) => {
   const downloadHistories = useSelector((state) => state.download);
 
   const setItemChip = (status) => {
@@ -15,7 +24,7 @@ const HistoryDrawer = () => {
         return <Chip icon={<PriorityHigh/>} label='Error' color='error' variant='outlined' size='small' sx={{ backgroundColor: 'white', alignSelf: 'start' }}/>
       case 'pending':
       default:
-        return <></>
+        return <CircularProgress size='24px' color='primary'/>
     }
   }
 
@@ -23,18 +32,22 @@ const HistoryDrawer = () => {
     return (
       <ListItem>
         <ItemWrapper status={item.status}>
-          <ItemInfoWrapper>
+          <ChipWrapper>
             {setItemChip(item.status)}
-            <div>
+          </ChipWrapper>
+          <ItemInfoWrapper>
+            <ItemTitle>
               {item.title}
-            </div>
+            </ItemTitle>
             <ItemDesc>
-              {getTimeStr(item.startTime)} ~ {getTimeStr(item.endTime)}
+              <div>
+                {getTimeStr(item.startTime)} ~ {getTimeStr(item.endTime)}
+              </div>
+              <div>
+                {item.option}
+              </div>
             </ItemDesc>
           </ItemInfoWrapper>
-          { item.status === 'pending' &&
-            <LinearProgress color={"secondary"}/>
-          }
         </ItemWrapper>
       </ListItem>
     )
@@ -42,6 +55,14 @@ const HistoryDrawer = () => {
 
   return (
     <Box>
+      <ListHeaderWrapper>
+        <Typography variant='h6'>
+          다운로드 내역
+        </Typography>
+        <IconButton onClick={handleClose}>
+          <Close/>
+        </IconButton>
+      </ListHeaderWrapper>
       {
         downloadHistories.length > 0 ? (
           <List>
@@ -66,19 +87,27 @@ const setBackground = (status, theme) => {
   }
 }
 
+const ListHeaderWrapper = styled(Box)(({ theme }) => ({
+  width: '100%',
+  display: 'flex',
+  justifyContent: 'space-between',
+  alignItems: 'center',
+  padding: '1rem',
+}))
+
 const ItemWrapper = styled(Box)(({ theme, status }) => ({
   display: 'flex',
+  position: 'relative',
   flexDirection: 'column',
   width: '100%',
   backgroundColor: setBackground(status, theme),
   borderRadius: '5px',
-
+  padding: '1rem',
 }))
 
 const ItemInfoWrapper = styled('div')(({ theme }) => ({
   display: 'flex',
   flexDirection: 'column',
-  padding: '1rem',
   color: theme.palette.text.secondary,
 }))
 
@@ -87,6 +116,14 @@ const ItemDesc = styled('div')(({ theme }) => ({
   justifyContent: 'space-between',
   fontSize: '0.75rem',
   color: theme.palette.text.secondary,
+}))
+
+const ItemTitle = styled('div')(({ theme }) => ({
+  paddingTop: '1.75rem',
+}))
+
+const ChipWrapper = styled('div')(({ theme }) => ({
+  position: 'absolute',
 }))
 
 export default HistoryDrawer;
